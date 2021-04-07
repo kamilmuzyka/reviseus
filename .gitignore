@@ -7,4 +7,4 @@ dist/
 # Environment
 .DS_Store
 .env
-.cache
+.parcel-cache
