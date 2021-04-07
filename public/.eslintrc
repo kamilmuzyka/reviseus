@@ -1,5 +1,6 @@
 {
-    "extends": ["airbnb-typescript/base"],
+    "plugins": ["prettier"],
+    "extends": ["airbnb-typescript/base", "plugin:prettier/recommended"],
     "rules": {
         "indent": "off",
         "@typescript-eslint/indent": ["error", 4]
