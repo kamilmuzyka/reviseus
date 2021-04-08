@@ -1,3 +1,6 @@
+/** @module Component/PrimaryHeading */
+
+/** Primary heading component used as a generic UI element. */
 const PrimaryHeading = (): void => {
     if (!customElements.get('primary-heading')) {
         customElements.define(

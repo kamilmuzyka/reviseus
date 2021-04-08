@@ -1,14 +1,19 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "es2015",
+        "target": "es6",
+        "module": "es2020",
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": ".",
         "strict": true,
         "moduleResolution": "node",
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
     },
-    "exclude": ["client"]
+    "typedocOptions": {
+        "name": "Revise.us Docs",
+        "entryPoints": ["src", "client/src"],
+        "out": "docs/TypeDoc",
+        "exclude": ["src/app.ts"]
+    }
 }
