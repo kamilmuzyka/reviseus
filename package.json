@@ -1,10 +1,13 @@
 {
     "type": "module",
     "dependencies": {
-        "express": "^4.17.1"
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "pg": "^8.5.1"
     },
     "devDependencies": {
         "@types/express": "^4.17.11",
+        "@types/pg": "^7.14.11",
         "@typescript-eslint/eslint-plugin": "^4.21.0",
         "@typescript-eslint/parser": "^4.21.0",
         "concurrently": "^6.0.1",
@@ -19,7 +22,7 @@
     "scripts": {
         "postinstall": "npm install --prefix client",
         "client": "npm run dev --prefix client",
-        "server": "tsc -w & nodemon ./dist/app.js",
+        "server": "tsc -w & nodemon ./dist/src/app.js",
         "dev": "concurrently \"npm run client\" \"npm run server\"",
         "docs": "npx typedoc"
     }
