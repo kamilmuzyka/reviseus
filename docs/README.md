@@ -2,7 +2,6 @@
 
 | Convention | Meaning                       |
 | :--------- | :---------------------------- |
-| Component  | Client-side web component     |
 | Config     | Configuration file            |
 | Controller | Controller function (MVC)     |
 | Lib        | Library (local)               |

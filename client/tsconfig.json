@@ -1,5 +1,18 @@
 {
     "compilerOptions": {
-        "target": "es6"
+        "target": "es6",
+        "module": "es2020",
+        "strict": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "typedocOptions": {
+        "name": "Client Documentation (Revise.us)",
+        "readme": "docs/README.md",
+        "media": "docs/media",
+        "entryPoints": ["src"],
+        "out": "docs/TypeDoc"
     }
 }
