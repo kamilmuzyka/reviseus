@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Component/Application | Revise.us Docs</title>
-	<meta name="description" content="Documentation for Revise.us Docs">
+	<title>Config/Database | Revise.us Documentation</title>
+	<meta name="description" content="Documentation for Revise.us Documentation">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<script async src="../assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">Revise.us Docs</a>
+					<a href="../index.html" class="title">Revise.us Documentation</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,13 +52,13 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../modules.html">Revise.us Docs</a>
+					<a href="../modules.html">Revise.us Documentation</a>
 				</li>
 				<li>
-					<a href="component_application.html">Component/Application</a>
+					<a href="config_database.html">Config/Database</a>
 				</li>
 			</ul>
-			<h1>Module Component/Application</h1>
+			<h1>Module Config/Database</h1>
 		</div>
 	</div>
 </header>
@@ -70,37 +70,31 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Functions</h3>
+							<h3>Variables</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="component_application.html#default" class="tsd-kind-icon">default</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="config_database.html#default" class="tsd-kind-icon">default</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="default" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> default</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/7bd825d/client/src/index.ts#L5">index.ts:5</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Top-level application component that makes use of all existing components. It&#39;s installed in index.html as an entry point to JavaScript application. All components within the application are functions that define custom elements. A component function must execute before using a component. It&#39;s to ensure that a component is defined as a custom element.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
+					<div class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Pool</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/4891be0/src/storage/database/connection.ts#L11">src/storage/database/connection.ts:11</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Database Schema <img src="../media/schema.jpeg" alt="Database Schema as Entity Relationship
+							Diagram"></p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -110,18 +104,21 @@
 					<li class=" ">
 						<a href="../modules.html">Modules</a>
 					</li>
-					<li class="current tsd-kind-module">
-						<a href="component_application.html">Component/<wbr>Application</a>
+					<li class=" tsd-kind-module">
+						<a href="component_app.html">Component/<wbr>App</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="component_primaryheading.html">Component/<wbr>Primary<wbr>Heading</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="config_database.html">Config/<wbr>Database</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="component_application.html#default" class="tsd-kind-icon">default</a>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="config_database.html#default" class="tsd-kind-icon">default</a>
 					</li>
 				</ul>
 			</nav>
@@ -133,6 +130,7 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 		</div>

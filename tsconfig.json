@@ -11,7 +11,9 @@
         "forceConsistentCasingInFileNames": true
     },
     "typedocOptions": {
-        "name": "Revise.us Docs",
+        "name": "Revise.us Documentation",
+        "readme": "docs/README.md",
+        "media": "docs/media",
         "entryPoints": ["src", "client/src"],
         "out": "docs/TypeDoc",
         "exclude": ["src/app.ts"]

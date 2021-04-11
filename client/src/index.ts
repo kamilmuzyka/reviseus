@@ -1,4 +1,4 @@
-/** @module Component/Application */
+/** @module Component/App */
 import PrimaryHeading from './components/primary-heading/index';
 
 /** Top-level application component that makes use of all existing components.
