@@ -7,6 +7,7 @@
 | Lib        | Library (local)               |
 | Middleware | Middleware function (Express) |
 | Model      | Model class (MVC)             |
+| Route      | Router or subrouter (Express) |
 | Util       | Utility function              |
 
 ## Links
