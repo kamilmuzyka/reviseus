@@ -17,6 +17,10 @@
     "plugins": ["@typescript-eslint", "prettier"],
     "rules": {
         "quotes": "off",
-        "@typescript-eslint/quotes": ["error", "single"]
+        "@typescript-eslint/quotes": ["error", "single"],
+        "@typescript-eslint/no-explicit-any": [
+            "error",
+            { "ignoreRestArgs": true }
+        ]
     }
 }
