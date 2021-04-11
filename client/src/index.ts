@@ -8,17 +8,17 @@ import PrimaryHeading from './components/primary-heading/index';
  * component is defined as a custom element. */
 const App = (): void => {
     if (!customElements.get('the-app')) {
+        const template = document.createElement('template');
+        template.innerHTML = `
+            <div>
+                <primary-heading>Revise.us</primary-heading>
+            </div>
+        `;
         customElements.define(
             'the-app',
             class extends HTMLElement {
                 constructor() {
                     super();
-                    const template = document.createElement('template');
-                    template.innerHTML = `
-                      <div>
-                        <primary-heading>Revise.us</primary-heading>
-                      </div>
-                    `;
                     const shadowRoot = this.attachShadow({ mode: 'open' });
                     shadowRoot.appendChild(template.content.cloneNode(true));
                 }

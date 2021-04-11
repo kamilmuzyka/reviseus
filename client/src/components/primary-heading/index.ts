@@ -3,17 +3,17 @@
 /** Primary heading component used as a generic UI element. */
 const PrimaryHeading = (): void => {
     if (!customElements.get('primary-heading')) {
+        const template = document.createElement('template');
+        template.innerHTML = `
+            <h2>
+                <slot></slot>
+            </h2>
+        `;
         customElements.define(
             'primary-heading',
             class extends HTMLElement {
                 constructor() {
                     super();
-                    const template = document.createElement('template');
-                    template.innerHTML = `
-                      <h2>
-                        <slot></slot>
-                      </h2>
-                    `;
                     const shadowRoot = this.attachShadow({ mode: 'open' });
                     shadowRoot.appendChild(template.content.cloneNode(true));
                 }
