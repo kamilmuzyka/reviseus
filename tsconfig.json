@@ -3,18 +3,19 @@
         "target": "es6",
         "module": "es2020",
         "outDir": "./dist",
-        "rootDir": ".",
+        "rootDir": "./src",
         "strict": true,
         "moduleResolution": "node",
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
     },
+    "exclude": ["client"],
     "typedocOptions": {
-        "name": "Revise.us Documentation",
+        "name": "Server Documentation (Revise.us)",
         "readme": "docs/README.md",
         "media": "docs/media",
-        "entryPoints": ["src", "client/src"],
+        "entryPoints": ["src"],
         "out": "docs/TypeDoc",
         "exclude": ["src/app.ts"]
     }

@@ -22,12 +22,12 @@
     },
     "scripts": {
         "postinstall": "npm install --prefix client",
-        "database": "createdb reviseus && psql reviseus < src/storage/database/schema.sql",
-        "build": "npm run build --prefix client",
-        "setup": "npm run database & npm run build",
-        "client": "npm run dev --prefix client",
-        "server": "tsc -w & nodemon ./dist/src/app.js",
-        "dev": "concurrently \"npm run client\" \"npm run server\"",
-        "doc": "npx typedoc"
+        "createDatabase": "createdb reviseus && psql reviseus < src/storage/database/schema.sql",
+        "build": "tsc & npm run build --prefix client",
+        "setup": "npm run createDatabase & npm run build",
+        "devClient": "npm run dev --prefix client",
+        "devServer": "tsc -w & nodemon ./dist/app.js",
+        "dev": "concurrently \"npm run devClient\" \"npm run devServer\"",
+        "docs": "npx typedoc"
     }
 }
