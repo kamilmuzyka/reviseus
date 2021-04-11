@@ -30,8 +30,6 @@
 
     `npm run setup`
 
-    - It might take the app a while to build.
-
 4. Start the development server:
 
     `npm run dev`
