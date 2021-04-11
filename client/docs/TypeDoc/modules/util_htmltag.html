@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Component/App | Client Documentation (Revise.us)</title>
+	<title>Util/HTMLTag | Client Documentation (Revise.us)</title>
 	<meta name="description" content="Documentation for Client Documentation (Revise.us)">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">Client Documentation (Revise.us)</a>
 				</li>
 				<li>
-					<a href="component_app.html">Component/App</a>
+					<a href="util_htmltag.html">Util/HTMLTag</a>
 				</li>
 			</ul>
-			<h1>Module Component/App</h1>
+			<h1>Module Util/HTMLTag</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="component_app.html#default" class="tsd-kind-icon">default</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="util_htmltag.html#default" class="tsd-kind-icon">default</a></li>
 							</ul>
 						</section>
 					</div>
@@ -84,25 +84,33 @@
 					<a name="default" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> default</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">(</span>strings<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TemplateStringsArray</span>, <span class="tsd-signature-symbol">...</span>interpolations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/e6b531d/client/src/index.ts#L10">index.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/e6b531d/client/src/utils/html-tag.ts#L7">utils/html-tag.ts:7</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Top-level application component that makes use of all existing components.
-										It&#39;s installed in index.html as an entry point to JavaScript application. All
-										components within the application are functions that define custom elements.
-										A function must be executed before using a component. It&#39;s to ensure that a
-									component is defined as a custom element.</p>
+									<p>Tag function that returns a standard template string without changing it. It
+										helps to highlight and format HTML inside of JavaScript when using extensions
+										such as lit-HTML (Visual Studio Code) that only work with tagged template
+									literals.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>strings: <span class="tsd-signature-type">TemplateStringsArray</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>interpolations: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -114,13 +122,13 @@
 					<li class=" ">
 						<a href="../modules.html">Exports</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="component_app.html">Component/<wbr>App</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="component_primaryheading.html">Component/<wbr>Primary<wbr>Heading</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="util_htmltag.html">Util/HTMLTag</a>
 					</li>
 				</ul>
@@ -128,7 +136,7 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="component_app.html#default" class="tsd-kind-icon">default</a>
+						<a href="util_htmltag.html#default" class="tsd-kind-icon">default</a>
 					</li>
 				</ul>
 			</nav>

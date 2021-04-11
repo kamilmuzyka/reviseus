@@ -1,4 +1,5 @@
 /** @module Component/App */
+import html from './utils/html-tag';
 import PrimaryHeading from './components/primary-heading/index';
 
 /** Top-level application component that makes use of all existing components.
@@ -9,7 +10,7 @@ import PrimaryHeading from './components/primary-heading/index';
 const App = (): void => {
     if (!customElements.get('the-app')) {
         const template = document.createElement('template');
-        template.innerHTML = `
+        template.innerHTML = html`
             <div>
                 <primary-heading>Revise.us</primary-heading>
             </div>
