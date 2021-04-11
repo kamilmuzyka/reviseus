@@ -8,3 +8,7 @@
 | Middleware | Middleware function (Express) |
 | Model      | Model class (MVC)             |
 | Util       | Utility function              |
+
+## Links
+
+[Client Documentation](https://fictional-chainsaw-8092472b.pages.github.io/client/docs/TypeDoc/)

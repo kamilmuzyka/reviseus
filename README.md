@@ -40,7 +40,9 @@
 
 ## Documentation
 
-[Access the documentation here.](https://fictional-chainsaw-8092472b.pages.github.io/TypeDoc/)
+[Server Documentation](https://fictional-chainsaw-8092472b.pages.github.io/docs/TypeDoc/)
+
+[Client Documentation](https://fictional-chainsaw-8092472b.pages.github.io/client/docs/TypeDoc/)
 
 ## Coursework Specification
 
