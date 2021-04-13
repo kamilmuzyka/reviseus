@@ -1,7 +1,8 @@
 /** @module Component/GoogleButton */
 import html from '../../utils/html-tag';
 
-/** */
+/**  A link element redirecting the user to the Google consent screen so they
+ * can authenticate themselves. */
 const GoogleButton = (): void => {
     if (!customElements.get('google-button')) {
         const template = document.createElement('template');
@@ -11,7 +12,7 @@ const GoogleButton = (): void => {
                     cursor: pointer;
                 }
             </style>
-            <button>Continue with Google</button>
+            <a href="/auth/google">Continue with Google</a>
         `;
         customElements.define(
             'google-button',
@@ -20,12 +21,6 @@ const GoogleButton = (): void => {
                     super();
                     const shadowRoot = this.attachShadow({ mode: 'open' });
                     shadowRoot.appendChild(template.content.cloneNode(true));
-                }
-                connectedCallback() {
-                    const button = this.shadowRoot?.querySelector('button');
-                    button?.addEventListener('click', () => {
-                        fetch('/auth/google');
-                    });
                 }
             }
         );

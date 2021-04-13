@@ -1,9 +1,8 @@
 /** @module Util/HTMLTag */
 
-/** Tag function that returns a standard template string without changing it. It
- * helps to highlight and format HTML inside of JavaScript when using extensions
- * such as lit-HTML (Visual Studio Code) that only work with tagged template
- * literals. */
+/** A tag function that returns an intact template string. Use it as a template
+ * tag to highlight and format HTML inside of JavaScript, when using an
+ * extension such as lit-html (Visual Studio Code). */
 const html = (
     strings: TemplateStringsArray,
     ...interpolations: any[]

@@ -1,14 +1,27 @@
 /** @module Routes/AuthRoutes */
 import { Router } from 'express';
+import passport from 'passport';
 
 const router = Router();
 
-router.get('/auth/google', (req, res) => {
-    res.send('Logging with Google');
-});
+router.get(
+    '/google',
+    passport.authenticate('google', {
+        session: false,
+        scope: 'profile',
+    })
+);
 
-router.get('/auth/google/redirect', (req, res) => {
-    res.redirect('/');
-});
+router.get(
+    '/google/redirect',
+    passport.authenticate('google', {
+        session: false,
+    }),
+    (req, res) => {
+        // Create JWT
+        // Create cookie
+        res.redirect('/');
+    }
+);
 
 export default router;
