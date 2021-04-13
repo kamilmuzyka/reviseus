@@ -1,5 +1,6 @@
 import path from 'path';
 import express from 'express';
+import authRoutes from './routes/auth-routes.js';
 
 /* Define local constants */
 const PORT = process.env.PORT || 8080;
@@ -10,6 +11,9 @@ const app = express();
 
 /* Set up middleware */
 app.use(express.json());
+
+/* Install routes */
+app.use(authRoutes);
 
 /* Serve static files */
 app.use(express.static(path.join(DIRNAME, 'client', 'dist')));

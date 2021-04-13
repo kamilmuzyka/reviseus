@@ -1,6 +1,6 @@
 /** @module Component/App */
 import html from './utils/html-tag';
-import PrimaryHeading from './components/primary-heading/index';
+import GoogleButton from './components/google-button/index';
 
 /** Top-level application component that makes use of all existing components.
  * It's installed in index.html as an entry point to JavaScript application. All
@@ -12,7 +12,7 @@ const App = (): void => {
         const template = document.createElement('template');
         template.innerHTML = html`
             <div>
-                <primary-heading>Revise.us</primary-heading>
+                <google-button></google-button>
             </div>
         `;
         customElements.define(
@@ -28,7 +28,7 @@ const App = (): void => {
     }
 };
 
-PrimaryHeading();
+GoogleButton();
 App();
 
 export default App;
