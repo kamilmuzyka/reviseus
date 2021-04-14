@@ -10,8 +10,8 @@ const initializePassport = (): void => {
     passport.use(
         new GoogleStrategy(
             {
-                clientID: process.env.GOOGLE_CLIENT || '',
-                clientSecret: process.env.GOOGLE_SECRET || '',
+                clientID: process.env.GOOGLE_CLIENT ?? '',
+                clientSecret: process.env.GOOGLE_SECRET ?? '',
                 callbackURL: '/auth/google/redirect',
             },
             (accessToken, refreshToken, profile, done) => {

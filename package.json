@@ -6,7 +6,9 @@
         "express": "^4.17.1",
         "passport": "^0.4.1",
         "passport-google-oauth20": "^2.0.0",
-        "pg": "^8.5.1"
+        "pg": "^8.6.0",
+        "pg-hstore": "^2.3.3",
+        "sequelize": "^6.6.2"
     },
     "devDependencies": {
         "@types/express": "^4.17.11",
@@ -26,7 +28,7 @@
     },
     "scripts": {
         "postinstall": "npm install --prefix client",
-        "createDatabase": "createdb reviseus && psql reviseus < src/storage/database/schema.sql",
+        "createDatabase": "createdb reviseus",
         "build": "tsc & npm run build --prefix client",
         "setup": "npm run createDatabase & npm run build",
         "devClient": "npm run dev --prefix client",

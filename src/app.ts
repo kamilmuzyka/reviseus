@@ -1,11 +1,12 @@
 import path from 'path';
 import express from 'express';
-import initializePassport from './config/passport-config.js';
 import authRoutes from './routes/auth-routes.js';
+import sequelize from './config/sequelize-config.js';
+import initializePassport from './config/passport-config.js';
 
 /** Define local constants. */
-const PORT = process.env.PORT || 8080;
-const DIRNAME = process.env.PWD || '';
+const PORT = process.env.PORT ?? 8080;
+const DIRNAME = process.env.PWD ?? '';
 
 /** Create Express application. */
 const app = express();
@@ -23,7 +24,10 @@ app.get('*', (req, res) => {
 });
 
 /** Start the application. */
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+    await sequelize.sync({
+        // force: true,
+    });
     initializePassport();
     console.log(`Server running at port ${PORT}`);
 });
