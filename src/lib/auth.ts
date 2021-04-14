@@ -21,41 +21,42 @@ export const createToken = (
     });
 };
 
-/** It verifies a token and attaches its payload to the response object. */
-export const verifyToken = (token: string, req: Request): void => {
-    return jwt.verify(token, process.env.JWT_SECRET ?? '', (error, payload) => {
-        if (error) {
-            throw Error(error.message);
-        }
-        req.user = payload;
-    });
+/** It verifies a token by name and attaches its payload to the response object.
+ * Throws an error on verification failure. */
+export const verifyToken = (tokenName: string, req: Request): void => {
+    const token = req.cookies[tokenName];
+    if (token) {
+        jwt.verify(token, process.env.JWT_SECRET ?? '', (error, payload) => {
+            if (error) {
+                throw Error(error.message);
+            }
+            req.user = payload;
+        });
+        return;
+    }
+    throw Error('Unauthorized');
 };
 
-/** It resets a token cookie expiry date and attaches it back to the response
- * object. */
+/** It resets a token cookie expiry date and attaches it to the response object.
+ * */
 export const removeToken = (tokenName: string, res: Response): void => {
     res.cookie(tokenName, '', { maxAge: 1 });
 };
 
-/**  It's a middleware function that protects a route from unauthorised users. It
- * checks request cookies for attached tokens and verifies them. If verification
- * happens to be successful, the token payload gets attached to the request
- * object as a property named "user". Otherwise, the middleware function
+/**  It's a middleware function that protects a route from unauthorised users.
+ * It checks request cookies for attached tokens and verifies them. If
+ * verification happens to be successful, the token payload gets attached to the
+ * request object as a property named "user". Otherwise, the middleware function
  * automatically sends a 401 code response. */
 export const protect = (
     req: Request,
     res: Response,
     next: NextFunction
 ): void => {
-    const googleToken = req.cookies.google;
-    if (googleToken) {
-        try {
-            verifyToken(googleToken, req);
-            next();
-        } catch (err) {
-            res.sendStatus(401);
-        }
-        return;
+    try {
+        verifyToken('google', req);
+        next();
+    } catch (err) {
+        res.sendStatus(401);
     }
-    res.sendStatus(401);
 };
