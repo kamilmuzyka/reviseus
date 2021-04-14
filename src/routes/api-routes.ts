@@ -1,11 +1,9 @@
 /** @module Routes/APIRoutes */
 import { Router } from 'express';
-import { protect } from '../lib/auth.js';
+import userRoutes from './user-routes.js';
 
 const router = Router();
 
-router.get('/', protect, (req, res) => {
-    res.json(req.user);
-});
+router.use('/user', userRoutes);
 
 export default router;

@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-/** Creates a token that expires after 30 days and attaches it to the
+/** It creates a token that expires after 30 days and attaches it to the
  * request object as a cookie. */
 export const createToken = (
     tokenName: string,
@@ -21,7 +21,7 @@ export const createToken = (
     });
 };
 
-/** Verifies a token and attaches its payload to the response object. */
+/** It verifies a token and attaches its payload to the response object. */
 export const verifyToken = (token: string, req: Request): void => {
     return jwt.verify(token, process.env.JWT_SECRET ?? '', (error, payload) => {
         if (error) {
@@ -31,13 +31,13 @@ export const verifyToken = (token: string, req: Request): void => {
     });
 };
 
-/** Resets a token cookie expiry date and attaches it back to the response
+/** It resets a token cookie expiry date and attaches it back to the response
  * object. */
 export const removeToken = (tokenName: string, res: Response): void => {
     res.cookie(tokenName, '', { maxAge: 1 });
 };
 
-/**  A middleware function that protects a route from unauthorised users. It
+/**  It's a middleware function that protects a route from unauthorised users. It
  * checks request cookies for attached tokens and verifies them. If verification
  * happens to be successful, the token payload gets attached to the request
  * object as a property named "user". Otherwise, the middleware function
