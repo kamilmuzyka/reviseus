@@ -1,6 +1,7 @@
 /** @module Routes/AuthRoutes */
 import { Router } from 'express';
 import passport from 'passport';
+import { createToken } from '../lib/auth.js';
 
 const router = Router();
 
@@ -18,8 +19,9 @@ router.get(
         session: false,
     }),
     (req, res) => {
-        // Create JWT
-        // Create cookie
+        // @ts-expect-error *Angry TypeScript noises*
+        // https://dev.to/kwabenberko/extend-express-s-request-object-with-typescript-declaration-merging-1nn5
+        createToken('google', req.user.id, res);
         res.redirect('/');
     }
 );

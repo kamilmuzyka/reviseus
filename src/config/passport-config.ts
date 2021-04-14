@@ -23,7 +23,7 @@ const initializePassport = (): void => {
                         googleId: profile.id,
                     },
                 });
-                done(null, user);
+                done(null, user[0]);
             }
         )
     );
