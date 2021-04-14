@@ -1,6 +1,10 @@
-import { DataTypes } from 'sequelize';
+/** @module Model/User */
+import Sequelize from 'sequelize';
 import sequelize from '../config/sequelize-config.js';
 
+const { DataTypes } = Sequelize;
+
+/** User table schema. */
 const User = sequelize.define(
     'User',
     {

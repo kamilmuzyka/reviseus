@@ -2,6 +2,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
+import User from '../models/User.js';
 
 dotenv.config();
 
@@ -14,9 +15,15 @@ const initializePassport = (): void => {
                 clientSecret: process.env.GOOGLE_SECRET ?? '',
                 callbackURL: '/auth/google/redirect',
             },
-            (accessToken, refreshToken, profile, done) => {
-                // Look up or create a user
-                done(null, profile);
+            async (accessToken, refreshToken, profile, done) => {
+                const user = await User.findOrCreate({
+                    where: {
+                        firstName: profile.name?.givenName,
+                        lastName: profile.name?.familyName,
+                        googleId: profile.id,
+                    },
+                });
+                done(null, user);
             }
         )
     );
