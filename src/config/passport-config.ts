@@ -6,7 +6,7 @@ import User from '../models/User.js';
 
 dotenv.config();
 
-/** Create Passport.js authentication strategies. */
+/** Creates Passport.js authentication strategies. */
 const initializePassport = (): void => {
     passport.use(
         new GoogleStrategy(

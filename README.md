@@ -22,7 +22,12 @@
 2. Create _.env_ file in the project root directory and use the following
    template to populate it:
 
-    `DB_URI=postgres://<username>:<password>@localhost:5432/reviseus`
+    ```
+    DB_URI=postgres://<username>:<password>@localhost:5432/reviseus
+    GOOGLE_CLIENT=965556441564-cce55mafc1159cbsadka911r301sj6kj.apps.googleusercontent.com
+    GOOGLE_SECRET=OVYXy9cWLGmTnX455z6HFxuo
+    JWT_SECRET=CXweCZDfwDPp94Tp7E62
+    ```
 
     - Replace the <> fragments with your local settings.
 

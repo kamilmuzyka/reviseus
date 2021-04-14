@@ -1,7 +1,7 @@
 /** @module Component/GoogleButton */
 import html from '../../utils/html-tag';
 
-/**  A link element redirecting the user to the Google consent screen so they
+/**  A link element that redirects users to the Google consent screen so they
  * can authenticate themselves. */
 const GoogleButton = (): void => {
     if (!customElements.get('google-button')) {

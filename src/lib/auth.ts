@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-/** It creates a token that expires after 30 days and attaches it to the
- * request object as a cookie. */
+/** Creates a token that expires after 30 days and attaches it to the request
+ * object as a cookie. */
 export const createToken = (
     tokenName: string,
     userId: string,
@@ -21,8 +21,8 @@ export const createToken = (
     });
 };
 
-/** It verifies a token by name and attaches its payload to the response object.
- * Throws an error on verification failure. */
+/** Verifies a token based on its name and attaches its payload to the response
+ * object. Throws an error on verification failure. */
 export const verifyToken = (tokenName: string, req: Request): void => {
     const token = req.cookies[tokenName];
     if (token) {
@@ -37,16 +37,16 @@ export const verifyToken = (tokenName: string, req: Request): void => {
     throw Error('Unauthorized');
 };
 
-/** It resets a token cookie expiry date and attaches it to the response object.
+/** Resets a token cookie expiry date.
  * */
 export const removeToken = (tokenName: string, res: Response): void => {
     res.cookie(tokenName, '', { maxAge: 1 });
 };
 
-/**  It's a middleware function that protects a route from unauthorised users.
- * It checks request cookies for attached tokens and verifies them. If
- * verification happens to be successful, the token payload gets attached to the
- * request object as a property named "user". Otherwise, the middleware function
+/** A middleware function that protects a route from unauthorised users. It
+ * checks request cookies for attached tokens and verifies them. If verification
+ * happens to be successful, the token payload gets attached to the request
+ * object as a property named "user". Otherwise, the middleware function
  * automatically sends a 401 code response. */
 export const protect = (
     req: Request,

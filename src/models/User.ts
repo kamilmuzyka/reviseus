@@ -4,7 +4,7 @@ import sequelize from '../config/sequelize-config.js';
 
 const { DataTypes } = Sequelize;
 
-/** User model schema. */
+/** Define user schema. */
 const User = sequelize.define(
     'User',
     {
