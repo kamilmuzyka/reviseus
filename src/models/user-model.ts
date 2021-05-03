@@ -1,7 +1,12 @@
 /** @module Model/User */
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-@Table({ timestamps: false })
+@Table({
+    timestamps: false,
+    defaultScope: {
+        attributes: { exclude: ['googleId'] },
+    },
+})
 class User extends Model<User> {
     @Column({
         type: DataType.UUID,
