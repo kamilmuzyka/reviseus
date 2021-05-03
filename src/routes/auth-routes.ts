@@ -19,7 +19,10 @@ router.get(
         session: false,
     }),
     (req, res) => {
-        // @ts-expect-error *Angry TypeScript noises
+        // @ts-expect-error The req.user object is temporarily appended by
+        // Passport.js. The function below replaces it with a new req.user
+        // defined in @types/express/index.d.ts, which is the correct interface
+        // used across the application.
         createToken('google', req.user.id, res);
         res.redirect('/');
     }
