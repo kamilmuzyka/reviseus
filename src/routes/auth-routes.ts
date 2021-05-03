@@ -19,8 +19,7 @@ router.get(
         session: false,
     }),
     (req, res) => {
-        // @ts-expect-error *Angry TypeScript noises*
-        // https://dev.to/kwabenberko/extend-express-s-request-object-with-typescript-declaration-merging-1nn5
+        // @ts-expect-error *Angry TypeScript noises
         createToken('google', req.user.id, res);
         res.redirect('/');
     }

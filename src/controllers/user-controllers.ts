@@ -8,5 +8,6 @@ export const getUser = (req: Request, res: Response): void => {
 
 /** Sends data of currently logged in user. Use on protected routes only. */
 export const getCurrentUser = (req: Request, res: Response): void => {
+    const { userId } = req.user;
     res.json(req.user);
 };
