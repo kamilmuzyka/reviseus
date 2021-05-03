@@ -24,10 +24,14 @@ export const getCurrentUser = async (
     res: Response
 ): Promise<void> => {
     const { userId } = req.user;
-    const user = await User.findOne({
-        where: {
-            id: userId,
-        },
-    });
-    res.json(user);
+    if (userId && testUUID(userId)) {
+        const user = await User.findOne({ where: { id: userId } });
+        if (user) {
+            res.json(user);
+            return;
+        }
+        res.sendStatus(404);
+        return;
+    }
+    res.sendStatus(400);
 };
