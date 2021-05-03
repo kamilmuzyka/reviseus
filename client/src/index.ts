@@ -1,10 +1,12 @@
 /** @module Component/App */
 import html from './utils/html-tag';
 import './components/google-button/index';
+import './components/primary-heading/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
     <div>
+        <primary-heading>Revise.us</primary-heading>
         <google-button></google-button>
     </div>
 `;

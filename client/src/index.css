@@ -1,3 +1,30 @@
+:root {
+    font-size: 62.5%;
+    --primary-bg: #131314;
+    --secondary-bg: #1b1c1c;
+    --tertiary-bg: #2c2d2e;
+    --primary-text: #ffffff;
+    --secondary-text: #b0b3b8;
+    --accent: #1d8dee;
+    --google: #d82b28;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    color: inherit;
+}
+
 body {
-    font-family: Verdana, sans-serif;
+    background-color: var(--primary-bg);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--primary-text);
 }
