@@ -2,7 +2,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
-import User from '../models/User.js';
+import User from '../models/user-model.js';
 
 dotenv.config();
 
@@ -23,6 +23,10 @@ const initializePassport = (): void => {
                         googleId: profile.id,
                     },
                 });
+                if (!user[0].profilePhoto && profile.photos) {
+                    user[0].profilePhoto = profile.photos[0].value;
+                    user[0].save();
+                }
                 done(null, user[0]);
             }
         )

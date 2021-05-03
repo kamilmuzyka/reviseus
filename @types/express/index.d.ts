@@ -6,8 +6,10 @@ interface RequestUser {
     exp: number;
 }
 
-declare module 'express' {
-    interface Request {
-        user: RequestUser;
+declare global {
+    namespace Express {
+        interface Request {
+            user: RequestUser;
+        }
     }
 }
