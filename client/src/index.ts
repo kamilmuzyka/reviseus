@@ -1,27 +1,33 @@
 /** @module Component/App */
 import html from './utils/html-tag';
-import './components/google-button/index';
-import './components/primary-heading/index';
-import './components/browser-router/index';
 import './components/router-link/index';
+import './components/browser-router/index';
+import './components/single-route/index';
+import './components/primary-heading/index';
+import './components/google-button/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
     <div>
         <nav>
             <a href="/home" is="router-link">Home</a>
-            <a href="/settings" is="router-link">Settings</a>
+            <a href="/groups" is="router-link">Groups</a>
+            <a href="/preferences" is="router-link">Preferences</a>
+            <a href="/login" is="router-link">Login</a>
         </nav>
         <browser-router>
-            <!-- browser-route -->
-            <div data-path="/home">
-                <!-- component -->
-                <div style="display: none">Home</div>
-            </div>
-            <div data-path="/settings">
-                <!-- component -->
-                <div style="display: none">Settings</div>
-            </div>
+            <single-route data-path="/home">
+                <primary-heading>Home</primary-heading>
+            </single-route>
+            <single-route data-path="/groups">
+                <primary-heading>Groups</primary-heading>
+            </single-route>
+            <single-route data-path="/preferences">
+                <primary-heading>Preferences</primary-heading>
+            </single-route>
+            <single-route data-path="/login">
+                <google-button></google-button>
+            </single-route>
         </browser-router>
     </div>
 `;

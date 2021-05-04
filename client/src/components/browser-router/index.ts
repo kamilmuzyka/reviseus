@@ -19,9 +19,9 @@ class BrowserRouter extends HTMLElement {
                 route instanceof HTMLElement &&
                 component instanceof HTMLElement
             ) {
-                component.style.display = 'none';
+                component.classList.remove('active');
                 if (route.dataset.path === location.pathname) {
-                    component.style.display = 'block';
+                    component.classList.add('active');
                 }
             }
         });
