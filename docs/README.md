@@ -3,7 +3,7 @@
 | Convention  | Meaning                       |
 | :---------- | :---------------------------- |
 | Config      | Configuration file            |
-| Controllers | Controller function (MVC)     |
+| Controllers | Controller functions (MVC)    |
 | Lib         | Library (local)               |
 | Middleware  | Middleware function (Express) |
 | Model       | Model class (MVC)             |
