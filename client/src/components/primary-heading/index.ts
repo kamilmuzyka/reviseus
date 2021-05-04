@@ -23,4 +23,6 @@ class PrimaryHeading extends HTMLElement {
     }
 }
 
-customElements.define('primary-heading', PrimaryHeading);
+if (!customElements.get('primary-heading')) {
+    customElements.define('primary-heading', PrimaryHeading);
+}

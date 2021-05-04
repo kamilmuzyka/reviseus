@@ -1,6 +1,6 @@
 import 'express';
 
-interface RequestUser {
+interface CurrentUser {
     userId: string;
     iat: number;
     exp: number;
@@ -9,7 +9,7 @@ interface RequestUser {
 declare global {
     namespace Express {
         interface Request {
-            user: RequestUser;
+            user: CurrentUser;
         }
     }
 }

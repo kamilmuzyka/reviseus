@@ -21,4 +21,6 @@ class App extends HTMLElement {
     }
 }
 
-customElements.define('the-app', App);
+if (!customElements.get('the-app')) {
+    customElements.define('the-app', App);
+}
