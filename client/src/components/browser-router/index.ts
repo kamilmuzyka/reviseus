@@ -20,7 +20,7 @@ class BrowserRouter extends HTMLElement {
                 component instanceof HTMLElement
             ) {
                 component.style.display = 'none';
-                if (route.getAttribute('path') === location.pathname) {
+                if (route.dataset.path === location.pathname) {
                     component.style.display = 'block';
                 }
             }
