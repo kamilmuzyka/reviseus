@@ -56,3 +56,5 @@ class GoogleButton extends HTMLElement {
 if (!customElements.get('google-button')) {
     customElements.define('google-button', GoogleButton);
 }
+
+export default GoogleButton;

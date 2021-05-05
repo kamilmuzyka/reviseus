@@ -10,22 +10,22 @@ const template = document.createElement('template');
 template.innerHTML = html`
     <div>
         <nav>
-            <a href="/home" is="router-link">Home</a>
+            <a href="/" is="router-link">Home</a>
             <a href="/groups" is="router-link">Groups</a>
             <a href="/preferences" is="router-link">Preferences</a>
             <a href="/login" is="router-link">Login</a>
         </nav>
         <browser-router>
-            <single-route data-path="/home">
+            <single-route data-path="/" data-exact="true">
                 <primary-heading>Home</primary-heading>
             </single-route>
             <single-route data-path="/groups">
                 <primary-heading>Groups</primary-heading>
             </single-route>
-            <single-route data-path="/preferences">
+            <single-route data-path="/preferences" data-exact="true">
                 <primary-heading>Preferences</primary-heading>
             </single-route>
-            <single-route data-path="/login">
+            <single-route data-path="/login" data-exact="true">
                 <google-button></google-button>
             </single-route>
         </browser-router>
@@ -45,3 +45,5 @@ class App extends HTMLElement {
 if (!customElements.get('the-app')) {
     customElements.define('the-app', App);
 }
+
+export default App;

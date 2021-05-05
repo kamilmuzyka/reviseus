@@ -2,7 +2,10 @@
 
 /** A tag function that recreates a passed template string. Use it as a
  * template tag to highlight and format HTML inside of JavaScript, when using
- * extensions such as lit-html (Visual Studio Code). */
+ * extensions such as lit-html (Visual Studio Code):
+ * ```typescript
+ * const template = html`<div></div>`;
+ * ``` */
 const html = (
     strings: TemplateStringsArray,
     ...interpolations: any[]

@@ -15,6 +15,7 @@ template.innerHTML = html`
     </h2>
 `;
 
+/** A generic UI component. */
 class PrimaryHeading extends HTMLElement {
     constructor() {
         super();
@@ -26,3 +27,5 @@ class PrimaryHeading extends HTMLElement {
 if (!customElements.get('primary-heading')) {
     customElements.define('primary-heading', PrimaryHeading);
 }
+
+export default PrimaryHeading;
