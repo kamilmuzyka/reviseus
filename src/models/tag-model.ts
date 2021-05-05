@@ -4,7 +4,7 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
 @Table({
     timestamps: false,
 })
-class Tag extends Model<Tag> {
+class Tag extends Model {
     @Column({
         type: DataType.UUID,
         defaultValue: DataType.UUIDV4,

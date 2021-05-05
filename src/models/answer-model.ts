@@ -2,7 +2,7 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table
-class Answer extends Model<Answer> {
+class Answer extends Model {
     @Column({
         type: DataType.UUID,
         defaultValue: DataType.UUIDV4,

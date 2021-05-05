@@ -7,7 +7,7 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
         attributes: { exclude: ['googleId'] },
     },
 })
-class User extends Model<User> {
+class User extends Model {
     @Column({
         type: DataType.UUID,
         defaultValue: DataType.UUIDV4,
