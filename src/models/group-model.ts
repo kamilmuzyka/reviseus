@@ -1,7 +1,9 @@
 /** @module Model/Group */
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-@Table
+@Table({
+    timestamps: false,
+})
 class Group extends Model<Group> {
     @Column({
         type: DataType.UUID,

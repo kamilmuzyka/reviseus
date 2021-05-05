@@ -1,7 +1,9 @@
 /** @module Model/File */
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-@Table
+@Table({
+    timestamps: false,
+})
 class File extends Model<File> {
     @Column({
         type: DataType.UUID,
