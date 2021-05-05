@@ -4,9 +4,9 @@ import html from '../../utils/html-tag';
 const template = document.createElement('template');
 template.innerHTML = html`<slot></slot>`;
 
-/** A component used to implement browser routing functionality. Use
- * <i>"single-route"</i> elements as <i>"browser-router"</i> element's direct
- * children to switch between components based on the current location:
+/** A component used to implement browser routing functionality. Use with
+ * <i>"single-route"</i> element to switch between components based on the
+ * current location:
  * ```html
  * <browser-router>
  *  <single-route data-path="/" data-exact="true">
@@ -24,8 +24,6 @@ class BrowserRouter extends HTMLElement {
         shadowRoot.appendChild(template.content.cloneNode(true));
     }
 
-    /** Iterates through "browser-router" element's children and adds class
-     * "active" to those that match the current location. */
     route(): void {
         const routes = [...this.children];
         routes.forEach((route) => {
@@ -35,7 +33,6 @@ class BrowserRouter extends HTMLElement {
                 component instanceof HTMLElement
             ) {
                 component.classList.remove('active');
-                /** Matches only exact routes. */
                 if (
                     route.dataset.path === location.pathname &&
                     route.dataset.exact
@@ -43,7 +40,6 @@ class BrowserRouter extends HTMLElement {
                     component.classList.add('active');
                 }
                 const inexactLocation = `/${location.pathname.split('/')[1]}`;
-                /** Matches all other (inexact) routes. */
                 if (
                     route.dataset.path === inexactLocation &&
                     !route.dataset.exact
