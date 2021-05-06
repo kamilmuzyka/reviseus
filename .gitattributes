@@ -1,2 +1,2 @@
-./docs/* linguist-vendored
-./client/docs/* linguist-vendored
+docs/**/* linguist-vendored
+client/docs/**/* linguist-vendored
