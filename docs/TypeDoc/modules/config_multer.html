@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Model/User | Server Documentation (Revise.us)</title>
+	<title>Config/Multer | Server Documentation (Revise.us)</title>
 	<meta name="description" content="Documentation for Server Documentation (Revise.us)">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">Server Documentation (Revise.us)</a>
 				</li>
 				<li>
-					<a href="model_user.html">Model/User</a>
+					<a href="config_multer.html">Config/Multer</a>
 				</li>
 			</ul>
-			<h1>Module Model/User</h1>
+			<h1>Module Config/Multer</h1>
 		</div>
 	</div>
 </header>
@@ -70,17 +70,41 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Classes</h3>
+							<h3>Variables</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/model_user.default.html" class="tsd-kind-icon">default</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="config_multer.html#parsefiles" class="tsd-kind-icon">parse<wbr>Files</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/model_user.userattributes.html" class="tsd-kind-icon">User<wbr>Attributes</a></li>
-							</ul>
-						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="parsefiles" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> parse<wbr>Files</h3>
+					<div class="tsd-signature tsd-kind-icon">parse<wbr>Files<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/e390df0/src/config/multer-config.ts#L58">src/config/multer-config.ts:58</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A controller function that parses all the files sent in a field named
+								&quot;attachments&quot; e.g. <code>&lt;input type="file" name="attachments"
+multiple/&gt;</code>. If parsing is successful, files can be accessed under
+								<i>req.files</i>. If there are no files attached, then <i>req.files</i> is
+							set to <i>undefined</i>.</p>
+							<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">uploadController</span><span style="color: #000000"> = (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #795E26">parseFiles</span><span style="color: #000000">(</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">, (</span><span style="color: #001080">error</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">error</span><span style="color: #000000">) {</span>
+<span style="color: #000000">          </span><span style="color: #AF00DB">throw</span><span style="color: #000000"> </span><span style="color: #267F99">Error</span><span style="color: #000000">(</span><span style="color: #001080">filesError</span><span style="color: #000000">); </span><span style="color: #008000">// Parsing or validation error</span>
+<span style="color: #000000">      }</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">files</span><span style="color: #000000"> = </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">files</span><span style="color: #000000">; </span><span style="color: #008000">// Attached files or undefined</span>
+<span style="color: #000000">}</span>
+</code></pre>
+						</div>
 					</div>
 				</section>
 			</section>
@@ -91,7 +115,7 @@
 					<li class=" ">
 						<a href="../modules.html">Exports</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="config_multer.html">Config/<wbr>Multer</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -130,7 +154,7 @@
 					<li class=" tsd-kind-module">
 						<a href="model_tag.html">Model/<wbr>Tag</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="model_user.html">Model/<wbr>User</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -155,11 +179,8 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/model_user.default.html" class="tsd-kind-icon">default</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/model_user.userattributes.html" class="tsd-kind-icon">User<wbr>Attributes</a>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="config_multer.html#parsefiles" class="tsd-kind-icon">parse<wbr>Files</a>
 					</li>
 				</ul>
 			</nav>

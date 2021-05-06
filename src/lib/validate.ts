@@ -1,10 +1,8 @@
-interface NewPost {
-    title: string;
-    content: string;
-    tags?: string[];
-}
+/** @module Lib/Validate */
+import { PostAttributes } from '../models/post-model.js';
 
-export const validateNewPost = (post: NewPost): NewPost => {
+/** Validates attributes required to create a new <i>Post</i> instance. */
+export const validateNewPost = (post: PostAttributes): PostAttributes => {
     const { title, content } = post;
     if (!title) {
         throw Error('Your post needs a title!');
