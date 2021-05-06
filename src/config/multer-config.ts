@@ -6,14 +6,13 @@ import multer from 'multer';
 /** Specify the output directory. */
 const fileDestination = path.join(process.env.PWD ?? '', 'uploads');
 
-/** Create the output directory if it doesn't exist. */
-fs.mkdirSync(fileDestination, { recursive: true });
-
-/** Define Multer storage. You can set the file output destination and file
- * naming pattern here. */
+/** Define Multer storage. Every file goes into the user's directory (named same
+ * as the user ID). */
 const fileStorage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, fileDestination);
+        const userFileDestination = path.join(fileDestination, req.user.userId);
+        fs.mkdirSync(userFileDestination, { recursive: true });
+        callback(null, userFileDestination);
     },
     filename: (req, file, callback) => {
         callback(null, file.originalname);
