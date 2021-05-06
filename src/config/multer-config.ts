@@ -40,7 +40,7 @@ const fileUpload = multer({
     },
 });
 
-/** A controller function that parses all the files sent in a field named
+/** A middleware function that parses all the files sent in a field named
  * "attachments" e.g. <code>&lt;input type="file" name="attachments"
  * multiple/&gt;</code>. If parsing is successful, files can be accessed under
  * <i>req.files</i>. If there are no files attached, then <i>req.files</i> is
