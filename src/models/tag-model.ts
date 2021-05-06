@@ -1,6 +1,14 @@
 /** @module Model/Tag */
 import { Optional } from 'sequelize';
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import {
+    Table,
+    Column,
+    Model,
+    DataType,
+    BelongsToMany,
+} from 'sequelize-typescript';
+import Post from './post-model.js';
+import PostTags from './post-tags-model.js';
 
 export interface TagAttributes {
     id: string;
@@ -25,6 +33,9 @@ class Tag extends Model<TagAttributes, TagCreationAttributes> {
         allowNull: false,
     })
     name: string;
+
+    @BelongsToMany(() => Post, () => PostTags)
+    posts: Post[];
 }
 
 export default Tag;

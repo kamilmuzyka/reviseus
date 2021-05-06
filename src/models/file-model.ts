@@ -1,10 +1,20 @@
 /** @module Model/File */
 import { Optional } from 'sequelize';
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import {
+    Table,
+    Column,
+    Model,
+    DataType,
+    ForeignKey,
+    BelongsTo,
+} from 'sequelize-typescript';
+import Post, { PostAttributes } from './post-model.js';
 
 export interface FileAttributes {
     id: string;
     uri: string;
+    postId?: string;
+    post?: PostAttributes;
 }
 
 interface FileCreationAttributes extends Optional<FileAttributes, 'id'> {}
@@ -25,6 +35,12 @@ class File extends Model<FileAttributes, FileCreationAttributes> {
         allowNull: false,
     })
     uri: string;
+
+    @ForeignKey(() => Post)
+    postId: string;
+
+    @BelongsTo(() => Post)
+    post: PostAttributes;
 }
 
 export default File;
