@@ -2,12 +2,15 @@
 import fs from 'fs';
 import path from 'path';
 import multer from 'multer';
+import { v4 } from 'uuid';
 
 /** Specify the output directory. */
 const fileDestination = path.join(process.env.PWD ?? '', 'uploads');
 
-/** Define Multer storage. Every file goes into the user's directory (named same
- * as the user ID). */
+/** Define the output directory and set file names pattern. Every file goes into
+ * the user's directory (named same as the user ID). File names are randomly
+ * generated UUIDs. Original file names should be saved in the database along
+ * with the path to a file. */
 const fileStorage = multer.diskStorage({
     destination: (req, file, callback) => {
         const userFileDestination = path.join(fileDestination, req.user.userId);
@@ -15,7 +18,7 @@ const fileStorage = multer.diskStorage({
         callback(null, userFileDestination);
     },
     filename: (req, file, callback) => {
-        callback(null, file.originalname);
+        callback(null, `${v4() + path.extname(file.originalname)}`);
     },
 });
 

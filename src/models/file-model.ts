@@ -12,6 +12,7 @@ import Post, { PostAttributes } from './post-model.js';
 
 export interface FileAttributes {
     id: string;
+    name: string;
     uri: string;
     postId?: string;
     post?: PostAttributes;
@@ -29,6 +30,12 @@ class File extends Model<FileAttributes, FileCreationAttributes> {
         primaryKey: true,
     })
     id: string;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    name: string;
 
     @Column({
         type: DataType.TEXT,

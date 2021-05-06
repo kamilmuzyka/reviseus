@@ -5,8 +5,9 @@ import { parseFiles } from '../config/multer-config.js';
 import Post from '../models/post-model.js';
 import User from '../models/user-model.js';
 import Tag from '../models/tag-model.js';
+import File from '../models/file-model.js';
 
-export const createPost = async (
+export const createNewPost = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -15,6 +16,7 @@ export const createPost = async (
             if (filesError) {
                 throw Error(filesError);
             }
+            const files = req.files;
             const { userId } = req.user;
             const { title, content, tags } = validateNewPost(req.body);
 
@@ -49,7 +51,19 @@ export const createPost = async (
                 await newPost.$set('tags', postTags);
             }
 
-            //** To do: <Check for file> */
+            /** Reflect any uploaded files in the database. */
+            if (files && files.length) {
+                const postFiles = await Promise.all(
+                    files.map(async (file) => {
+                        const postFile = await File.create({
+                            name: file.originalname,
+                            uri: file.path,
+                        });
+                        return postFile;
+                    })
+                );
+                await newPost.$set('files', postFiles);
+            }
 
             //** To do: <Check for group> */
 
@@ -58,7 +72,7 @@ export const createPost = async (
                 where: {
                     id: newPost.id,
                 },
-                include: [User, Tag],
+                include: [User, Tag, File],
             });
             res.json(createdPost);
             return;
