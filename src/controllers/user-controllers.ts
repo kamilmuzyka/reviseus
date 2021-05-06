@@ -15,6 +15,7 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
                 );
             }
             res.json(user);
+            return;
         }
         throw Error('Incorrect user ID.');
     } catch (error) {
@@ -37,8 +38,9 @@ export const getCurrentUser = async (
                 );
             }
             res.json(user);
+            return;
         }
-        throw Error('Incorrect user ID.');
+        throw Error('Invalid user ID.');
     } catch (error) {
         res.status(400).json(error.message);
     }

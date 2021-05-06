@@ -20,6 +20,7 @@ export const createPost = async (
         const post = await Post.create({ title, content });
         await user.$set('posts', [post]);
         res.sendStatus(200);
+        return;
     } catch (error) {
         res.status(400).json(error.message);
     }
