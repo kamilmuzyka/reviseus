@@ -15,8 +15,6 @@ export const createPost = async (
             if (filesError) {
                 throw Error(filesError);
             }
-            // console.log(req.files);
-
             const { userId } = req.user;
             const { title, content, tags } = validateNewPost(req.body);
 

@@ -54,5 +54,4 @@ const fileUpload = multer({
  *       const files = req.files; // Attached files or undefined
  * }
  * ```*/
-
 export const parseFiles = fileUpload.array('attachments');
