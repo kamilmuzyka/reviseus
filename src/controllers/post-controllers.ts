@@ -48,8 +48,7 @@ export const createPost = async (
 
         //** To do: <Check for group> */
 
-        /** Retrieve the mutated new post from the database and send it to the
-         * client. */
+        /** Find the new (mutated) post and send it to the client. */
         const createdPost = await Post.findOne({
             where: {
                 id: newPost.id,
