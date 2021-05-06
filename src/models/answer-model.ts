@@ -1,10 +1,20 @@
 /** @module Model/Answer */
+import { Optional } from 'sequelize';
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
+export interface AnswerAttributes {
+    id: string;
+    content: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+interface AnswerCreationAttributes extends Optional<AnswerAttributes, 'id'> {}
+
 @Table
-class Answer extends Model {
+class Answer extends Model<AnswerAttributes, AnswerCreationAttributes> {
     @Column({
-        type: DataType.UUID,
+        type: DataType.STRING,
         defaultValue: DataType.UUIDV4,
         primaryKey: true,
     })

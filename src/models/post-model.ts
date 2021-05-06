@@ -1,10 +1,31 @@
 /** @module Model/Post */
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Optional } from 'sequelize';
+import {
+    Table,
+    Column,
+    Model,
+    DataType,
+    ForeignKey,
+    BelongsTo,
+} from 'sequelize-typescript';
+import User, { UserAttributes } from './user-model.js';
+
+export interface PostAttributes {
+    id: string;
+    title: string;
+    content: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+    userId?: string;
+    user?: UserAttributes;
+}
+
+interface PostCreationAttributes extends Optional<PostAttributes, 'id'> {}
 
 @Table
-class Post extends Model {
+class Post extends Model<PostAttributes, PostCreationAttributes> {
     @Column({
-        type: DataType.UUID,
+        type: DataType.STRING,
         defaultValue: DataType.UUIDV4,
         primaryKey: true,
     })
@@ -21,6 +42,13 @@ class Post extends Model {
         allowNull: false,
     })
     content: string;
+
+    @ForeignKey(() => User)
+    @Column
+    userId: string;
+
+    @BelongsTo(() => User)
+    user: UserAttributes;
 }
 
 export default Post;

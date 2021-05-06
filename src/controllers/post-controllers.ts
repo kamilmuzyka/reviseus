@@ -18,7 +18,16 @@ export const createPost = async (
             );
         }
         const post = await Post.create({ title, content });
-        // user.addPosts([post]);
+        await user.$set('posts', [post]);
+        const test = await Post.findOne({
+            where: {
+                id: post.id,
+            },
+            include: User,
+        });
+        console.log(test);
+        test?.user.firstName;
+
         res.json(post);
     } catch (error) {
         res.status(400).json(error.message);

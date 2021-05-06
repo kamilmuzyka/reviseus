@@ -1,12 +1,20 @@
 /** @module Model/Group */
+import { Optional } from 'sequelize';
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
+
+export interface GroupAttributes {
+    id: string;
+    name: string;
+}
+
+interface GroupCreationAttributes extends Optional<GroupAttributes, 'id'> {}
 
 @Table({
     timestamps: false,
 })
-class Group extends Model {
+class Group extends Model<GroupAttributes, GroupCreationAttributes> {
     @Column({
-        type: DataType.UUID,
+        type: DataType.STRING,
         defaultValue: DataType.UUIDV4,
         primaryKey: true,
     })

@@ -21,6 +21,12 @@
         "@typescript-eslint/no-explicit-any": [
             "error",
             { "ignoreRestArgs": true }
+        ],
+        "@typescript-eslint/no-empty-interface": [
+            "error",
+            {
+                "allowSingleExtends": true
+            }
         ]
     }
 }
