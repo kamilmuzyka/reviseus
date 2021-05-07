@@ -1,4 +1,5 @@
 /** @module Component/RouterLink */
+import BrowserRouter from '../browser-router';
 
 /** A component that extends <i>"a"</i> tag. It prevents <i>"a"</i> from
  * reloading the page but still updates the history. To implement, use
@@ -6,7 +7,6 @@
  * ```html
  * <a href="#" is="router-link">Link</a>
  * ``` */
-
 class RouterLink extends HTMLAnchorElement {
     constructor() {
         super();
@@ -16,11 +16,7 @@ class RouterLink extends HTMLAnchorElement {
         this.addEventListener('click', (e) => {
             e.preventDefault();
             const href = this.href;
-            if (location.pathname === href) {
-                return;
-            }
-            history.pushState({}, '', href);
-            window.dispatchEvent(new Event('popstate'));
+            BrowserRouter.redirect(href);
         });
     }
 }

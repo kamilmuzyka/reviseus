@@ -33,6 +33,16 @@ class BrowserRouter extends HTMLElement {
         shadowRoot.appendChild(template.content.cloneNode(true));
     }
 
+    /** A static utility method. Use to redirect users without reloading the
+     * page. */
+    static redirect(href: string): void {
+        if (location.pathname === href) {
+            return;
+        }
+        history.pushState({}, '', href);
+        window.dispatchEvent(new Event('popstate'));
+    }
+
     route(): void {
         const routes = [...this.children];
         const exactLocation = location.pathname;

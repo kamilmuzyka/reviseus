@@ -3,10 +3,11 @@
     --primary-bg: #131314;
     --secondary-bg: #1b1c1c;
     --tertiary-bg: #2c2d2e;
-    --primary-text: #ffffff;
+    --primary-text: #f0f0f0;
     --secondary-text: #b0b3b8;
     --accent: #1d8dee;
     --google: #d82b28;
+    --error: #891c23;
 }
 
 *,

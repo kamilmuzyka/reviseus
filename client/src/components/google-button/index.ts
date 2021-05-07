@@ -6,7 +6,7 @@ template.innerHTML = html`
     <style>
         .link {
             display: inline-block;
-            padding: 0.5em 0.625em;
+            padding: 0.8rem 1rem;
             background-color: var(--google);
             border-radius: 5px;
             text-decoration: none;
