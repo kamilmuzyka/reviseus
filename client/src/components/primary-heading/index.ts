@@ -5,6 +5,7 @@ const template = document.createElement('template');
 template.innerHTML = html`
     <style>
         h2 {
+            margin: 0 0 3.5rem 0;
             font-family: 'Open Sans', sans-serif;
             font-size: 3.2rem;
             font-weight: 700;
