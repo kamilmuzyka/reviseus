@@ -15,6 +15,11 @@ template.innerHTML = html`<slot></slot>`;
  *  <single-route data-path="/preferences" data-exact="true">
  *     <preferences-view></preferennces-view>
  *  </single-route>
+ *  // The last route is always a fallback.
+ *  // It renders if no other route matches the current location.
+ *  <single-route>
+ *     <404-page></404-page>
+ *  </single-route>
  * </browser-router>
  * ``` */
 class BrowserRouter extends HTMLElement {
@@ -26,25 +31,43 @@ class BrowserRouter extends HTMLElement {
 
     route(): void {
         const routes = [...this.children];
-        routes.forEach((route) => {
+        const exactLocation = location.pathname;
+        const inexactLocation = `/${location.pathname.split('/')[1]}`;
+        let isMatched = false;
+        /** Iterate through all the routes and their components. */
+        routes.forEach((route, index) => {
             const component = route.children[0];
+            component.classList.remove('active');
+            /** Render only single component out of all. */
             if (
+                !isMatched &&
                 route instanceof HTMLElement &&
                 component instanceof HTMLElement
             ) {
-                component.classList.remove('active');
+                /** Display a component if it's matching the exact route. */
                 if (
-                    route.dataset.path === location.pathname &&
-                    route.dataset.exact
+                    route.dataset.exact &&
+                    route.dataset.path === exactLocation
                 ) {
                     component.classList.add('active');
+                    isMatched = true;
+                    return;
                 }
-                const inexactLocation = `/${location.pathname.split('/')[1]}`;
+                /** Display a component if it's matching the inexact route. */
                 if (
-                    route.dataset.path === inexactLocation &&
-                    !route.dataset.exact
+                    !route.dataset.exact &&
+                    route.dataset.path?.includes(inexactLocation) &&
+                    inexactLocation !== '/'
                 ) {
                     component.classList.add('active');
+                    isMatched = true;
+                    return;
+                }
+                /** Display the last component as a fallback if no route was
+                 * matching at the end of iteration. */
+                if (index === routes.length - 1) {
+                    component.classList.add('active');
+                    return;
                 }
             }
         });

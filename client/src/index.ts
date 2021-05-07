@@ -11,6 +11,7 @@ template.innerHTML = html`
     <div>
         <nav>
             <a href="/" is="router-link">Home</a>
+            <a href="/posts" is="router-link">Posts</a>
             <a href="/groups" is="router-link">Groups</a>
             <a href="/preferences" is="router-link">Preferences</a>
             <a href="/login" is="router-link">Login</a>
@@ -19,14 +20,23 @@ template.innerHTML = html`
             <single-route data-path="/" data-exact="true">
                 <primary-heading>Home</primary-heading>
             </single-route>
-            <single-route data-path="/groups">
-                <primary-heading>Groups</primary-heading>
+            <single-route data-path="/posts/new" data-exact="true">
+                <primary-heading>New Post</primary-heading>
+            </single-route>
+            <single-route data-path="/posts/:id">
+                <primary-heading>Post</primary-heading>
             </single-route>
             <single-route data-path="/preferences" data-exact="true">
                 <primary-heading>Preferences</primary-heading>
             </single-route>
             <single-route data-path="/login" data-exact="true">
                 <google-button></google-button>
+            </single-route>
+            <single-route data-path="/groups/:id">
+                <primary-heading>Groups</primary-heading>
+            </single-route>
+            <single-route>
+                <primary-heading>404</primary-heading>
             </single-route>
         </browser-router>
     </div>
