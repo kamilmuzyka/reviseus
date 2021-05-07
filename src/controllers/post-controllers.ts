@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import { validateNewPost } from '../lib/validate.js';
 import { parseFiles } from '../config/multer-config.js';
+import extractHashtags from '../utils/extract-hashtags.js';
 import Post from '../models/post-model.js';
 import User from '../models/user-model.js';
 import Tag from '../models/tag-model.js';
@@ -38,8 +39,9 @@ export const createNewPost = async (
             /** Find or create any attached tags and associate them with the new
              * post. */
             if (tags && tags.length) {
-                const postTags = await Promise.all(
-                    tags.map(async (tag) => {
+                const hashtags = extractHashtags(tags);
+                const postHashtags = await Promise.all(
+                    hashtags.map(async (tag) => {
                         const postTag = await Tag.findOrCreate({
                             where: {
                                 name: tag,
@@ -48,7 +50,7 @@ export const createNewPost = async (
                         return postTag[0];
                     })
                 );
-                await newPost.$set('tags', postTags);
+                await newPost.$set('tags', postHashtags);
             }
 
             /** Reflect any uploaded files in the database. */
