@@ -2,18 +2,7 @@
 import html from '../../utils/html-tag';
 
 const template = document.createElement('template');
-template.innerHTML = html`
-    <style>
-        ::slotted(*) {
-            display: none;
-        }
-
-        ::slotted(.active) {
-            display: block;
-        }
-    </style>
-    <slot></slot>
-`;
+template.innerHTML = html`<slot></slot>`;
 
 /**  A component meant to be used as a direct child of the "browser-router"
  * element. Pass it a single child element (component) that you would like

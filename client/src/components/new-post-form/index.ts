@@ -191,6 +191,7 @@ class NewPostForm extends HTMLElement {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.addEventListeners();
     }
 
     openFileInput(): void {
@@ -200,7 +201,7 @@ class NewPostForm extends HTMLElement {
         }
     }
 
-    displayError(message: string): void {
+    displayErrors(message: string): void {
         const errorEl = this.shadowRoot?.querySelector('.form-error');
         if (errorEl) {
             errorEl.textContent = message;
@@ -208,7 +209,7 @@ class NewPostForm extends HTMLElement {
         }
     }
 
-    removeError(): void {
+    removeErrors(): void {
         const errorEl = this.shadowRoot?.querySelector('.form-error');
         if (errorEl) {
             errorEl.textContent = '';
@@ -227,11 +228,11 @@ class NewPostForm extends HTMLElement {
             const result = await response.json();
             if (response.ok) {
                 form.reset();
-                this.removeError();
+                this.removeErrors();
                 BrowserRouter.redirect(`/posts/${result.id}`);
                 return;
             }
-            this.displayError(result);
+            this.displayErrors(result);
         }
     }
 
@@ -244,8 +245,8 @@ class NewPostForm extends HTMLElement {
         fileButton?.addEventListener('click', () => this.openFileInput());
     }
 
-    connectedCallback(): void {
-        this.addEventListeners();
+    disconnectedCallback(): void {
+        this.removeErrors();
     }
 }
 

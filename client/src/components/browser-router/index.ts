@@ -1,6 +1,16 @@
 /** @module Component/BrowserRouter */
 import html from '../../utils/html-tag';
 
+interface Route {
+    path: string;
+    exact: boolean;
+    component: Element;
+}
+
+interface IBrowserRouter {
+    routes: Route[];
+}
+
 const template = document.createElement('template');
 template.innerHTML = html`<slot></slot>`;
 
@@ -26,11 +36,17 @@ template.innerHTML = html`<slot></slot>`;
  *  </single-route>
  * </browser-router>
  * ``` */
-class BrowserRouter extends HTMLElement {
+class BrowserRouter extends HTMLElement implements IBrowserRouter {
+    /** Cached routes. */
+    routes: Route[] = [];
+
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.cache();
+        this.route();
+        this.addEventListeners();
     }
 
     /** A static utility method. Use to redirect users without reloading the
@@ -43,52 +59,64 @@ class BrowserRouter extends HTMLElement {
         window.dispatchEvent(new Event('popstate'));
     }
 
-    route(): void {
+    /** Saves all the routes, so components can easily be added and removed from
+     * the DOM. */
+    cache(): void {
         const routes = [...this.children];
+        routes.forEach((route) => {
+            if (route instanceof HTMLElement) {
+                const path = route.dataset.path ?? '';
+                const exact = Boolean(route.dataset.exact);
+                const component = route.children[0];
+                if (component) {
+                    this.routes.push({
+                        path,
+                        exact,
+                        component,
+                    });
+                }
+            }
+        });
+    }
+
+    /** Renders components based on the current location. */
+    route(): void {
         const exactLocation = location.pathname;
         const inexactLocation = `/${location.pathname.split('/')[1]}`;
         let isMatched = false;
         /** Iterate through all the routes and their components. */
-        routes.forEach((route, index) => {
-            const component = route.children[0];
-            component.classList.remove('active');
-            /** Render only a single component out of all. */
-            if (
-                !isMatched &&
-                route instanceof HTMLElement &&
-                component instanceof HTMLElement
-            ) {
+        this.routes.forEach((route, index) => {
+            const { path, exact, component } = route;
+            component.remove();
+            if (!isMatched) {
                 /** Display a component if it's matching the exact route. */
-                if (
-                    route.dataset.exact &&
-                    route.dataset.path === exactLocation
-                ) {
-                    component.classList.add('active');
+                if (exact && path === exactLocation) {
+                    this.appendChild(component);
                     isMatched = true;
                     return;
                 }
-                /** Display a component if it's matching the inexact route. */
+                /** Display a component if it's matching the inexact (catch-all)
+                 * route. */
                 if (
-                    !route.dataset.exact &&
-                    route.dataset.path?.includes(inexactLocation) &&
+                    !exact &&
+                    path?.includes(inexactLocation) &&
                     inexactLocation !== '/'
                 ) {
-                    component.classList.add('active');
+                    this.appendChild(component);
                     isMatched = true;
                     return;
                 }
-                /** Display the last component as a fallback if no route is
-                 * matching at the end of the iteration. */
-                if (index === routes.length - 1) {
-                    component.classList.add('active');
+                /** Use the last route as a fallback if no other route was
+                 * matched by the end of the iteration. */
+                if (index === this.routes.length - 1) {
+                    this.appendChild(component);
                     return;
                 }
             }
         });
     }
 
-    connectedCallback(): void {
-        this.route();
+    addEventListeners(): void {
         window.addEventListener('popstate', () => this.route());
     }
 }
