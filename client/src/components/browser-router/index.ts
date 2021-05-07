@@ -42,7 +42,7 @@ class BrowserRouter extends HTMLElement {
         routes.forEach((route, index) => {
             const component = route.children[0];
             component.classList.remove('active');
-            /** Render only single component out of all. */
+            /** Render only a single component out of all. */
             if (
                 !isMatched &&
                 route instanceof HTMLElement &&
@@ -67,8 +67,8 @@ class BrowserRouter extends HTMLElement {
                     isMatched = true;
                     return;
                 }
-                /** Display the last component as a fallback if no route was
-                 * matching at the end of iteration. */
+                /** Display the last component as a fallback if no route is
+                 * matching at the end of the iteration. */
                 if (index === routes.length - 1) {
                     component.classList.add('active');
                     return;
