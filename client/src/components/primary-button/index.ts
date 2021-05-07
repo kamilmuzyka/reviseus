@@ -16,6 +16,7 @@ template.innerHTML = html`
             text-decoration: none;
             font-family: inherit;
             font-size: 1.6rem;
+            background-color: var(--accent);
             color: var(--primary-text);
             cursor: pointer;
         }
@@ -47,9 +48,15 @@ class PrimaryButton extends HTMLElement {
 
     addCustomStyles(): void {
         const button = this.shadowRoot?.querySelector('.button');
-        const backgroundColor = this.dataset.color;
-        if (button instanceof HTMLElement && backgroundColor) {
-            button.style.backgroundColor = backgroundColor;
+        const backgroundColor = this.dataset.background;
+        const borderColor = this.dataset.border;
+        if (button instanceof HTMLElement) {
+            if (backgroundColor) {
+                button.style.backgroundColor = backgroundColor;
+            }
+            if (borderColor) {
+                button.style.border = `1px solid ${borderColor}`;
+            }
         }
     }
 

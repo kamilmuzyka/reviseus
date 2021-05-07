@@ -10,8 +10,8 @@ template.innerHTML = html`
             display: flex;
             flex-direction: column;
             padding: 2.5rem;
-            width: 650px;
-            max-width: 100%;
+            width: 100%;
+            box-sizing: border-box;
             border-radius: 25px;
             background-color: var(--secondary-bg);
         }
@@ -42,6 +42,10 @@ template.innerHTML = html`
         }
 
         .form-file-input {
+            display: none;
+        }
+
+        .form-file-button {
             margin-top: 1rem;
         }
 
@@ -49,11 +53,15 @@ template.innerHTML = html`
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+        }
+
+        .form-group:not(:first-child) {
             margin-top: 2.5rem;
         }
 
         .form-error {
             display: none;
+            margin-top: 2.5rem;
             padding: 1rem;
             background-color: var(--error);
             border-radius: 5px;
@@ -99,6 +107,49 @@ template.innerHTML = html`
                 id="attachments"
                 multiple
             />
+            <primary-button
+                class="form-file-button"
+                data-background="transparent"
+                data-border="var(--subtle)"
+            >
+                <svg
+                    slot="icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12.207"
+                    viewBox="0 0 12 12.207"
+                >
+                    <g transform="translate(0.5 0.707)">
+                        <path
+                            d="M15.5,22.5v2.444a1.222,1.222,0,0,1-1.222,1.222H5.722A1.222,1.222,0,0,1,4.5,24.944V22.5"
+                            transform="translate(-4.5 -15.167)"
+                            fill="none"
+                            stroke="#f0f0f0"
+                            stroke-linecap="square"
+                            stroke-linejoin="round"
+                            stroke-width="1"
+                        />
+                        <path
+                            d="M10.5,18.056,13.556,15l3.056,3.056"
+                            transform="translate(-8.056 -15)"
+                            fill="none"
+                            stroke="#f0f0f0"
+                            stroke-linecap="square"
+                            stroke-width="1"
+                        />
+                        <path
+                            d="M18,4.5v7"
+                            transform="translate(-12.5 -4.167)"
+                            fill="none"
+                            stroke="#f0f0f0"
+                            stroke-linecap="square"
+                            stroke-linejoin="round"
+                            stroke-width="1"
+                        />
+                    </g>
+                </svg>
+                <span>Select Files</span>
+            </primary-button>
         </div>
         <div class="form-group">
             <label for="tags">Tags</label>
@@ -111,7 +162,10 @@ template.innerHTML = html`
             />
         </div>
         <div class="form-group">
-            <primary-button data-color="var(--accent)">
+            <primary-button
+                class="form-submit-button"
+                data-background="var(--accent)"
+            >
                 <svg
                     slot="icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -122,15 +176,13 @@ template.innerHTML = html`
                     <path
                         d="M6.75,12.566H11.2v4.448h1.368V12.566h4.448V11.2H12.566V6.75H11.2V11.2H6.75Z"
                         transform="translate(-6.75 -6.75)"
-                        fill="#fff"
+                        fill="#f0f0f0"
                     />
                 </svg>
                 <span>Create Post</span>
             </primary-button>
         </div>
-        <div class="form-group">
-            <div class="form-error"></div>
-        </div>
+        <div class="form-error"></div>
     </form>
 `;
 
@@ -139,6 +191,13 @@ class NewPostForm extends HTMLElement {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+    }
+
+    openFileInput(): void {
+        const fileInput = this.shadowRoot?.querySelector('.form-file-input');
+        if (fileInput instanceof HTMLInputElement) {
+            fileInput.click();
+        }
     }
 
     displayError(message: string): void {
@@ -177,8 +236,12 @@ class NewPostForm extends HTMLElement {
     }
 
     addEventListeners(): void {
-        const button = this.shadowRoot?.querySelector('primary-button');
-        button?.addEventListener('click', () => this.submitNewPost());
+        const submitButton = this.shadowRoot?.querySelector(
+            '.form-submit-button'
+        );
+        const fileButton = this.shadowRoot?.querySelector('.form-file-button');
+        submitButton?.addEventListener('click', () => this.submitNewPost());
+        fileButton?.addEventListener('click', () => this.openFileInput());
     }
 
     connectedCallback(): void {
