@@ -12,13 +12,17 @@ template.innerHTML = html`<slot></slot>`;
  *  <single-route data-path="/" data-exact="true">
  *     <home-view></home-view>
  *  </single-route>
- *  <single-route data-path="/preferences" data-exact="true">
- *     <preferences-view></preferennces-view>
+ *  <!-- Mind the order. Exact routes should always go before the catch-all routes. -->
+ *  <single-route data-path="/posts" data-exact="true">
+ *     <posts-view></posts-view>
  *  </single-route>
- *  // The last route is always a fallback.
- *  // It renders if no other route matches the current location.
+ *  <single-route data-path="/posts/:id">
+ *     <single-post></single-post>
+ *  </single-route>
+ *  <!-- The last route is always a fallback route. -->
+ *  <!-- It renders if no other route is matching the current location. -->
  *  <single-route>
- *     <404-page></404-page>
+ *     <page-404></page-404>
  *  </single-route>
  * </browser-router>
  * ``` */

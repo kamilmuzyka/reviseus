@@ -78,8 +78,17 @@
 <span style="color: #000000"> </span><span style="color: #800000">&lt;single-route</span><span style="color: #000000"> </span><span style="color: #FF0000">data-path</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;/&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">data-exact</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;true&quot;</span><span style="color: #800000">&gt;</span>
 <span style="color: #000000">    </span><span style="color: #800000">&lt;home-view&gt;&lt;/home-view&gt;</span>
 <span style="color: #000000"> </span><span style="color: #800000">&lt;/single-route&gt;</span>
-<span style="color: #000000"> </span><span style="color: #800000">&lt;single-route</span><span style="color: #000000"> </span><span style="color: #FF0000">data-path</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;/preferences&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">data-exact</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;true&quot;</span><span style="color: #800000">&gt;</span>
-<span style="color: #000000">    </span><span style="color: #800000">&lt;preferences-view&gt;&lt;/preferennces-view&gt;</span>
+<span style="color: #000000"> </span><span style="color: #008000">&lt;!-- Mind the order. Exact routes should always go before the catch-all routes. --&gt;</span>
+<span style="color: #000000"> </span><span style="color: #800000">&lt;single-route</span><span style="color: #000000"> </span><span style="color: #FF0000">data-path</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;/posts&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">data-exact</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;true&quot;</span><span style="color: #800000">&gt;</span>
+<span style="color: #000000">    </span><span style="color: #800000">&lt;posts-view&gt;&lt;/posts-view&gt;</span>
+<span style="color: #000000"> </span><span style="color: #800000">&lt;/single-route&gt;</span>
+<span style="color: #000000"> </span><span style="color: #800000">&lt;single-route</span><span style="color: #000000"> </span><span style="color: #FF0000">data-path</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;/posts/:id&quot;</span><span style="color: #800000">&gt;</span>
+<span style="color: #000000">    </span><span style="color: #800000">&lt;single-post&gt;&lt;/single-post&gt;</span>
+<span style="color: #000000"> </span><span style="color: #800000">&lt;/single-route&gt;</span>
+<span style="color: #000000"> </span><span style="color: #008000">&lt;!-- The last route is always a fallback route. --&gt;</span>
+<span style="color: #000000"> </span><span style="color: #008000">&lt;!-- It renders if no other route is matching the current location. --&gt;</span>
+<span style="color: #000000"> </span><span style="color: #800000">&lt;single-route&gt;</span>
+<span style="color: #000000">    </span><span style="color: #800000">&lt;page-404&gt;&lt;/page-404&gt;</span>
 <span style="color: #000000"> </span><span style="color: #800000">&lt;/single-route&gt;</span>
 <span style="color: #800000">&lt;/browser-router&gt;</span>
 </code></pre>
@@ -380,7 +389,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides HTMLElement.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/e390df0/client/src/components/browser-router/index.ts#L20">src/components/browser-router/index.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/b496df0/client/src/components/browser-router/index.ts#L29">src/components/browser-router/index.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="component_browserrouter.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4>
@@ -3382,7 +3391,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/e390df0/client/src/components/browser-router/index.ts#L53">src/components/browser-router/index.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/b496df0/client/src/components/browser-router/index.ts#L80">src/components/browser-router/index.ts:80</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -4838,7 +4847,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/e390df0/client/src/components/browser-router/index.ts#L27">src/components/browser-router/index.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/b496df0/client/src/components/browser-router/index.ts#L36">src/components/browser-router/index.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
