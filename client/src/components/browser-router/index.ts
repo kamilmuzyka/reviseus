@@ -12,7 +12,7 @@ interface Route {
 }
 
 interface Params {
-    [param: string]: string | undefined;
+    [name: string]: string | undefined;
 }
 
 const template = document.createElement('template');
@@ -89,7 +89,7 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
      * example, for pattern <i>/user/:id</i> and a path <i>/user/1</i>, the
      * returned object will be <i>{id: 1}</i>. Parameters are considered all
      * words starting with ":". A pattern can have multiple parameters, but they
-     * must be split with "/" e.g. <i>/group/:groupId/users/:userId.</i>. */
+     * must be separated with "/" e.g. <i>/group/:groupId/users/:userId.</i>. */
     extractPathParams(pattern: string, path: string): Params {
         const currentPath = path.split('/').splice(1);
         const params = {};
