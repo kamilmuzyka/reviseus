@@ -3,11 +3,15 @@ import { Request, Response } from 'express';
 import { validateNewPost } from '../lib/validate.js';
 import { parseFiles } from '../config/multer-config.js';
 import extractHashtags from '../utils/extract-hashtags.js';
+import testUUID from '../utils/test-uuid.js';
 import Post from '../models/post-model.js';
 import User from '../models/user-model.js';
 import Tag from '../models/tag-model.js';
 import File from '../models/file-model.js';
+import Answer from '../models/answer-model.js';
 
+/**  Creates a new post based on data attached to a request body. Use on
+ * protected routes only. */
 export const createNewPost = async (
     req: Request,
     res: Response
@@ -82,4 +86,32 @@ export const createNewPost = async (
             res.status(400).json(error.message);
         }
     });
+};
+
+/** Sends data of any post based on post ID passed as a URL parameter. */
+export const sendSinglePost = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const postId = req.params.id;
+        if (postId && testUUID(postId)) {
+            const post = await Post.findOne({
+                where: {
+                    id: postId,
+                },
+                include: [User, Tag, File, Answer],
+            });
+            if (!post) {
+                throw Error(
+                    'Could not find a post with the corresponding post ID.'
+                );
+            }
+            res.json(post);
+            return;
+        }
+        throw Error('Invalid post ID.');
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
 };

@@ -7,6 +7,7 @@ import './components/primary-container/index';
 import './components/secondary-container/index';
 import './components/home-view/index';
 import './components/new-post-view/index';
+import './components/post-view/index';
 import './components/primary-heading/index';
 import './components/google-button/index';
 
@@ -34,7 +35,7 @@ template.innerHTML = html`
                     </single-route>
                     <!-- Single Post -->
                     <single-route data-path="/posts/:id">
-                        <primary-heading>Post</primary-heading>
+                        <post-view></post-view>
                     </single-route>
                     <!-- Login -->
                     <single-route data-path="/login" data-exact="true">
