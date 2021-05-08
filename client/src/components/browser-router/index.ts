@@ -58,7 +58,7 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
     /** A static utility method. Use to redirect users without reloading the
      * page. */
     static redirect(href: string): void {
-        if (location.pathname === href) {
+        if (location.href === href) {
             return;
         }
         history.pushState({}, '', href);
