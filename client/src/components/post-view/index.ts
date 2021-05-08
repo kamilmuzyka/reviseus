@@ -105,6 +105,7 @@ class PostView extends HTMLElement {
         shadowRoot.appendChild(template.content.cloneNode(true));
     }
 
+    /** Requests post's data from the server. */
     async loadDetails(): Promise<void> {
         const currentPostId = this.dataset.id;
         const response = await fetch(`/api/post/${currentPostId}`);
@@ -116,6 +117,7 @@ class PostView extends HTMLElement {
         BrowserRouter.redirect('/404');
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             photo: this.shadowRoot?.querySelector('.user-photo'),
@@ -132,6 +134,7 @@ class PostView extends HTMLElement {
         }
     }
 
+    /** Populates HTML elements with data downloaded from the server. */
     displayDetails(): void {
         if (this.el.photo instanceof HTMLImageElement) {
             this.el.photo.src = this.details.user.profilePhoto;
@@ -155,6 +158,7 @@ class PostView extends HTMLElement {
         });
     }
 
+    /** Removes data from all populated HTML elements. */
     clearDetails(): void {
         if (this.el.photo instanceof HTMLImageElement) {
             this.el.photo.src = '';
