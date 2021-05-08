@@ -11,7 +11,7 @@ interface Route {
     component: HTMLElement;
 }
 
-interface Params {
+interface RouteParams {
     [name: string]: string | undefined;
 }
 
@@ -50,8 +50,8 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
-        this.cache();
-        this.route();
+        this.cacheRoutes();
+        this.changeRoute();
         this.addEventListeners();
     }
 
@@ -67,7 +67,7 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
 
     /** Saves all the routes, so components can easily be added and removed from
      * the DOM. */
-    cache(): void {
+    cacheRoutes(): void {
         const routes = [...this.children];
         routes.forEach((route) => {
             if (route instanceof HTMLElement) {
@@ -85,12 +85,12 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
         });
     }
 
-    /** Extracts parameters from a path based on a provided pattern. For
-     * example, for pattern <i>/user/:id</i> and a path <i>/user/1</i>, the
-     * returned object will be <i>{id: 1}</i>. Parameters are considered all
-     * words starting with ":". A pattern can have multiple parameters, but they
-     * must be separated with "/" e.g. <i>/group/:groupId/users/:userId.</i>. */
-    extractPathParams(pattern: string, path: string): Params {
+    /** Extracts parameters from a route based on its pattern. For example, for
+     * pattern <i>/user/:id</i> and a path <i>/user/1</i>, the returned object
+     * will be <i>{id: 1}</i>. Parameters are considered all words starting with
+     * ":". A pattern can have multiple parameters, but they must be separated
+     * with "/" e.g. <i>/group/:groupId/users/:userId.</i>. */
+    extractRouteParams(pattern: string, path: string): RouteParams {
         const currentPath = path.split('/').splice(1);
         const params = {};
         pattern
@@ -111,8 +111,9 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
     }
 
     /** Attaches any found path parameters to a component's dataset. */
-    applyPathParams(path: string, component: HTMLElement): void {
-        const params = this.extractPathParams(path, location.pathname);
+    applyRouteParams(route: Route): void {
+        const { path, component } = route;
+        const params = this.extractRouteParams(path, location.pathname);
         for (const [param, value] of Object.entries(params)) {
             if (value) {
                 component.dataset[param] = value;
@@ -121,7 +122,7 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
     }
 
     /** Renders components based on the current location. */
-    route(): void {
+    changeRoute(): void {
         const exactLocation = location.pathname;
         const inexactLocation = `/${location.pathname.split('/')[1]}`;
         let isMatched = false;
@@ -143,7 +144,7 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
                     path?.includes(inexactLocation) &&
                     inexactLocation !== '/'
                 ) {
-                    this.applyPathParams(path, component);
+                    this.applyRouteParams(route);
                     this.appendChild(component);
                     isMatched = true;
                     return;
@@ -159,7 +160,7 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
     }
 
     addEventListeners(): void {
-        window.addEventListener('popstate', () => this.route());
+        window.addEventListener('popstate', () => this.changeRoute());
     }
 }
 

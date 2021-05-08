@@ -96,7 +96,10 @@ template.innerHTML = html`
 `;
 
 class PostView extends HTMLElement {
+    /** Post's data fetched from the server. */
     private details;
+
+    /** Buffered HTML elements. */
     private el: Elements = {};
 
     constructor() {
