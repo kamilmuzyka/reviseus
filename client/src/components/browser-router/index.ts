@@ -30,6 +30,8 @@ template.innerHTML = html`<slot></slot>`;
  *  <single-route data-path="/posts" data-exact="true">
  *     <posts-view></posts-view>
  *  </single-route>
+ *  <!-- Any parameters will be attached to a component's dataset, -->
+ *  <!-- retaining their names e.g. dataset.id. -->
  *  <single-route data-path="/posts/:id">
  *     <single-post></single-post>
  *  </single-route>
@@ -85,9 +87,9 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
 
     /** Extracts parameters from a path based on a provided pattern. For
      * example, for pattern <i>/user/:id</i> and a path <i>/user/1</i>, the
-     * result will be <i>{ id: 1 }</i>. Parameters are considered all words
-     * starting with ":". A pattern can have multiple parameters, but they must
-     * be split with "/" e.g. <i>/group/:groupId/users/:userId.</i>. */
+     * returned object will be <i>{id: 1}</i>. Parameters are considered all
+     * words starting with ":". A pattern can have multiple parameters, but they
+     * must be split with "/" e.g. <i>/group/:groupId/users/:userId.</i>. */
     extractPathParams(pattern: string, path: string): Params {
         const currentPath = path.split('/').splice(1);
         const params = {};

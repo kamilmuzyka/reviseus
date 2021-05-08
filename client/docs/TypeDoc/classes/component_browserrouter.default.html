@@ -82,6 +82,8 @@
 <span style="color: #000000"> </span><span style="color: #800000">&lt;single-route</span><span style="color: #000000"> </span><span style="color: #FF0000">data-path</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;/posts&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">data-exact</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;true&quot;</span><span style="color: #800000">&gt;</span>
 <span style="color: #000000">    </span><span style="color: #800000">&lt;posts-view&gt;&lt;/posts-view&gt;</span>
 <span style="color: #000000"> </span><span style="color: #800000">&lt;/single-route&gt;</span>
+<span style="color: #000000"> </span><span style="color: #008000">&lt;!-- Any parameters will be attached to a component&#039;s dataset, --&gt;</span>
+<span style="color: #000000"> </span><span style="color: #008000">&lt;!-- retaining their names e.g. dataset.id. --&gt;</span>
 <span style="color: #000000"> </span><span style="color: #800000">&lt;single-route</span><span style="color: #000000"> </span><span style="color: #FF0000">data-path</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;/posts/:id&quot;</span><span style="color: #800000">&gt;</span>
 <span style="color: #000000">    </span><span style="color: #800000">&lt;single-post&gt;&lt;/single-post&gt;</span>
 <span style="color: #000000"> </span><span style="color: #800000">&lt;/single-route&gt;</span>
@@ -108,6 +110,12 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><span class="tsd-signature-type">IBrowserRouter</span></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -118,7 +126,7 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="component_browserrouter.default.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited tsd-is-external">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#attribute_node" class="tsd-kind-icon">ATTRIBUTE_<wbr>NODE</a></li>
@@ -282,6 +290,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#prefix" class="tsd-kind-icon">prefix</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#previouselementsibling" class="tsd-kind-icon">previous<wbr>Element<wbr>Sibling</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#previoussibling" class="tsd-kind-icon">previous<wbr>Sibling</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="component_browserrouter.default.html#routes" class="tsd-kind-icon">routes</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#scrollheight" class="tsd-kind-icon">scroll<wbr>Height</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#scrollleft" class="tsd-kind-icon">scroll<wbr>Left</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#scrolltop" class="tsd-kind-icon">scroll<wbr>Top</a></li>
@@ -301,20 +310,23 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_browserrouter.default.html#addeventlisteners" class="tsd-kind-icon">add<wbr>Event<wbr>Listeners</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#after" class="tsd-kind-icon">after</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#animate" class="tsd-kind-icon">animate</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#append" class="tsd-kind-icon">append</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#appendchild" class="tsd-kind-icon">append<wbr>Child</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_browserrouter.default.html#applypathparams" class="tsd-kind-icon">apply<wbr>Path<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#attachshadow" class="tsd-kind-icon">attach<wbr>Shadow</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#before" class="tsd-kind-icon">before</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#blur" class="tsd-kind-icon">blur</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_browserrouter.default.html#cache" class="tsd-kind-icon">cache</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#click" class="tsd-kind-icon">click</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#clonenode" class="tsd-kind-icon">clone<wbr>Node</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#closest" class="tsd-kind-icon">closest</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#comparedocumentposition" class="tsd-kind-icon">compare<wbr>Document<wbr>Position</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_browserrouter.default.html#connectedcallback" class="tsd-kind-icon">connected<wbr>Callback</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#contains" class="tsd-kind-icon">contains</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#dispatchevent" class="tsd-kind-icon">dispatch<wbr>Event</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_browserrouter.default.html#extractpathparams" class="tsd-kind-icon">extract<wbr>Path<wbr>Params</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#focus" class="tsd-kind-icon">focus</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#getanimations" class="tsd-kind-icon">get<wbr>Animations</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#getattribute" class="tsd-kind-icon">get<wbr>Attribute</a></li>
@@ -371,6 +383,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#setpointercapture" class="tsd-kind-icon">set<wbr>Pointer<wbr>Capture</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#toggleattribute" class="tsd-kind-icon">toggle<wbr>Attribute</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_browserrouter.default.html#webkitmatchesselector" class="tsd-kind-icon">webkit<wbr>Matches<wbr>Selector</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="component_browserrouter.default.html#redirect" class="tsd-kind-icon">redirect</a></li>
 							</ul>
 						</section>
 					</div>
@@ -389,7 +402,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides HTMLElement.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/b496df0/client/src/components/browser-router/index.ts#L29">src/components/browser-router/index.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/f1f41a2/client/src/components/browser-router/index.ts#L47">src/components/browser-router/index.ts:47</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="component_browserrouter.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4>
@@ -397,7 +410,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-external">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="attribute_node" class="tsd-anchor"></a>
@@ -2795,6 +2808,22 @@
 						</div>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="routes" class="tsd-anchor"></a>
+					<h3>routes</h3>
+					<div class="tsd-signature tsd-kind-icon">routes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Route</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of IBrowserRouter.routes</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/f1f41a2/client/src/components/browser-router/index.ts#L47">src/components/browser-router/index.ts:47</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Cached routes.</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="scrollheight" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> scroll<wbr>Height</h3>
@@ -3032,6 +3061,23 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addeventlisteners" class="tsd-anchor"></a>
+					<h3>add<wbr>Event<wbr>Listeners</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Event<wbr>Listeners<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/f1f41a2/client/src/components/browser-router/index.ts#L161">src/components/browser-router/index.ts:161</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="after" class="tsd-anchor"></a>
 					<h3>after</h3>
@@ -3149,6 +3195,37 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="applypathparams" class="tsd-anchor"></a>
+					<h3>apply<wbr>Path<wbr>Params</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">apply<wbr>Path<wbr>Params<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, component<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/f1f41a2/client/src/components/browser-router/index.ts#L114">src/components/browser-router/index.ts:114</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Attaches any found path parameters to a component&#39;s dataset.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>component: <span class="tsd-signature-type">HTMLElement</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="attachshadow" class="tsd-anchor"></a>
 					<h3>attach<wbr>Shadow</h3>
@@ -3222,6 +3299,29 @@
 									<li>Defined in node_modules/typescript/lib/lib.dom.d.ts:8099</li>
 								</ul>
 							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="cache" class="tsd-anchor"></a>
+					<h3>cache</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">cache<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/f1f41a2/client/src/components/browser-router/index.ts#L70">src/components/browser-router/index.ts:70</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Saves all the routes, so components can easily be added and removed from
+									the DOM.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -3381,23 +3481,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="connectedcallback" class="tsd-anchor"></a>
-					<h3>connected<wbr>Callback</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">connected<wbr>Callback<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/b496df0/client/src/components/browser-router/index.ts#L80">src/components/browser-router/index.ts:80</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="contains" class="tsd-anchor"></a>
 					<h3>contains</h3>
@@ -3453,6 +3536,41 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="extractpathparams" class="tsd-anchor"></a>
+					<h3>extract<wbr>Path<wbr>Params</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">extract<wbr>Path<wbr>Params<span class="tsd-signature-symbol">(</span>pattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Params</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/f1f41a2/client/src/components/browser-router/index.ts#L93">src/components/browser-router/index.ts:93</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Extracts parameters from a path based on a provided pattern. For
+										example, for pattern <i>/user/:id</i> and a path <i>/user/1</i>, the
+										returned object will be <i>{id: 1}</i>. Parameters are considered all
+										words starting with &quot;:&quot;. A pattern can have multiple parameters, but they
+									must be split with &quot;/&quot; e.g. <i>/group/:groupId/users/:userId.</i>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>pattern: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Params</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -4847,9 +4965,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/b496df0/client/src/components/browser-router/index.ts#L36">src/components/browser-router/index.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/f1f41a2/client/src/components/browser-router/index.ts#L124">src/components/browser-router/index.ts:124</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Renders components based on the current location.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -5203,6 +5326,35 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="redirect" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> redirect</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">redirect<span class="tsd-signature-symbol">(</span>href<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/f1f41a2/client/src/components/browser-router/index.ts#L60">src/components/browser-router/index.ts:60</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A static utility method. Use to redirect users without reloading the
+									page.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>href: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -5221,10 +5373,28 @@
 						<a href="../modules/component_googlebutton.html">Component/<wbr>Google<wbr>Button</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="../modules/component_homeview.html">Component/<wbr>Home<wbr>View</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/component_newpostform.html">Component/<wbr>New<wbr>Post<wbr>Form</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/component_newpostview.html">Component/<wbr>New<wbr>Post<wbr>View</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/component_primarybutton.html">Component/<wbr>Primary<wbr>Button</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/component_primarycontainer.html">Component/<wbr>Primary<wbr>Container</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/component_primaryheading.html">Component/<wbr>Primary<wbr>Heading</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/component_routerlink.html">Component/<wbr>Router<wbr>Link</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/component_secondarycontainer.html">Component/<wbr>Secondary<wbr>Container</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/component_singleroute.html">Component/<wbr>Single<wbr>Route</a>
@@ -5727,6 +5897,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#previoussibling" class="tsd-kind-icon">previous<wbr>Sibling</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="component_browserrouter.default.html#routes" class="tsd-kind-icon">routes</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#scrollheight" class="tsd-kind-icon">scroll<wbr>Height</a>
 							</li>
@@ -5769,6 +5942,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_browserrouter.default.html#addeventlisteners" class="tsd-kind-icon">add<wbr>Event<wbr>Listeners</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#after" class="tsd-kind-icon">after</a>
 							</li>
@@ -5781,6 +5957,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#appendchild" class="tsd-kind-icon">append<wbr>Child</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_browserrouter.default.html#applypathparams" class="tsd-kind-icon">apply<wbr>Path<wbr>Params</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#attachshadow" class="tsd-kind-icon">attach<wbr>Shadow</a>
 							</li>
@@ -5789,6 +5968,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#blur" class="tsd-kind-icon">blur</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_browserrouter.default.html#cache" class="tsd-kind-icon">cache</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#click" class="tsd-kind-icon">click</a>
@@ -5802,14 +5984,14 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#comparedocumentposition" class="tsd-kind-icon">compare<wbr>Document<wbr>Position</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="component_browserrouter.default.html#connectedcallback" class="tsd-kind-icon">connected<wbr>Callback</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#contains" class="tsd-kind-icon">contains</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#dispatchevent" class="tsd-kind-icon">dispatch<wbr>Event</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_browserrouter.default.html#extractpathparams" class="tsd-kind-icon">extract<wbr>Path<wbr>Params</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#focus" class="tsd-kind-icon">focus</a>
@@ -5979,6 +6161,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_browserrouter.default.html#webkitmatchesselector" class="tsd-kind-icon">webkit<wbr>Matches<wbr>Selector</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="component_browserrouter.default.html#redirect" class="tsd-kind-icon">redirect</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -5995,10 +6180,14 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
