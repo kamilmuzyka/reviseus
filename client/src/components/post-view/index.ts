@@ -69,8 +69,7 @@ template.innerHTML = html`
         }
     </style>
     <section>
-        <primary-heading data-color="var(--accent)">
-            Lorem ipsum dolor sit amet.
+        <primary-heading class="post-title" data-color="var(--accent)">
         </primary-heading>
         <div class="post">
             <div class="user-details">
@@ -78,35 +77,23 @@ template.innerHTML = html`
                     <img class="user-photo" />
                 </div>
                 <div>
-                    <div class="user-name">Posted by John Doe</div>
+                    <div>
+                        Posted by
+                        <span class="user-name"></span>
+                    </div>
                     <div class="post-time">15 hours ago</div>
                 </div>
             </div>
-            <p class="post-content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                erat nisl, tristique finibus consectetur in, placerat vel metus.
-                Proin faucibus neque nibh, quis imperdiet nibh commodo în.
-                Aenean fermentum ipsum justo, at sodales nibh pellentesque
-                posuere. Cras nisl enim, luctus eu leo nec, tempus faucibus
-                nunc. Vivamus lobortis laoreet sodales. Duis suscipit turpis a
-                nisi ullamcorper cursus. Nulla aliquam sit amet nibh ut aliquet.
-                Quisque sodales faucibus bibendum. Integer a sollicitudin purus.
-            </p>
-            <div class="post-files">
-                <a href="#" download>
-                    <file-button>lorem.pdf</file-button>
-                </a>
-            </div>
-            <ul class="post-tags">
-                <li>#lorem</li>
-                <li>#ipsum</li>
-            </ul>
+            <p class="post-content"></p>
+            <div class="post-files"></div>
+            <ul class="post-tags"></ul>
         </div>
     </section>
 `;
 
 class PostView extends HTMLElement {
     private details;
+    private el;
 
     constructor() {
         super();
@@ -120,25 +107,86 @@ class PostView extends HTMLElement {
         if (response.ok) {
             const data = await response.json();
             this.details = data;
-            console.log(this.details);
-
             return;
         }
         BrowserRouter.redirect('/404');
     }
 
+    loadElements(): void {
+        this.el = {
+            photo: this.shadowRoot?.querySelector('.user-photo'),
+            user: this.shadowRoot?.querySelector('.user-name'),
+            title: this.shadowRoot?.querySelector('.post-title'),
+            content: this.shadowRoot?.querySelector('.post-content'),
+            files: this.shadowRoot?.querySelector('.post-files'),
+            tags: this.shadowRoot?.querySelector('.post-tags'),
+        };
+    }
+
     displayDetails(): void {
-        const img = this.shadowRoot?.querySelector('.user-photo');
-        if (img instanceof HTMLImageElement) {
-            img.src = this.details.user.profilePhoto;
+        if (this.el.photo instanceof HTMLImageElement) {
+            this.el.photo.src = this.details.user.profilePhoto;
+        }
+        if (this.el.user instanceof HTMLElement) {
+            this.el.user.textContent = `${this.details.user.firstName} ${this.details.user.lastName}`;
+        }
+        if (this.el.title instanceof HTMLElement) {
+            this.el.title.textContent = this.details.title;
+        }
+        if (this.el.content instanceof HTMLElement) {
+            this.el.content.textContent = this.details.content;
+        }
+        if (this.el.files instanceof HTMLElement) {
+            this.details.files.forEach((file) => {
+                const link = document.createElement('a');
+                link.href = file.uri;
+                link.setAttribute('download', '');
+                const button = document.createElement('file-button');
+                button.textContent = file.name;
+                link.appendChild(button);
+                this.el.files.appendChild(link);
+            });
+        }
+        if (this.el.tags instanceof HTMLElement) {
+            this.details.tags.forEach((tag) => {
+                const item = document.createElement('li');
+                item.textContent = `#${tag.name}`;
+                this.el.tags.appendChild(item);
+            });
+        }
+    }
+
+    resetDetails(): void {
+        if (this.el.photo instanceof HTMLImageElement) {
+            this.el.photo.src = '';
+        }
+        if (this.el.user instanceof HTMLElement) {
+            this.el.user.textContent = '';
+        }
+        if (this.el.title instanceof HTMLElement) {
+            this.el.title.textContent = '';
+        }
+        if (this.el.content instanceof HTMLElement) {
+            this.el.content.textContent = '';
+        }
+        if (this.el.files instanceof HTMLElement) {
+            [...this.el.files.children].forEach((child) => child.remove());
+        }
+        if (this.el.tags instanceof HTMLElement) {
+            [...this.el.tags.children].forEach((tag) => tag.remove());
         }
     }
 
     connectedCallback(): void {
         (async () => {
+            this.loadElements();
             await this.loadDetails();
             this.displayDetails();
         })();
+    }
+
+    disconnectedCallback(): void {
+        this.resetDetails();
     }
 }
 
