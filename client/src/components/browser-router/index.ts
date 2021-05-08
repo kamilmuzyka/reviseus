@@ -1,14 +1,18 @@
 /** @module Component/BrowserRouter */
 import html from '../../utils/html-tag';
 
+interface IBrowserRouter {
+    routes: Route[];
+}
+
 interface Route {
     path: string;
     exact: boolean;
-    component: Element;
+    component: HTMLElement;
 }
 
-interface IBrowserRouter {
-    routes: Route[];
+interface Params {
+    [param: string]: string | undefined;
 }
 
 const template = document.createElement('template');
@@ -68,7 +72,7 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
                 const path = route.dataset.path ?? '';
                 const exact = Boolean(route.dataset.exact);
                 const component = route.children[0];
-                if (component) {
+                if (component instanceof HTMLElement) {
                     this.routes.push({
                         path,
                         exact,
@@ -77,6 +81,41 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
                 }
             }
         });
+    }
+
+    /** Extracts parameters from a path based on a provided pattern. For
+     * example, for pattern <i>/user/:id</i> and a path <i>/user/1</i>, the
+     * result will be <i>{ id: 1 }</i>. Parameters are considered all words
+     * starting with ":". A pattern can have multiple parameters, but they must
+     * be split with "/" e.g. <i>/group/:groupId/users/:userId.</i>. */
+    extractPathParams(pattern: string, path: string): Params {
+        const currentPath = path.split('/').splice(1);
+        const params = {};
+        pattern
+            .split('/')
+            .slice(1)
+            .map((item, index) => {
+                if (item[0] === ':') {
+                    return [item.substring(1), index];
+                }
+            })
+            .filter((item) => item)
+            .forEach((item) => {
+                if (item) {
+                    params[item[0]] = currentPath[item[1]];
+                }
+            });
+        return params;
+    }
+
+    /** Attaches any found path parameters to a component's dataset. */
+    applyPathParams(path: string, component: HTMLElement): void {
+        const params = this.extractPathParams(path, location.pathname);
+        for (const [param, value] of Object.entries(params)) {
+            if (value) {
+                component.dataset[param] = value;
+            }
+        }
     }
 
     /** Renders components based on the current location. */
@@ -102,6 +141,7 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
                     path?.includes(inexactLocation) &&
                     inexactLocation !== '/'
                 ) {
+                    this.applyPathParams(path, component);
                     this.appendChild(component);
                     isMatched = true;
                     return;
