@@ -4,6 +4,10 @@ import '../primary-heading/index';
 import '../file-button/index';
 import BrowserRouter from '../browser-router/index';
 
+interface Elements {
+    [name: string]: HTMLElement;
+}
+
 const template = document.createElement('template');
 template.innerHTML = html`
     <style>
@@ -93,7 +97,7 @@ template.innerHTML = html`
 
 class PostView extends HTMLElement {
     private details;
-    private el;
+    private el: Elements = {};
 
     constructor() {
         super();
@@ -113,7 +117,7 @@ class PostView extends HTMLElement {
     }
 
     loadElements(): void {
-        this.el = {
+        const requestedElements = {
             photo: this.shadowRoot?.querySelector('.user-photo'),
             user: this.shadowRoot?.querySelector('.user-name'),
             title: this.shadowRoot?.querySelector('.post-title'),
@@ -121,60 +125,45 @@ class PostView extends HTMLElement {
             files: this.shadowRoot?.querySelector('.post-files'),
             tags: this.shadowRoot?.querySelector('.post-tags'),
         };
+        for (const element in requestedElements) {
+            if (element) {
+                this.el[element] = requestedElements[element];
+            }
+        }
     }
 
     displayDetails(): void {
         if (this.el.photo instanceof HTMLImageElement) {
             this.el.photo.src = this.details.user.profilePhoto;
         }
-        if (this.el.user instanceof HTMLElement) {
-            this.el.user.textContent = `${this.details.user.firstName} ${this.details.user.lastName}`;
-        }
-        if (this.el.title instanceof HTMLElement) {
-            this.el.title.textContent = this.details.title;
-        }
-        if (this.el.content instanceof HTMLElement) {
-            this.el.content.textContent = this.details.content;
-        }
-        if (this.el.files instanceof HTMLElement) {
-            this.details.files.forEach((file) => {
-                const link = document.createElement('a');
-                link.href = file.uri;
-                link.setAttribute('download', '');
-                const button = document.createElement('file-button');
-                button.textContent = file.name;
-                link.appendChild(button);
-                this.el.files.appendChild(link);
-            });
-        }
-        if (this.el.tags instanceof HTMLElement) {
-            this.details.tags.forEach((tag) => {
-                const item = document.createElement('li');
-                item.textContent = `#${tag.name}`;
-                this.el.tags.appendChild(item);
-            });
-        }
+        this.el.user.textContent = `${this.details.user.firstName} ${this.details.user.lastName}`;
+        this.el.title.textContent = this.details.title;
+        this.el.content.textContent = this.details.content;
+        this.details.files.forEach((file) => {
+            const link = document.createElement('a');
+            link.href = file.uri;
+            link.setAttribute('download', '');
+            const button = document.createElement('file-button');
+            button.textContent = file.name;
+            link.appendChild(button);
+            this.el.files.appendChild(link);
+        });
+        this.details.tags.forEach((tag) => {
+            const item = document.createElement('li');
+            item.textContent = `#${tag.name}`;
+            this.el.tags.appendChild(item);
+        });
     }
 
-    resetDetails(): void {
+    clearDetails(): void {
         if (this.el.photo instanceof HTMLImageElement) {
             this.el.photo.src = '';
         }
-        if (this.el.user instanceof HTMLElement) {
-            this.el.user.textContent = '';
-        }
-        if (this.el.title instanceof HTMLElement) {
-            this.el.title.textContent = '';
-        }
-        if (this.el.content instanceof HTMLElement) {
-            this.el.content.textContent = '';
-        }
-        if (this.el.files instanceof HTMLElement) {
-            [...this.el.files.children].forEach((child) => child.remove());
-        }
-        if (this.el.tags instanceof HTMLElement) {
-            [...this.el.tags.children].forEach((tag) => tag.remove());
-        }
+        this.el.user.textContent = '';
+        this.el.title.textContent = '';
+        this.el.content.textContent = '';
+        [...this.el.files.children].forEach((file) => file.remove());
+        [...this.el.tags.children].forEach((tag) => tag.remove());
     }
 
     connectedCallback(): void {
@@ -186,7 +175,7 @@ class PostView extends HTMLElement {
     }
 
     disconnectedCallback(): void {
-        this.resetDetails();
+        this.clearDetails();
     }
 }
 
