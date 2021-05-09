@@ -3,7 +3,7 @@ import html from '../../utils/html-tag';
 import Elements from '../../interfaces/elements-interface';
 import BrowserRouter from '../browser-router';
 import '../primary-button/index';
-import '../file-button/index';
+import '../upload-button/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -47,7 +47,7 @@ template.innerHTML = html`
             display: none;
         }
 
-        .form-file-button {
+        .form-upload-button {
             margin-top: 1rem;
         }
 
@@ -109,7 +109,7 @@ template.innerHTML = html`
                 id="attachments"
                 multiple
             />
-            <file-button class="form-file-button">Select Files</file-button>
+            <upload-button class="form-upload-button">Select Files</-button>
         </div>
         <div class="form-group">
             <label for="tags">Tags</label>
@@ -161,7 +161,7 @@ class NewPostForm extends HTMLElement {
         const requestedElements = {
             form: this.shadowRoot?.querySelector('form'),
             fileInput: this.shadowRoot?.querySelector('.form-file-input'),
-            fileButton: this.shadowRoot?.querySelector('.form-file-button'),
+            uploadButton: this.shadowRoot?.querySelector('.form-upload-button'),
             submitButton: this.shadowRoot?.querySelector('.form-submit-button'),
             error: this.shadowRoot?.querySelector('.form-error'),
         };
@@ -176,7 +176,7 @@ class NewPostForm extends HTMLElement {
         this.el.submitButton.addEventListener('click', () =>
             this.submitNewPost()
         );
-        this.el.fileButton.addEventListener('click', () =>
+        this.el.uploadButton.addEventListener('click', () =>
             this.openFileInput()
         );
     }

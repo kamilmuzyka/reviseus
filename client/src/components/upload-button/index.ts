@@ -3,11 +3,7 @@ import '../primary-button/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
-    <primary-button
-        class="form-file-button"
-        data-background="transparent"
-        data-border="var(--subtle)"
-    >
+    <primary-button data-background="transparent" data-border="var(--subtle)">
         <svg
             slot="icon"
             xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +44,7 @@ template.innerHTML = html`
     </primary-button>
 `;
 
-class FileButton extends HTMLElement {
+class UploadButton extends HTMLElement {
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
@@ -56,8 +52,8 @@ class FileButton extends HTMLElement {
     }
 }
 
-if (!customElements.get('file-button')) {
-    customElements.define('file-button', FileButton);
+if (!customElements.get('upload-button')) {
+    customElements.define('upload-button', UploadButton);
 }
 
-export default FileButton;
+export default UploadButton;
