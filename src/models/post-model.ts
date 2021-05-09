@@ -49,7 +49,7 @@ class Post extends Model<PostAttributes, PostCreationAttributes> {
     title: string;
 
     @Column({
-        type: DataType.STRING(510),
+        type: DataType.TEXT,
         allowNull: false,
     })
     content: string;
