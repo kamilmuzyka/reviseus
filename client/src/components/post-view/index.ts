@@ -1,5 +1,6 @@
 /** @module Component/PostView */
 import html from '../../utils/html-tag';
+import convertDate from '../../utils/convert-date';
 import Elements from '../../interfaces/elements-interface';
 import BrowserRouter from '../browser-router/index';
 import '../primary-heading/index';
@@ -111,6 +112,7 @@ class PostView extends HTMLElement {
         const requestedElements = {
             photo: this.shadowRoot?.querySelector('.user-photo'),
             user: this.shadowRoot?.querySelector('.user-name'),
+            time: this.shadowRoot?.querySelector('.post-time'),
             title: this.shadowRoot?.querySelector('.post-title'),
             content: this.shadowRoot?.querySelector('.post-content'),
             files: this.shadowRoot?.querySelector('.post-files'),
@@ -141,6 +143,9 @@ class PostView extends HTMLElement {
             this.el.photo.src = this.details.user.profilePhoto;
         }
         this.el.user.textContent = `${this.details.user.firstName} ${this.details.user.lastName}`;
+        this.el.time.textContent = convertDate(
+            new Date(this.details.createdAt)
+        );
         this.el.title.textContent = this.details.title;
         this.el.content.textContent = this.details.content;
         this.details.files.forEach((file) => {
