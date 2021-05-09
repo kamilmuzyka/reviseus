@@ -3,7 +3,7 @@ import html from '../../utils/html-tag';
 import Elements from '../../interfaces/elements-interface';
 import BrowserRouter from '../browser-router/index';
 import '../primary-heading/index';
-import '../upload-button/index';
+import '../download-button/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -147,7 +147,7 @@ class PostView extends HTMLElement {
             const link = document.createElement('a');
             link.href = file.uri;
             link.setAttribute('download', '');
-            const button = document.createElement('upload-button');
+            const button = document.createElement('download-button');
             button.textContent = file.name;
             link.appendChild(button);
             this.el.files.appendChild(link);
