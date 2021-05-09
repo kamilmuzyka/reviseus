@@ -5,14 +5,20 @@ import Elements from '../../interfaces/elements-interface';
 import BrowserRouter from '../browser-router/index';
 import '../primary-heading/index';
 import '../download-button/index';
+import '../post-answer-form/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
     <style>
-        .post {
+        .post-body {
             padding: 2.5rem;
             background-color: var(--secondary-bg);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
+        }
+
+        .post-section:not(:first-child) {
+            margin-top: 5rem;
         }
 
         .post-content {
@@ -77,28 +83,33 @@ template.innerHTML = html`
             margin-top: -5px;
         }
     </style>
-    <section>
-        <primary-heading class="post-title" data-color="var(--accent)">
-        </primary-heading>
-        <div class="post">
-            <div class="user-details">
-                <div class="user-profile">
-                    <img class="user-photo" />
-                </div>
-                <div>
-                    <div>
-                        Posted by
-                        <span class="user-name"></span>
+    <article class="post">
+        <section class="post-section">
+            <primary-heading class="post-title" data-color="var(--accent)">
+            </primary-heading>
+            <div class="post-body">
+                <div class="user-details">
+                    <div class="user-profile">
+                        <img class="user-photo" />
                     </div>
-                    <div class="post-time">15 hours ago</div>
+                    <div>
+                        <div>
+                            Posted by
+                            <span class="user-name"></span>
+                        </div>
+                        <div class="post-time">15 hours ago</div>
+                    </div>
                 </div>
+                <p class="post-content"></p>
+                <div class="post-images"></div>
+                <div class="post-files"></div>
+                <ul class="post-tags"></ul>
             </div>
-            <p class="post-content"></p>
-            <div class="post-images"></div>
-            <div class="post-files"></div>
-            <ul class="post-tags"></ul>
-        </div>
-    </section>
+        </section>
+        <section class="post-section">
+            <post-answer-form></post-answer-form>
+        </section>
+    </article>
 `;
 
 class PostView extends HTMLElement {
