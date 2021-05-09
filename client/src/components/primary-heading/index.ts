@@ -1,5 +1,6 @@
 /** @module Component/PrimaryHeading */
 import html from '../../utils/html-tag';
+import Elements from '../../interfaces/elements-interface';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -16,21 +17,31 @@ template.innerHTML = html`
     </h2>
 `;
 
-/** A generic UI component. */
 class PrimaryHeading extends HTMLElement {
+    private el: Elements = {};
+
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.loadElements();
+    }
+
+    loadElements(): void {
+        const requestedElements = {
+            heading: this.shadowRoot?.querySelector('.heading'),
+        };
+        for (const element in requestedElements) {
+            if (element) {
+                this.el[element] = requestedElements[element];
+            }
+        }
     }
 
     addCustomStyles(): void {
-        const heading = this.shadowRoot?.querySelector('.heading');
         const color = this.dataset.color;
-        if (heading instanceof HTMLElement) {
-            if (color) {
-                heading.style.color = color;
-            }
+        if (color) {
+            this.el.heading.style.color = color;
         }
     }
 

@@ -1,5 +1,6 @@
 /** @module Component/NewPostForm */
 import html from '../../utils/html-tag';
+import Elements from '../../interfaces/elements-interface';
 import BrowserRouter from '../browser-router';
 import '../primary-button/index';
 import '../file-button/index';
@@ -146,62 +147,72 @@ template.innerHTML = html`
 `;
 
 class NewPostForm extends HTMLElement {
+    private el: Elements = {};
+
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.loadElements();
         this.addEventListeners();
     }
 
+    loadElements(): void {
+        const requestedElements = {
+            form: this.shadowRoot?.querySelector('form'),
+            fileInput: this.shadowRoot?.querySelector('.form-file-input'),
+            fileButton: this.shadowRoot?.querySelector('.form-file-button'),
+            submitButton: this.shadowRoot?.querySelector('.form-submit-button'),
+            error: this.shadowRoot?.querySelector('.form-error'),
+        };
+        for (const element in requestedElements) {
+            if (element) {
+                this.el[element] = requestedElements[element];
+            }
+        }
+    }
+
+    addEventListeners(): void {
+        this.el.submitButton.addEventListener('click', () =>
+            this.submitNewPost()
+        );
+        this.el.fileButton.addEventListener('click', () =>
+            this.openFileInput()
+        );
+    }
+
     openFileInput(): void {
-        const fileInput = this.shadowRoot?.querySelector('.form-file-input');
-        if (fileInput instanceof HTMLInputElement) {
-            fileInput.click();
+        if (this.el.fileInput instanceof HTMLInputElement) {
+            this.el.fileInput.click();
         }
     }
 
     displayErrors(message: string): void {
-        const errorEl = this.shadowRoot?.querySelector('.form-error');
-        if (errorEl) {
-            errorEl.textContent = message;
-            errorEl.classList.add('active');
-        }
+        this.el.error.textContent = message;
+        this.el.error.classList.add('active');
     }
 
     removeErrors(): void {
-        const errorEl = this.shadowRoot?.querySelector('.form-error');
-        if (errorEl) {
-            errorEl.textContent = '';
-            errorEl.classList.remove('active');
-        }
+        this.el.error.textContent = '';
+        this.el.error.classList.remove('active');
     }
 
     async submitNewPost(): Promise<void> {
-        const form = this.shadowRoot?.querySelector('form');
-        if (form) {
-            const payload = new FormData(form);
+        if (this.el.form instanceof HTMLFormElement) {
+            const payload = new FormData(this.el.form);
             const response = await fetch('/api/post', {
                 method: 'POST',
                 body: payload,
             });
             const result = await response.json();
             if (response.ok) {
-                form.reset();
+                this.el.form.reset();
                 this.removeErrors();
                 BrowserRouter.redirect(`/posts/${result.id}`);
                 return;
             }
             this.displayErrors(result);
         }
-    }
-
-    addEventListeners(): void {
-        const submitButton = this.shadowRoot?.querySelector(
-            '.form-submit-button'
-        );
-        const fileButton = this.shadowRoot?.querySelector('.form-file-button');
-        submitButton?.addEventListener('click', () => this.submitNewPost());
-        fileButton?.addEventListener('click', () => this.openFileInput());
     }
 
     disconnectedCallback(): void {

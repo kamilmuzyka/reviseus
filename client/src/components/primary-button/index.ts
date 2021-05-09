@@ -1,5 +1,6 @@
 /** @module Component/PrimaryButton */
 import html from '../../utils/html-tag';
+import Elements from '../../interfaces/elements-interface';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -40,23 +41,34 @@ template.innerHTML = html`
 `;
 
 class PrimaryButton extends HTMLElement {
+    private el: Elements = {};
+
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.loadElements();
+    }
+
+    loadElements(): void {
+        const requestedElements = {
+            button: this.shadowRoot?.querySelector('.button'),
+        };
+        for (const element in requestedElements) {
+            if (element) {
+                this.el[element] = requestedElements[element];
+            }
+        }
     }
 
     addCustomStyles(): void {
-        const button = this.shadowRoot?.querySelector('.button');
         const backgroundColor = this.dataset.background;
         const borderColor = this.dataset.border;
-        if (button instanceof HTMLElement) {
-            if (backgroundColor) {
-                button.style.backgroundColor = backgroundColor;
-            }
-            if (borderColor) {
-                button.style.border = `1px solid ${borderColor}`;
-            }
+        if (backgroundColor) {
+            this.el.button.style.backgroundColor = backgroundColor;
+        }
+        if (borderColor) {
+            this.el.button.style.border = `1px solid ${borderColor}`;
         }
     }
 

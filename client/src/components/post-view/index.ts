@@ -1,12 +1,9 @@
 /** @module Component/PostView */
 import html from '../../utils/html-tag';
+import Elements from '../../interfaces/elements-interface';
+import BrowserRouter from '../browser-router/index';
 import '../primary-heading/index';
 import '../file-button/index';
-import BrowserRouter from '../browser-router/index';
-
-interface Elements {
-    [name: string]: HTMLElement;
-}
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -106,18 +103,7 @@ class PostView extends HTMLElement {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
-    }
-
-    /** Requests post's data from the server. */
-    async loadDetails(): Promise<void> {
-        const currentPostId = this.dataset.id;
-        const response = await fetch(`/api/post/${currentPostId}`);
-        if (response.ok) {
-            const data = await response.json();
-            this.details = data;
-            return;
-        }
-        BrowserRouter.redirect('/404');
+        this.loadElements();
     }
 
     /** Buffers required HTML elements. */
@@ -135,6 +121,18 @@ class PostView extends HTMLElement {
                 this.el[element] = requestedElements[element];
             }
         }
+    }
+
+    /** Requests post's data from the server. */
+    async loadDetails(): Promise<void> {
+        const currentPostId = this.dataset.id;
+        const response = await fetch(`/api/post/${currentPostId}`);
+        if (response.ok) {
+            const data = await response.json();
+            this.details = data;
+            return;
+        }
+        BrowserRouter.redirect('/404');
     }
 
     /** Populates HTML elements with data downloaded from the server. */
@@ -175,7 +173,6 @@ class PostView extends HTMLElement {
 
     connectedCallback(): void {
         (async () => {
-            this.loadElements();
             await this.loadDetails();
             this.displayDetails();
         })();
