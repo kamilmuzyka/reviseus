@@ -1,14 +1,28 @@
 :root {
     font-size: 62.5%;
-    --primary-bg: #131314;
-    --secondary-bg: #1b1c1c;
-    --tertiary-bg: #2c2d2e;
-    --primary-text: #dedede;
-    --secondary-text: #b0b3b8;
+    --primary-bg: #eff2f5;
+    --secondary-bg: #ffffff;
+    --tertiary-bg: #eff2f5;
+    --primary-text: #333;
+    --secondary-text: #555555;
     --accent: #1d8dee;
-    --subtle: #555555;
+    --subtle: #bbbbbb;
     --google: #d82b28;
     --error: #891c23;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* --primary-bg: #131314;
+        --secondary-bg: #1b1c1c;
+        --tertiary-bg: #2c2d2e;
+        --primary-text: #dedede;
+        --secondary-text: #b0b3b8;
+        --accent: #1d8dee;
+        --subtle: #555555;
+        --google: #d82b28;
+        --error: #891c23; */
+    }
 }
 
 *,

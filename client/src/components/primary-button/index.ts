@@ -64,11 +64,15 @@ class PrimaryButton extends HTMLElement {
     addCustomStyles(): void {
         const backgroundColor = this.dataset.background;
         const borderColor = this.dataset.border;
+        const color = this.dataset.color;
         if (backgroundColor) {
             this.el.button.style.backgroundColor = backgroundColor;
         }
         if (borderColor) {
             this.el.button.style.border = `1px solid ${borderColor}`;
+        }
+        if (color) {
+            this.el.button.style.color = color;
         }
     }
 

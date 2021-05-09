@@ -39,6 +39,7 @@ template.innerHTML = html`
             <primary-button
                 class="form-submit-button"
                 data-background="var(--accent)"
+                data-color="#f0f0f0"
             >
                 <svg
                     slot="icon"
@@ -50,7 +51,7 @@ template.innerHTML = html`
                     <path
                         d="M6.75,12.566H11.2v4.448h1.368V12.566h4.448V11.2H12.566V6.75H11.2V11.2H6.75Z"
                         transform="translate(-6.75 -6.75)"
-                        fill="var(--primary-text)"
+                        fill="#f0f0f0"
                     />
                 </svg>
                 <span>Add Answer</span>
