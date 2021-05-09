@@ -6,7 +6,7 @@ template.innerHTML = html`
     <style>
         .container {
             margin: 0 auto;
-            padding: 7.5rem 2.5rem 0;
+            padding: 7.5rem 2.5rem;
             width: 1320px;
             max-width: 100%;
         }

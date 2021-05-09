@@ -28,6 +28,13 @@ template.innerHTML = html`
             margin: 1.5rem 1.5rem 0 0;
         }
 
+        .post-images > * {
+            display: block;
+            margin: 2.5rem 0 1rem 0;
+            max-width: 100%;
+            border: 1px solid var(--subtle);
+        }
+
         .post-tags {
             display: flex;
             flex-wrap: wrap;
@@ -87,6 +94,7 @@ template.innerHTML = html`
                 </div>
             </div>
             <p class="post-content"></p>
+            <div class="post-images"></div>
             <div class="post-files"></div>
             <ul class="post-tags"></ul>
         </div>
@@ -116,6 +124,7 @@ class PostView extends HTMLElement {
             title: this.shadowRoot?.querySelector('.post-title'),
             content: this.shadowRoot?.querySelector('.post-content'),
             files: this.shadowRoot?.querySelector('.post-files'),
+            images: this.shadowRoot?.querySelector('.post-images'),
             tags: this.shadowRoot?.querySelector('.post-tags'),
         };
         for (const element in requestedElements) {
@@ -149,9 +158,18 @@ class PostView extends HTMLElement {
         this.el.title.textContent = this.details.title;
         this.el.content.textContent = this.details.content;
         this.details.files.forEach((file) => {
+            const resource = `/api/${file.uri}`;
+            /** If the file is an image, then render it. */
+            if (file.mimetype.includes('image')) {
+                const image = document.createElement('img');
+                image.src = resource;
+                this.el.images.appendChild(image);
+                return;
+            }
+            /** Otherwise, create a download button. */
             const link = document.createElement('a');
-            link.href = `/api/${file.uri}`;
-            link.setAttribute('download', '');
+            link.href = resource;
+            link.setAttribute('download', file.name);
             const button = document.createElement('download-button');
             button.textContent = file.name;
             link.appendChild(button);
@@ -173,6 +191,7 @@ class PostView extends HTMLElement {
         this.el.title.textContent = '';
         this.el.content.textContent = '';
         [...this.el.files.children].forEach((file) => file.remove());
+        [...this.el.images.children].forEach((image) => image.remove());
         [...this.el.tags.children].forEach((tag) => tag.remove());
     }
 
