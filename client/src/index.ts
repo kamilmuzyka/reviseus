@@ -8,8 +8,8 @@ import './components/secondary-container/index';
 import './components/home-view/index';
 import './components/new-post-view/index';
 import './components/post-view/index';
+import './components/login-view/index';
 import './components/primary-heading/index';
-import './components/google-button/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -39,7 +39,7 @@ template.innerHTML = html`
                     </single-route>
                     <!-- Login -->
                     <single-route data-path="/login" data-exact="true">
-                        <google-button></google-button>
+                        <login-view></login-view>
                     </single-route>
                     <!-- 404 -->
                     <single-route>
