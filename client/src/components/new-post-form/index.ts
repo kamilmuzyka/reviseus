@@ -47,8 +47,16 @@ template.innerHTML = html`
             display: none;
         }
 
+        .form-file-group {
+            margin-top: 2.5rem;
+        }
+
         .form-upload-button {
             margin-top: 1rem;
+        }
+
+        .form-file-count {
+            margin-left: 1.5rem;
         }
 
         .form-group {
@@ -109,7 +117,12 @@ template.innerHTML = html`
                 id="attachments"
                 multiple
             />
-            <upload-button class="form-upload-button">Select Files</-button>
+            <div class="form-file-group">
+                <upload-button class="form-upload-button">
+                    Select Files
+                </upload-button>
+                <span class="form-file-count"></span>
+            </div>
         </div>
         <div class="form-group">
             <label for="tags">Tags</label>
@@ -161,6 +174,7 @@ class NewPostForm extends HTMLElement {
         const requestedElements = {
             form: this.shadowRoot?.querySelector('form'),
             fileInput: this.shadowRoot?.querySelector('.form-file-input'),
+            fileCount: this.shadowRoot?.querySelector('.form-file-count'),
             uploadButton: this.shadowRoot?.querySelector('.form-upload-button'),
             submitButton: this.shadowRoot?.querySelector('.form-submit-button'),
             error: this.shadowRoot?.querySelector('.form-error'),
@@ -179,11 +193,20 @@ class NewPostForm extends HTMLElement {
         this.el.uploadButton.addEventListener('click', () =>
             this.openFileInput()
         );
+        this.el.fileInput.addEventListener('change', () =>
+            this.updateFileInput()
+        );
     }
 
     openFileInput(): void {
         if (this.el.fileInput instanceof HTMLInputElement) {
             this.el.fileInput.click();
+        }
+    }
+
+    updateFileInput(): void {
+        if (this.el.fileInput instanceof HTMLInputElement) {
+            this.el.fileCount.textContent = `${this.el.fileInput.files?.length} Files Selected`;
         }
     }
 
