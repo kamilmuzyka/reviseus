@@ -64,6 +64,7 @@ export const createNewPost = async (
                         const postFile = await File.create({
                             name: file.originalname,
                             uri: file.path,
+                            mimetype: file.mimetype,
                         });
                         return postFile;
                     })

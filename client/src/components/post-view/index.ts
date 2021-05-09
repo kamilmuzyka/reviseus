@@ -150,7 +150,7 @@ class PostView extends HTMLElement {
         this.el.content.textContent = this.details.content;
         this.details.files.forEach((file) => {
             const link = document.createElement('a');
-            link.href = file.uri;
+            link.href = `/api/${file.uri}`;
             link.setAttribute('download', '');
             const button = document.createElement('download-button');
             button.textContent = file.name;

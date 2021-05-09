@@ -5,7 +5,7 @@ import multer from 'multer';
 import { v4 } from 'uuid';
 
 /** Specify the output directory. */
-const fileDestination = path.join(process.env.PWD ?? '', 'uploads');
+const fileDestination = 'uploads';
 
 /** Define the output directory and set file names pattern. Every file goes into
  * the user's directory (named same as the user ID). File names are randomly
