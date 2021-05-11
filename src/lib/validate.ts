@@ -7,6 +7,11 @@ interface NewPost {
     groupId?: string;
 }
 
+interface PostAnswer {
+    postId: string;
+    content: string;
+}
+
 /** Validates attributes required to create a new <i>Post</i> instance. */
 export const validateNewPost = (post: NewPost): NewPost => {
     const { title, content } = post;
@@ -26,4 +31,19 @@ export const validateNewPost = (post: NewPost): NewPost => {
         throw Error('Your post is too long!');
     }
     return post;
+};
+
+/** Validates attributes required to create a new <i>Answer</i> instance. */
+export const validatePostAnswer = (answer: PostAnswer): PostAnswer => {
+    const { postId, content } = answer;
+    if (!postId) {
+        throw Error('No post ID provided.');
+    }
+    if (!content) {
+        throw Error('No answer provided.');
+    }
+    if (content.length > 50000) {
+        throw Error('Your answer is too long!');
+    }
+    return answer;
 };

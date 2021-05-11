@@ -1,6 +1,6 @@
 /** @module Controllers/Post */
 import { Request, Response } from 'express';
-import { validateNewPost } from '../lib/validate.js';
+import { validateNewPost, validatePostAnswer } from '../lib/validate.js';
 import { parseFiles } from '../config/multer-config.js';
 import extractHashtags from '../utils/extract-hashtags.js';
 import testUUID from '../utils/test-uuid.js';
@@ -87,6 +87,58 @@ export const createNewPost = async (
             res.status(400).json(error.message);
         }
     });
+};
+
+export const createPostAnswer = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const { userId } = req.user;
+        const { postId, content } = validatePostAnswer(req.body);
+
+        /** Find the current user. */
+        const user = await User.findOne({
+            where: { id: userId },
+            include: [Answer],
+        });
+        if (!user) {
+            throw Error(
+                'Could not find a user with the corresponding user ID.'
+            );
+        }
+
+        /** Find the indicated post. */
+        const post = await Post.findOne({
+            where: { id: postId },
+            include: [Answer],
+        });
+        if (!post) {
+            throw Error(
+                'Could not find a post with the corresponding post ID.'
+            );
+        }
+
+        /** Create an Answer instance and associate it with the current user and
+         * the indicated post. */
+        const postAnswer = await Answer.create({ content });
+        await user.$set('answers', [...user.answers, postAnswer]);
+        await post.$set('answers', [...post.answers, postAnswer]);
+
+        //** To do: <Check for group> */
+
+        /** Find the new (mutated) answer and send it to the client. */
+        const createdAnswer = await Answer.findOne({
+            where: {
+                id: postAnswer.id,
+            },
+            include: [User],
+        });
+        res.json(createdAnswer);
+        return;
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
 };
 
 /** Sends data of any post based on post ID passed as a URL parameter. */
