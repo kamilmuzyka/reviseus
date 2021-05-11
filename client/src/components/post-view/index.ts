@@ -4,9 +4,11 @@ import convertDate from '../../utils/convert-date';
 import Elements from '../../interfaces/elements-interface';
 import BrowserRouter from '../browser-router/index';
 import '../primary-heading/index';
+import '../secondary-heading/index';
 import '../user-entry/index';
 import '../download-button/index';
 import '../post-answer-form/index';
+import '../post-answer/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -72,6 +74,14 @@ template.innerHTML = html`
         </section>
         <section class="post-section">
             <post-answer-form></post-answer-form>
+        </section>
+        <section class="post-section">
+            <secondary-heading>2 Answers</secondary-heading>
+            <div>
+                <post-answer></post-answer>
+                <post-answer></post-answer>
+                <post-answer></post-answer>
+            </div>
         </section>
     </article>
 `;
@@ -172,10 +182,7 @@ class PostView extends HTMLElement {
 
     /** Removes data from all populated HTML elements. */
     clearDetails(): void {
-        if (this.el.image instanceof HTMLImageElement) {
-            this.el.image.src = '';
-        }
-        this.el.user.textContent = '';
+        [...this.el.user.children].forEach((child) => child.remove());
         this.el.title.textContent = '';
         this.el.content.textContent = '';
         [...this.el.files.children].forEach((file) => file.remove());
