@@ -121,10 +121,14 @@ class PostView extends HTMLElement {
     /** Requests post's data from the server. */
     async loadDetails(): Promise<void> {
         const currentPostId = this.dataset.id;
-        const response = await fetch(`/api/post/${currentPostId}`);
-        if (response.ok) {
-            const data = await response.json();
-            this.details = data;
+        const responses = await Promise.all([
+            fetch(`/api/post/${currentPostId}`),
+            fetch(`/api/post/${currentPostId}/answers`),
+        ]);
+        if (responses[0].ok) {
+            const details = await responses[0].json();
+            details.answers = await responses[1].json();
+            this.details = details;
             return;
         }
         BrowserRouter.redirect('/404');
@@ -178,6 +182,9 @@ class PostView extends HTMLElement {
             const item = document.createElement('li');
             item.textContent = `#${tag.name}`;
             this.el.tags.appendChild(item);
+        });
+        this.details.answers.forEach((answer) => {
+            console.log(answer);
         });
     }
 
