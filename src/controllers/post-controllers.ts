@@ -79,7 +79,7 @@ export const createNewPost = async (
                 where: {
                     id: newPost.id,
                 },
-                include: [User, Tag, File],
+                include: [User, Tag, File, Answer],
             });
             res.json(createdPost);
             return;
