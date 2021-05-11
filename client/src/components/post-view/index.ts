@@ -4,6 +4,7 @@ import convertDate from '../../utils/convert-date';
 import Elements from '../../interfaces/elements-interface';
 import BrowserRouter from '../browser-router/index';
 import '../primary-heading/index';
+import '../user-entry/index';
 import '../download-button/index';
 import '../post-answer-form/index';
 
@@ -56,50 +57,13 @@ template.innerHTML = html`
         .post-tags > *:not(:last-child) {
             margin-right: 1.5rem;
         }
-
-        .user-profile {
-            width: 40px;
-            height: 40px;
-            border: 1px solid #b0b3b8;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        .user-photo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .user-details {
-            display: grid;
-            grid-template-columns: 40px 1fr;
-            gap: 1.5rem;
-            font-size: 1.4rem;
-        }
-
-        .post-time {
-            color: var(--secondary-text);
-            margin-top: -5px;
-        }
     </style>
     <article class="post">
         <section class="post-section">
             <primary-heading class="post-title" data-color="var(--accent)">
             </primary-heading>
             <div class="post-body">
-                <div class="user-details">
-                    <div class="user-profile">
-                        <img class="user-photo" />
-                    </div>
-                    <div>
-                        <div>
-                            Posted by
-                            <span class="user-name"></span>
-                        </div>
-                        <div class="post-time">15 hours ago</div>
-                    </div>
-                </div>
+                <user-entry class="post-user"></user-entry>
                 <p class="post-content"></p>
                 <div class="post-images"></div>
                 <div class="post-files"></div>
@@ -129,9 +93,7 @@ class PostView extends HTMLElement {
     /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
-            photo: this.shadowRoot?.querySelector('.user-photo'),
-            user: this.shadowRoot?.querySelector('.user-name'),
-            time: this.shadowRoot?.querySelector('.post-time'),
+            user: this.shadowRoot?.querySelector('.post-user'),
             title: this.shadowRoot?.querySelector('.post-title'),
             content: this.shadowRoot?.querySelector('.post-content'),
             files: this.shadowRoot?.querySelector('.post-files'),
@@ -159,15 +121,29 @@ class PostView extends HTMLElement {
 
     /** Populates HTML elements with data downloaded from the server. */
     displayDetails(): void {
-        if (this.el.photo instanceof HTMLImageElement) {
-            this.el.photo.src = this.details.user.profilePhoto;
-        }
-        this.el.user.textContent = `${this.details.user.firstName} ${this.details.user.lastName}`;
-        this.el.time.textContent = convertDate(
-            new Date(this.details.createdAt)
+        /** Post Author */
+        const userImage = document.createElement('img');
+        userImage.setAttribute('slot', 'image');
+        userImage.setAttribute(
+            'alt',
+            `${this.details.user.firstName}'s profile picture`
         );
+        userImage.setAttribute('src', this.details.user.profilePhoto);
+        const userName = document.createElement('span');
+        userName.setAttribute('slot', 'name');
+        userName.textContent = `${this.details.user.firstName} ${this.details.user.lastName}`;
+        const userTime = document.createElement('time');
+        userTime.setAttribute('slot', 'time');
+        userTime.setAttribute('datetime', this.details.createdAt);
+        userTime.textContent = convertDate(new Date(this.details.createdAt));
+        this.el.user.appendChild(userImage);
+        this.el.user.appendChild(userName);
+        this.el.user.appendChild(userTime);
+        /** Post Title */
         this.el.title.textContent = this.details.title;
+        /** Post Content */
         this.el.content.textContent = this.details.content;
+        /** Post Files */
         this.details.files.forEach((file) => {
             const resource = `/api/${file.uri}`;
             /** If the file is an image, then render it. */
@@ -186,6 +162,7 @@ class PostView extends HTMLElement {
             link.appendChild(button);
             this.el.files.appendChild(link);
         });
+        /** Post Tags */
         this.details.tags.forEach((tag) => {
             const item = document.createElement('li');
             item.textContent = `#${tag.name}`;
@@ -195,8 +172,8 @@ class PostView extends HTMLElement {
 
     /** Removes data from all populated HTML elements. */
     clearDetails(): void {
-        if (this.el.photo instanceof HTMLImageElement) {
-            this.el.photo.src = '';
+        if (this.el.image instanceof HTMLImageElement) {
+            this.el.image.src = '';
         }
         this.el.user.textContent = '';
         this.el.title.textContent = '';
