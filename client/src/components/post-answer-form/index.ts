@@ -29,7 +29,7 @@ template.innerHTML = html`
         }
 
         .form-submit-button {
-            margin-top: 2.5rem;
+            margin-top: 1.5rem;
         }
     </style>
     <div>

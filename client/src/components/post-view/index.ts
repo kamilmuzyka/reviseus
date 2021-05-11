@@ -21,7 +21,7 @@ template.innerHTML = html`
         }
 
         .post-section:not(:first-child) {
-            margin-top: 5rem;
+            margin-top: 3.5rem;
         }
 
         .post-content {
@@ -39,20 +39,21 @@ template.innerHTML = html`
 
         .post-images > * {
             display: block;
-            margin: 2.5rem 0 1rem 0;
+            margin: 1.5rem 0 0 0;
             max-width: 100%;
-            border: 1px solid var(--subtle);
+            border: 1px solid var(--border);
         }
 
         .post-tags {
             display: flex;
             flex-wrap: wrap;
+            margin: 0;
             padding: 0;
-            margin: 1.5rem 0 0 0;
             list-style-type: none;
         }
 
         .post-tags > * {
+            margin-top: 1.5rem;
             color: var(--accent);
         }
 

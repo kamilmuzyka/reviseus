@@ -126,7 +126,11 @@ template.innerHTML = html`
             </div>
         </div>
         <div class="form-group">
-            <label for="tags">Tags</label>
+            <label
+                for="tags"
+                title="All words starting with # will be considered tags"
+                >Tags</label
+            >
             <input
                 class="form-input"
                 type="text"

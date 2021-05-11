@@ -6,7 +6,8 @@
     --primary-text: #333;
     --secondary-text: #555555;
     --accent: #1d8dee;
-    --subtle: #bbbbbb;
+    --subtle: #cccccc;
+    --border: #dedede;
     --google: #d82b28;
     --error: #891c23;
 }
@@ -20,6 +21,7 @@
         --secondary-text: #b0b3b8;
         --accent: #1d8dee;
         --subtle: #555555;
+        --border: #555555;
         --google: #d82b28;
         --error: #891c23; */
     }
