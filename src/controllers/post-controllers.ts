@@ -168,3 +168,28 @@ export const sendSinglePost = async (
         res.status(400).json(error.message);
     }
 };
+
+/** Sends all answers of any post based on post ID passed as a URL parameter. */
+export const sendPostAnswers = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const postId = req.params.id;
+        if (postId && testUUID(postId)) {
+            const answers = await Answer.findAll({
+                where: {
+                    postId,
+                },
+                include: [User],
+            });
+            if (!answers) {
+                throw Error('Could not find answers for the provided post ID.');
+            }
+            res.json(answers);
+            return;
+        }
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+};
