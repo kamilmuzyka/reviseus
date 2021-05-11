@@ -14,20 +14,8 @@ template.innerHTML = html`
         }
     </style>
     <div class="post-answer">
-        <user-entry class="post-user">
-            <img
-                slot="image"
-                src="https://i.picsum.photos/id/538/100/100.jpg?hmac=1OOwsGQ5HpbT6Qjae_NY2WKbMiq-klJ8Dos-5QxbTj0"
-            />
-            <span slot="name">John Doe</span>
-            <time slot="time">2 hours ago</time>
-        </user-entry>
-        <p class="post-content">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero est
-            amet quisquam ullam provident placeat eaque omnis alias atque,
-            asperiores officiis repellat rerum? Numquam natus tenetur et quos!
-            Optio, soluta?
-        </p>
+        <slot name="user"></slot>
+        <slot name="content"></slot>
     </div>
 `;
 

@@ -78,11 +78,7 @@ template.innerHTML = html`
         </section>
         <section class="post-section">
             <secondary-heading>2 Answers</secondary-heading>
-            <div>
-                <post-answer></post-answer>
-                <post-answer></post-answer>
-                <post-answer></post-answer>
-            </div>
+            <div class="post-answers"></div>
         </section>
     </article>
 `;
@@ -110,6 +106,7 @@ class PostView extends HTMLElement {
             files: this.shadowRoot?.querySelector('.post-files'),
             images: this.shadowRoot?.querySelector('.post-images'),
             tags: this.shadowRoot?.querySelector('.post-tags'),
+            answers: this.shadowRoot?.querySelector('.post-answers'),
         };
         for (const element in requestedElements) {
             if (element) {
@@ -183,8 +180,37 @@ class PostView extends HTMLElement {
             item.textContent = `#${tag.name}`;
             this.el.tags.appendChild(item);
         });
+        /** Post Answers */
         this.details.answers.forEach((answer) => {
-            console.log(answer);
+            /** Answer Author */
+            const userImage = document.createElement('img');
+            userImage.setAttribute('slot', 'image');
+            userImage.setAttribute(
+                'alt',
+                `${answer.user.firstName}'s profile picture`
+            );
+            userImage.setAttribute('src', answer.user.profilePhoto);
+            const userName = document.createElement('span');
+            userName.setAttribute('slot', 'name');
+            userName.textContent = `${answer.user.firstName} ${answer.user.lastName}`;
+            const userTime = document.createElement('time');
+            userTime.setAttribute('slot', 'time');
+            userTime.setAttribute('datetime', answer.createdAt);
+            userTime.textContent = convertDate(new Date(answer.createdAt));
+            const user = document.createElement('user-entry');
+            user.setAttribute('slot', 'user');
+            user.appendChild(userImage);
+            user.appendChild(userName);
+            user.appendChild(userTime);
+            /** Answer Content */
+            const p = document.createElement('p');
+            p.setAttribute('slot', 'content');
+            p.textContent = answer.content;
+            /** Answer Element */
+            const postAnswer = document.createElement('post-answer');
+            postAnswer.appendChild(user);
+            postAnswer.appendChild(p);
+            this.el.answers.appendChild(postAnswer);
         });
     }
 
