@@ -14,7 +14,7 @@ template.innerHTML = html`
         .user-entry-image {
             width: 40px;
             height: 40px;
-            border: 1px solid #b0b3b8;
+            border: 1px solid var(--border);
             border-radius: 50%;
             overflow: hidden;
         }

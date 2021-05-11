@@ -77,7 +77,9 @@ template.innerHTML = html`
             <post-answer-form></post-answer-form>
         </section>
         <section class="post-section">
-            <secondary-heading>2 Answers</secondary-heading>
+            <secondary-heading>
+                <span class="post-answers-count"></span> Answers
+            </secondary-heading>
             <div class="post-answers"></div>
         </section>
     </article>
@@ -107,6 +109,7 @@ class PostView extends HTMLElement {
             images: this.shadowRoot?.querySelector('.post-images'),
             tags: this.shadowRoot?.querySelector('.post-tags'),
             answers: this.shadowRoot?.querySelector('.post-answers'),
+            count: this.shadowRoot?.querySelector('.post-answers-count'),
         };
         for (const element in requestedElements) {
             if (element) {
@@ -180,6 +183,8 @@ class PostView extends HTMLElement {
             item.textContent = `#${tag.name}`;
             this.el.tags.appendChild(item);
         });
+        /** Answers Count */
+        this.el.count.textContent = this.details.answers.length;
         /** Post Answers */
         this.details.answers.forEach((answer) => {
             /** Answer Author */
@@ -222,6 +227,8 @@ class PostView extends HTMLElement {
         [...this.el.files.children].forEach((file) => file.remove());
         [...this.el.images.children].forEach((image) => image.remove());
         [...this.el.tags.children].forEach((tag) => tag.remove());
+        this.el.count.textContent = '0';
+        [...this.el.answers.children].forEach((answer) => answer.remove());
     }
 
     connectedCallback(): void {
