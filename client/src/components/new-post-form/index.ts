@@ -76,7 +76,7 @@ template.innerHTML = html`
             padding: 1rem;
             background-color: var(--error);
             border-radius: 5px;
-            color: var(--primary-text);
+            color: #dedede;
         }
 
         .form-error.active {
