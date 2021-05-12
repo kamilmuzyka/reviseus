@@ -40,7 +40,7 @@ export const validatePostAnswer = (answer: PostAnswer): PostAnswer => {
         throw Error('No post ID provided.');
     }
     if (!content) {
-        throw Error('No answer provided.');
+        throw Error('Please type in your answer.');
     }
     if (content.length > 50000) {
         throw Error('Your answer is too long!');

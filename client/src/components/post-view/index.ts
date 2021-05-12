@@ -74,7 +74,7 @@ template.innerHTML = html`
             </div>
         </section>
         <section class="post-section">
-            <post-answer-form></post-answer-form>
+            <post-answer-form class="post-answer-form"></post-answer-form>
         </section>
         <section class="post-section">
             <secondary-heading>
@@ -108,6 +108,7 @@ class PostView extends HTMLElement {
             files: this.shadowRoot?.querySelector('.post-files'),
             images: this.shadowRoot?.querySelector('.post-images'),
             tags: this.shadowRoot?.querySelector('.post-tags'),
+            form: this.shadowRoot?.querySelector('.post-answer-form'),
             answers: this.shadowRoot?.querySelector('.post-answers'),
             count: this.shadowRoot?.querySelector('.post-answers-count'),
         };
@@ -184,6 +185,8 @@ class PostView extends HTMLElement {
             item.textContent = `#${tag.name}`;
             this.el.tags.appendChild(item);
         });
+        /** Answer Form */
+        this.el.form.setAttribute('data-post', this.dataset.id ?? '');
         /** Answers Count */
         this.el.count.textContent = this.details.answers.length;
         /** Post Answers */
