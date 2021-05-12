@@ -121,21 +121,22 @@ class PostView extends HTMLElement {
     /** Requests post's data from the server. */
     async loadDetails(): Promise<void> {
         const currentPostId = this.dataset.id;
-        const responses = await Promise.all([
-            fetch(`/api/post/${currentPostId}`),
-            fetch(`/api/post/${currentPostId}/answers`),
-        ]);
-        if (responses[0].ok) {
-            const details = await responses[0].json();
-            details.answers = await responses[1].json();
-            this.details = details;
+        const currentPost = await fetch(`/api/post/${currentPostId}`);
+        if (!currentPost.ok) {
+            BrowserRouter.redirect('/404');
             return;
         }
-        BrowserRouter.redirect('/404');
+        const details = await currentPost.json();
+        const postAnswers = await fetch(`/api/post/${currentPostId}/answers`);
+        details.answers = await postAnswers.json();
+        this.details = details;
     }
 
     /** Populates HTML elements with data downloaded from the server. */
     displayDetails(): void {
+        if (!this.details) {
+            return;
+        }
         /** Post Author */
         const userImage = document.createElement('img');
         userImage.setAttribute('slot', 'image');
