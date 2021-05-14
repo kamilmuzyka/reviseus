@@ -8,5 +8,8 @@
         "dev": "parcel watch ./public/index.html",
         "build": "parcel build ./public/index.html",
         "docs": "npx typedoc"
+    },
+    "dependencies": {
+        "socket.io-client": "^4.1.1"
     }
 }
