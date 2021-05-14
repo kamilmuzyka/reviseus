@@ -1,11 +1,12 @@
 ## Conventions
 
-| Convention | Meaning            |
-| :--------- | :----------------- |
-| Component  | Web component      |
-| Config     | Configuration file |
-| Lib        | Library (local)    |
-| Util       | Utility function   |
+| Convention | Meaning                         |
+| :--------- | :------------------------------ |
+| Component  | A web component                 |
+| Config     | A configuration file            |
+| Context    | A class that stores global data |
+| Lib        | A local library                 |
+| Util       | A utility function              |
 
 ## Links
 

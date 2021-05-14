@@ -1,14 +1,14 @@
 ## Conventions
 
-| Convention  | Meaning                       |
-| :---------- | :---------------------------- |
-| Config      | Configuration file            |
-| Controllers | Controller functions (MVC)    |
-| Lib         | Library (local)               |
-| Middleware  | Middleware function (Express) |
-| Model       | Model class (MVC)             |
-| Routes      | Router or subrouter (Express) |
-| Util        | Utility function              |
+| Convention  | Meaning                                 |
+| :---------- | :-------------------------------------- |
+| Config      | A configuration file                    |
+| Controllers | A module that stores controllers (MVC)  |
+| Lib         | A local library                         |
+| Middleware  | A middleware function (Express)         |
+| Model       | A class that defines a data model (MVC) |
+| Routes      | A router or subrouter                   |
+| Util        | A utility function                      |
 
 ## Links
 
