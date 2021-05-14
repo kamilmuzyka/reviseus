@@ -8,13 +8,13 @@
     --accent: #1d8dee;
     --subtle: #cccccc;
     --border: #dedede;
-    --google: #d82b28;
+    --google: #ef501e;
     --error: #891c23;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        /* --primary-bg: #131314;
+        --primary-bg: #131314;
         --secondary-bg: #1b1c1c;
         --tertiary-bg: #2c2d2e;
         --primary-text: #dedede;
@@ -22,8 +22,8 @@
         --accent: #1d8dee;
         --subtle: #555555;
         --border: #555555;
-        --google: #d82b28;
-        --error: #891c23; */
+        --google: #ef501e;
+        --error: #891c23;
     }
 }
 

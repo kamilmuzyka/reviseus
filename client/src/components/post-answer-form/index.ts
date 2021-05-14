@@ -1,6 +1,7 @@
 /** @module Component/PostAnswerForm */
 import html from '../../utils/html-tag';
 import Elements from '../../interfaces/elements-interface';
+import socket from '../../contexts/socketio';
 import '../secondary-heading/index';
 import '../primary-button/index';
 
@@ -136,6 +137,7 @@ class PostAnswerForm extends HTMLElement {
             if (response.ok) {
                 this.el.form.reset();
                 this.removeErrors();
+                socket.io.emit('answer', result);
                 return;
             }
             this.displayErrors(result);

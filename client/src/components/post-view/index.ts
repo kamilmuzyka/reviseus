@@ -2,7 +2,9 @@
 import html from '../../utils/html-tag';
 import convertDate from '../../utils/convert-date';
 import Elements from '../../interfaces/elements-interface';
+import Answer from '../../interfaces/answer-interface';
 import BrowserRouter from '../browser-router/index';
+import socket from '../../contexts/socketio';
 import '../primary-heading/index';
 import '../secondary-heading/index';
 import '../user-entry/index';
@@ -97,6 +99,7 @@ class PostView extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.loadElements();
+        this.addSocketMessages();
     }
 
     /** Buffers required HTML elements. */
@@ -119,6 +122,11 @@ class PostView extends HTMLElement {
         }
     }
 
+    /** Makes the component listen to incoming Socket IO messages. */
+    addSocketMessages(): void {
+        socket.io.on('answer', (details) => this.handleNewAnswer(details));
+    }
+
     /** Requests post's data from the server. */
     async loadDetails(): Promise<void> {
         const currentPostId = this.dataset.id;
@@ -133,7 +141,40 @@ class PostView extends HTMLElement {
         this.details = details;
     }
 
-    /** Populates HTML elements with data downloaded from the server. */
+    /** Creates post-answer component based on provided properties. */
+    createAnswerElement(details: Answer): HTMLElement {
+        /** Answer Author */
+        const userImage = document.createElement('img');
+        userImage.setAttribute('slot', 'image');
+        userImage.setAttribute(
+            'alt',
+            `${details.user.firstName}'s profile picture`
+        );
+        userImage.setAttribute('src', details.user.profilePhoto);
+        const userName = document.createElement('span');
+        userName.setAttribute('slot', 'name');
+        userName.textContent = `${details.user.firstName} ${details.user.lastName}`;
+        const userTime = document.createElement('time');
+        userTime.setAttribute('slot', 'time');
+        userTime.setAttribute('datetime', details.createdAt);
+        userTime.textContent = convertDate(new Date(details.createdAt));
+        const user = document.createElement('user-entry');
+        user.setAttribute('slot', 'user');
+        user.appendChild(userImage);
+        user.appendChild(userName);
+        user.appendChild(userTime);
+        /** Answer Content */
+        const p = document.createElement('p');
+        p.setAttribute('slot', 'content');
+        p.textContent = details.content;
+        /** Answer Element */
+        const postAnswer = document.createElement('post-answer');
+        postAnswer.appendChild(user);
+        postAnswer.appendChild(p);
+        return postAnswer;
+    }
+
+    /** Populates the post-view component with data downloaded from the server. */
     displayDetails(): void {
         if (!this.details) {
             return;
@@ -198,37 +239,26 @@ class PostView extends HTMLElement {
         /** Answers */
         const answersFragment = document.createDocumentFragment();
         this.details.answers.forEach((answer) => {
-            /** Answer Author */
-            const userImage = document.createElement('img');
-            userImage.setAttribute('slot', 'image');
-            userImage.setAttribute(
-                'alt',
-                `${answer.user.firstName}'s profile picture`
-            );
-            userImage.setAttribute('src', answer.user.profilePhoto);
-            const userName = document.createElement('span');
-            userName.setAttribute('slot', 'name');
-            userName.textContent = `${answer.user.firstName} ${answer.user.lastName}`;
-            const userTime = document.createElement('time');
-            userTime.setAttribute('slot', 'time');
-            userTime.setAttribute('datetime', answer.createdAt);
-            userTime.textContent = convertDate(new Date(answer.createdAt));
-            const user = document.createElement('user-entry');
-            user.setAttribute('slot', 'user');
-            user.appendChild(userImage);
-            user.appendChild(userName);
-            user.appendChild(userTime);
-            /** Answer Content */
-            const p = document.createElement('p');
-            p.setAttribute('slot', 'content');
-            p.textContent = answer.content;
-            /** Answer Element */
-            const postAnswer = document.createElement('post-answer');
-            postAnswer.appendChild(user);
-            postAnswer.appendChild(p);
+            const postAnswer = this.createAnswerElement(answer);
             answersFragment.appendChild(postAnswer);
         });
         this.el.answers.appendChild(answersFragment);
+    }
+
+    /** Renders a new answer at the end of the list. */
+    handleNewAnswer(details: Answer): void {
+        if (details.postId === this.dataset.id) {
+            const postAnswer = this.createAnswerElement(details);
+            this.el.answers.appendChild(postAnswer);
+            this.el.count.textContent = `${this.el.answers.children.length}`;
+            // if (details.userId === currentUserId) {
+            window.scrollTo({
+                left: 0,
+                top: document.body.scrollHeight,
+                behavior: 'smooth',
+            });
+            // }
+        }
     }
 
     /** Removes data from all populated HTML elements. */

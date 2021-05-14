@@ -4,7 +4,9 @@ import { io } from '../app.js';
 /** Connects with Socket IO clients and listens for emitted messages. */
 const initializeSocketIO = (): void => {
     io.on('connection', (client) => {
-        console.log(client.id);
+        client.on('answer', (details) => {
+            io.sockets.emit('answer', details);
+        });
     });
 };
 
