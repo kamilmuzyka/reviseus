@@ -161,13 +161,15 @@ class PostView extends HTMLElement {
         /** Post Content */
         this.el.content.textContent = this.details.content;
         /** Post Files */
+        const imagesFragment = document.createDocumentFragment();
+        const filesFragment = document.createDocumentFragment();
         this.details.files.forEach((file) => {
             const resource = `/api/${file.uri}`;
             /** If the file is an image, then render it. */
             if (file.mimetype.includes('image')) {
                 const image = document.createElement('img');
                 image.src = resource;
-                this.el.images.appendChild(image);
+                imagesFragment.appendChild(image);
                 return;
             }
             /** Otherwise, create a download button. */
@@ -177,19 +179,24 @@ class PostView extends HTMLElement {
             const button = document.createElement('download-button');
             button.textContent = file.name;
             link.appendChild(button);
-            this.el.files.appendChild(link);
+            filesFragment.appendChild(link);
         });
+        this.el.images.appendChild(imagesFragment);
+        this.el.files.appendChild(filesFragment);
         /** Post Tags */
+        const tagsFragment = document.createDocumentFragment();
         this.details.tags.forEach((tag) => {
             const item = document.createElement('li');
             item.textContent = `#${tag.name}`;
-            this.el.tags.appendChild(item);
+            tagsFragment.appendChild(item);
         });
+        this.el.tags.appendChild(tagsFragment);
         /** Answer Form */
         this.el.form.setAttribute('data-post', this.dataset.id ?? '');
         /** Answers Count */
         this.el.count.textContent = this.details.answers.length;
-        /** Post Answers */
+        /** Answers */
+        const answersFragment = document.createDocumentFragment();
         this.details.answers.forEach((answer) => {
             /** Answer Author */
             const userImage = document.createElement('img');
@@ -219,8 +226,9 @@ class PostView extends HTMLElement {
             const postAnswer = document.createElement('post-answer');
             postAnswer.appendChild(user);
             postAnswer.appendChild(p);
-            this.el.answers.appendChild(postAnswer);
+            answersFragment.appendChild(postAnswer);
         });
+        this.el.answers.appendChild(answersFragment);
     }
 
     /** Removes data from all populated HTML elements. */
