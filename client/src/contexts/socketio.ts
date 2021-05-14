@@ -1,5 +1,7 @@
+/** @module Context/SocketIO */
 import { io, Socket } from 'socket.io-client';
 
+/** Creates and stores a Socket IO client. */
 class Client {
     private socket;
 
@@ -8,9 +10,7 @@ class Client {
     }
 
     initialize(): void {
-        if (!this.socket) {
-            this.socket = io();
-        }
+        this.socket = io();
     }
 
     get io(): Socket {
