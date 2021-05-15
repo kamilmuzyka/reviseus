@@ -99,7 +99,7 @@ class PostView extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.loadElements();
-        this.addSocketMessages();
+        socket.io.on('postAnswer', (details) => this.handleNewAnswer(details));
     }
 
     /** Buffers required HTML elements. */
@@ -120,11 +120,6 @@ class PostView extends HTMLElement {
                 this.el[element] = requestedElements[element];
             }
         }
-    }
-
-    /** Makes the component listen to incoming Socket IO messages. */
-    addSocketMessages(): void {
-        socket.io.on('answer', (details) => this.handleNewAnswer(details));
     }
 
     /** Requests post's data from the server. */
@@ -277,11 +272,13 @@ class PostView extends HTMLElement {
         (async () => {
             await this.loadDetails();
             this.displayDetails();
+            socket.io.emit('subscribePost', this.dataset.id);
         })();
     }
 
     disconnectedCallback(): void {
         this.clearDetails();
+        socket.io.emit('unsubscribePost', this.dataset.id);
     }
 }
 

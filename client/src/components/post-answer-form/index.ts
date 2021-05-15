@@ -137,7 +137,7 @@ class PostAnswerForm extends HTMLElement {
             if (response.ok) {
                 this.el.form.reset();
                 this.removeErrors();
-                socket.io.emit('answer', result);
+                socket.io.emit('postAnswer', result);
                 return;
             }
             this.displayErrors(result);
