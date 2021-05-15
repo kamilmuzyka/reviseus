@@ -100,6 +100,7 @@ class PostView extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.loadElements();
+        this.addEventListeners();
         socket.io.on('postAnswer', (details) => this.handleNewAnswer(details));
     }
 
@@ -121,6 +122,25 @@ class PostView extends HTMLElement {
                 this.el[element] = requestedElements[element];
             }
         }
+    }
+
+    /** Adds global and local event listeners. */
+    addEventListeners(): void {
+        window.addEventListener('authchange', () => this.protectForm());
+    }
+
+    /** Removes global event listeners. */
+    removeEventListeners(): void {
+        window.removeEventListener('authchange', () => this.protectForm());
+    }
+
+    /** Shows or hides the answer form based on the user's auth status. */
+    protectForm(): void {
+        if (auth.ok) {
+            this.el.form.style.display = 'block';
+            return;
+        }
+        this.el.form.style.display = 'none';
     }
 
     /** Requests post's data from the server. */
@@ -279,6 +299,7 @@ class PostView extends HTMLElement {
 
     disconnectedCallback(): void {
         this.clearDetails();
+        this.removeEventListeners();
         socket.io.emit('unsubscribePost', this.dataset.id);
     }
 }

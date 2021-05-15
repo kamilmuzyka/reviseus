@@ -10,20 +10,31 @@ class Auth {
         this.isAuth = false;
     }
 
-    check() {
+    private dispatch(): void {
+        window.dispatchEvent(
+            new CustomEvent('authchange', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
+    check(): void {
         (async () => {
             const response = await fetch('/auth/identity');
             if (response.ok) {
                 this.isAuth = true;
                 this.currentUser = await response.json();
+                this.dispatch();
                 return;
             }
             this.isAuth = false;
             this.currentUser = {};
+            this.dispatch();
         })();
     }
 
-    get status(): boolean {
+    get ok(): boolean {
         return this.isAuth;
     }
 
