@@ -5,6 +5,7 @@ import Elements from '../../interfaces/elements-interface';
 import Answer from '../../interfaces/answer-interface';
 import BrowserRouter from '../browser-router/index';
 import socket from '../../contexts/socketio';
+import auth from '../../contexts/auth';
 import '../primary-heading/index';
 import '../secondary-heading/index';
 import '../user-entry/index';
@@ -246,13 +247,13 @@ class PostView extends HTMLElement {
             const postAnswer = this.createAnswerElement(details);
             this.el.answers.appendChild(postAnswer);
             this.el.count.textContent = `${this.el.answers.children.length}`;
-            // if (details.userId === currentUserId) {
-            window.scrollTo({
-                left: 0,
-                top: document.body.scrollHeight,
-                behavior: 'smooth',
-            });
-            // }
+            if (details.userId === auth.user.id) {
+                window.scrollTo({
+                    left: 0,
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth',
+                });
+            }
         }
     }
 

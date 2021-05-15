@@ -1,7 +1,8 @@
 /** @module Routes/AuthRoutes */
 import { Router } from 'express';
 import passport from 'passport';
-import { createToken } from '../lib/auth.js';
+import { createToken, protect } from '../lib/auth.js';
+import { getCurrentUser } from '../controllers/user-controllers.js';
 
 const router = Router();
 
@@ -27,5 +28,7 @@ router.get(
         res.redirect('/');
     }
 );
+
+router.get('/identity', protect, getCurrentUser);
 
 export default router;

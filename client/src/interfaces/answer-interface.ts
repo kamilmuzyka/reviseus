@@ -1,4 +1,5 @@
 /** @module Interface/Answer */
+import User from './user-interface';
 
 interface Answer {
     id: string;
@@ -7,12 +8,7 @@ interface Answer {
     postId: string;
     createdAt: string;
     updatedAt: string;
-    user: {
-        id: string;
-        firstName: string;
-        lastName: string;
-        profilePhoto: string;
-    };
+    user: User;
 }
 
 export default Answer;
