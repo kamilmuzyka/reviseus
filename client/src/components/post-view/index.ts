@@ -80,9 +80,7 @@ template.innerHTML = html`
             <post-answer-form class="post-answer-form"></post-answer-form>
         </section>
         <section class="post-section">
-            <secondary-heading>
-                <span class="post-answers-count"></span> Answers
-            </secondary-heading>
+            <secondary-heading class="post-answers-count"></secondary-heading>
             <div class="post-answers"></div>
         </section>
     </article>
@@ -190,6 +188,12 @@ class PostView extends HTMLElement {
         return postAnswer;
     }
 
+    /** Displays a new count of answers. */
+    updateAnswersCount(count: number): void {
+        this.el.count.textContent =
+            count === 1 ? `${count} Answer` : `${count} Answers`;
+    }
+
     /** Populates the post-view component with data downloaded from the server. */
     displayDetails(): void {
         if (!this.details) {
@@ -251,8 +255,7 @@ class PostView extends HTMLElement {
         /** Answer Form */
         this.el.form.setAttribute('data-post', this.dataset.id ?? '');
         /** Answers Count */
-        this.el.count.textContent = this.details.answers.length;
-        /** Answers */
+        this.updateAnswersCount(this.details.answers.length);
         const answersFragment = document.createDocumentFragment();
         this.details.answers.forEach((answer) => {
             const postAnswer = this.createAnswerElement(answer);
@@ -266,7 +269,7 @@ class PostView extends HTMLElement {
         if (details.postId === this.dataset.id) {
             const postAnswer = this.createAnswerElement(details);
             this.el.answers.appendChild(postAnswer);
-            this.el.count.textContent = `${this.el.answers.children.length}`;
+            this.updateAnswersCount(this.el.answers.children.length);
             if (details.userId === auth.user.id) {
                 window.scrollTo({
                     left: 0,
