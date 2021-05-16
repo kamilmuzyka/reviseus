@@ -31,7 +31,11 @@ template.innerHTML = html`
                         <home-view></home-view>
                     </single-route>
                     <!-- New Post -->
-                    <single-route data-path="/posts/new" data-exact="true">
+                    <single-route
+                        data-path="/posts/new"
+                        data-exact="true"
+                        data-protect="true"
+                    >
                         <new-post-view></new-post-view>
                     </single-route>
                     <!-- Single Post -->

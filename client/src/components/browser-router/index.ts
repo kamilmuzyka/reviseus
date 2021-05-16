@@ -1,5 +1,7 @@
 /** @module Component/BrowserRouter */
+import auth from '../../contexts/auth';
 import html from '../../utils/html-tag';
+import '../protected-boundary/index';
 
 interface IBrowserRouter {
     routes: Route[];
@@ -8,6 +10,7 @@ interface IBrowserRouter {
 interface Route {
     path: string;
     exact: boolean;
+    protect: boolean;
     component: HTMLElement;
 }
 
@@ -73,11 +76,13 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
             if (route instanceof HTMLElement) {
                 const path = route.dataset.path ?? '';
                 const exact = Boolean(route.dataset.exact);
+                const protect = Boolean(route.dataset.protect);
                 const component = route.children[0];
                 if (component instanceof HTMLElement) {
                     this.routes.push({
                         path,
                         exact,
+                        protect,
                         component,
                     });
                 }
@@ -126,24 +131,37 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
         const exactLocation = location.pathname;
         const inexactLocation = `/${location.pathname.split('/')[1]}`;
         let isMatched = false;
+        /** Clear browser-router's children on each routing cycle. */
+        [...this.children].forEach((child) => child.remove());
         /** Iterate through all the routes and their components. */
         this.routes.forEach((route, index) => {
-            const { path, exact, component } = route;
-            component.remove();
+            const { path, exact, protect, component } = route;
             if (!isMatched) {
+                const isProtected = protect && !auth.ok;
+                const isExactLocation = exact && path === exactLocation;
+                const isInExactLocation =
+                    !exact &&
+                    path?.includes(inexactLocation) &&
+                    inexactLocation !== '/';
+                /** Prevent the component from being rendered if the matched
+                 * route is protected and the user is not authenticated. */
+                if (isProtected && (isExactLocation || isInExactLocation)) {
+                    const boundary = document.createElement(
+                        'protected-boundary'
+                    );
+                    this.appendChild(boundary);
+                    isMatched = true;
+                    return;
+                }
                 /** Display a component if it's matching the exact route. */
-                if (exact && path === exactLocation) {
+                if (isExactLocation) {
                     this.appendChild(component);
                     isMatched = true;
                     return;
                 }
                 /** Display a component if it's matching the inexact (catch-all)
                  * route. */
-                if (
-                    !exact &&
-                    path?.includes(inexactLocation) &&
-                    inexactLocation !== '/'
-                ) {
+                if (isInExactLocation) {
                     this.applyRouteParams(route);
                     this.appendChild(component);
                     isMatched = true;
