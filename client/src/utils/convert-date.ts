@@ -7,7 +7,7 @@ const convertDate = (date: Date): string => {
     const hours = Math.floor(time / 1000 / 60 / 60);
     const days = Math.floor(hours / 24);
     const weeks = Math.floor(days / 7);
-    const months = Math.floor(weeks / 28);
+    const months = Math.floor(days / 28);
     const years = Math.floor(months / 12);
     if (years === 1) {
         return `${years} year ago`;

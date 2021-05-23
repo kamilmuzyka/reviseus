@@ -1,6 +1,7 @@
 /** @module Component/PostView */
 import html from '../../utils/html-tag';
 import convertDate from '../../utils/convert-date';
+import activateLinks from '../../utils/activate-links';
 import Elements from '../../interfaces/elements-interface';
 import Answer from '../../interfaces/answer-interface';
 import BrowserRouter from '../browser-router/index';
@@ -29,6 +30,10 @@ template.innerHTML = html`
 
         .post-content {
             margin: 1.5rem 0 0 0;
+        }
+
+        .post-content > a {
+            color: var(--accent);
         }
 
         .post-files {
@@ -180,7 +185,7 @@ class PostView extends HTMLElement {
         /** Answer Content */
         const p = document.createElement('p');
         p.setAttribute('slot', 'content');
-        p.textContent = details.content;
+        p.innerHTML = activateLinks(details.content);
         /** Answer Element */
         const postAnswer = document.createElement('post-answer');
         postAnswer.appendChild(user);
@@ -220,7 +225,7 @@ class PostView extends HTMLElement {
         /** Post Title */
         this.el.title.textContent = this.details.title;
         /** Post Content */
-        this.el.content.textContent = this.details.content;
+        this.el.content.innerHTML = activateLinks(this.details.content);
         /** Post Files */
         const imagesFragment = document.createDocumentFragment();
         const filesFragment = document.createDocumentFragment();
