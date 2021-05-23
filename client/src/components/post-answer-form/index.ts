@@ -15,6 +15,10 @@ template.innerHTML = html`
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
+        .form-heading {
+            margin-bottom: 2.5rem;
+        }
+
         .form-textarea {
             padding: 1rem;
             width: 100%;
@@ -48,7 +52,7 @@ template.innerHTML = html`
         }
     </style>
     <div>
-        <secondary-heading>Your Answer</secondary-heading>
+        <secondary-heading class="form-heading">Your Answer</secondary-heading>
         <form class="form">
             <textarea
                 class="form-textarea"

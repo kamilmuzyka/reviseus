@@ -3,9 +3,16 @@ import html from '../../utils/html-tag';
 import '../primary-heading/index';
 import '../router-link/index';
 import '../primary-button/index';
+import '../post-preview/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
+    <style>
+        .home-heading {
+            display: block;
+            margin-top: 5rem;
+        }
+    </style>
     <a href="/posts/new" is="router-link">
         <primary-button
             data-background="transparent"
@@ -27,7 +34,31 @@ template.innerHTML = html`
             <span>New Post</span>
         </primary-button>
     </a>
-    <primary-heading>Home</primary-heading>
+    <section>
+        <primary-heading class="home-heading">Public Posts</primary-heading>
+        <div>
+            <post-preview data-id="87aa4957-12ca-45fd-8930-c798e391afb9">
+                <span slot="author">John Doe</span>
+                <span slot="picture">
+                    <img
+                        src="https://i.picsum.photos/id/441/50/50.jpg?hmac=-GvWZdGDIITvZxSIX4lHcdHyZliGPkA4MuLNf4eiJMA"
+                    />
+                </span>
+                <span slot="time">10 minutes ago</span>
+                <span slot="count">3 answers</span>
+            </post-preview>
+            <post-preview data-id="9116a734-540b-4dd7-850f-69cba4142543">
+                <span slot="author">Adam Smith</span>
+                <span slot="picture">
+                    <img
+                        src="https://i.picsum.photos/id/441/50/50.jpg?hmac=-GvWZdGDIITvZxSIX4lHcdHyZliGPkA4MuLNf4eiJMA"
+                    />
+                </span>
+                <span slot="time">22 minutes ago</span>
+                <span slot="count">5 answers</span>
+            </post-preview>
+        </div>
+    </section>
 `;
 
 class HomeView extends HTMLElement {

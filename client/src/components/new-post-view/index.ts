@@ -5,7 +5,14 @@ import '../new-post-form/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
-    <primary-heading>Create a new post</primary-heading>
+    <style>
+        .new-post-heading {
+            margin-bottom: 3.5rem;
+        }
+    </style>
+    <primary-heading class="new-post-heading"
+        >Create a new post</primary-heading
+    >
     <new-post-form></new-post-form>
 `;
 

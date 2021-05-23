@@ -28,6 +28,10 @@ template.innerHTML = html`
             margin-top: 3.5rem;
         }
 
+        .post-title {
+            margin-bottom: 3.5rem;
+        }
+
         .post-content {
             margin: 1.5rem 0 0 0;
         }

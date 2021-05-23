@@ -5,7 +5,12 @@ import '../google-button/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
-    <primary-heading>Sign Up / Log In</primary-heading>
+    <style>
+        .login-heading {
+            margin-bottom: 3.5rem;
+        }
+    </style>
+    <primary-heading class="login-heading">Sign Up / Log In</primary-heading>
     <google-button></google-button>
 `;
 

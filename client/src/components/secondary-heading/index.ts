@@ -5,8 +5,12 @@ import Elements from '../../interfaces/elements-interface';
 const template = document.createElement('template');
 template.innerHTML = html`
     <style>
+        :host {
+            display: block;
+        }
+
         .heading {
-            margin: 0 0 3.5rem 0;
+            margin: 0;
             font-family: 'Open Sans', sans-serif;
             font-size: 2.4rem;
             font-weight: 700;
