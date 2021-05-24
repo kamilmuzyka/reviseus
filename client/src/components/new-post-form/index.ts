@@ -1,4 +1,5 @@
 /** @module Component/NewPostForm */
+import socket from '../../contexts/socketio';
 import html from '../../utils/html-tag';
 import Elements from '../../interfaces/elements-interface';
 import BrowserRouter from '../browser-router';
@@ -238,6 +239,7 @@ class NewPostForm extends HTMLElement {
                 this.el.form.reset();
                 this.removeErrors();
                 BrowserRouter.redirect(`/posts/${result.id}`);
+                socket.io.emit('groupPost', result);
                 return;
             }
             this.displayErrors(result);

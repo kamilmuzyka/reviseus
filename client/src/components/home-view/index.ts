@@ -1,4 +1,5 @@
 /** @module Component/HomeView */
+import socket from '../../contexts/socketio';
 import html from '../../utils/html-tag';
 import convertDate from '../../utils/convert-date';
 import activateLinks from '../../utils/activate-links';
@@ -70,7 +71,6 @@ class HomeView extends HTMLElement {
     private details;
     private offset = 0;
     private isExhausted = false;
-
     private el: Elements = {};
 
     constructor() {
@@ -78,6 +78,7 @@ class HomeView extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.loadElements();
+        socket.io.on('groupPost', (details) => this.handleNewPost(details));
     }
 
     loadElements(): void {
@@ -106,53 +107,58 @@ class HomeView extends HTMLElement {
         this.offset += 10;
     }
 
+    createPostPreviewElement(post): HTMLElement {
+        /** Post Preview */
+        const postPreview = document.createElement('post-preview');
+        postPreview.dataset.id = post.id;
+        /** Post Title */
+        const postTitle = document.createElement('span');
+        postTitle.setAttribute('slot', 'title');
+        postTitle.textContent = post.title;
+        /** Post Content */
+        const postContent = document.createElement('span');
+        postContent.setAttribute('slot', 'content');
+        postContent.innerHTML = activateLinks(post.content);
+        /** User Name */
+        const userName = document.createElement('span');
+        userName.setAttribute('slot', 'name');
+        userName.textContent = `${post.user.firstName} ${post.user.lastName}`;
+        /** User Image */
+        const userImage = document.createElement('img');
+        userImage.setAttribute('slot', 'picture');
+        userImage.setAttribute(
+            'alt',
+            `${post.user.firstName}'s profile picture`
+        );
+        userImage.setAttribute('src', post.user.profilePhoto);
+        /** Post Time */
+        const postTime = document.createElement('time');
+        postTime.setAttribute('slot', 'time');
+        postTime.setAttribute('datetime', post.createdAt);
+        postTime.textContent = convertDate(new Date(post.createdAt));
+        /** Answers Count */
+        const answersCount = document.createElement('span');
+        answersCount.setAttribute('slot', 'count');
+        answersCount.textContent =
+            post.answers.length === 1
+                ? `${post.answers.length} Answer`
+                : `${post.answers.length} Answers`;
+        postPreview.appendChild(postTitle);
+        postPreview.appendChild(postContent);
+        postPreview.appendChild(userName);
+        postPreview.appendChild(userImage);
+        postPreview.appendChild(postTime);
+        postPreview.appendChild(answersCount);
+        return postPreview;
+    }
+
     displayDetails(): void {
         if (!this.details) {
             return;
         }
         const postsFragment = document.createDocumentFragment();
         this.details.forEach((post) => {
-            /** Post Preview */
-            const postPreview = document.createElement('post-preview');
-            postPreview.dataset.id = post.id;
-            /** Post Title */
-            const postTitle = document.createElement('span');
-            postTitle.setAttribute('slot', 'title');
-            postTitle.textContent = post.title;
-            /** Post Content */
-            const postContent = document.createElement('span');
-            postContent.setAttribute('slot', 'content');
-            postContent.innerHTML = activateLinks(post.content);
-            /** User Name */
-            const userName = document.createElement('span');
-            userName.setAttribute('slot', 'name');
-            userName.textContent = `${post.user.firstName} ${post.user.lastName}`;
-            /** User Image */
-            const userImage = document.createElement('img');
-            userImage.setAttribute('slot', 'picture');
-            userImage.setAttribute(
-                'alt',
-                `${post.user.firstName}'s profile picture`
-            );
-            userImage.setAttribute('src', post.user.profilePhoto);
-            /** Post Time */
-            const postTime = document.createElement('time');
-            postTime.setAttribute('slot', 'time');
-            postTime.setAttribute('datetime', post.createdAt);
-            postTime.textContent = convertDate(new Date(post.createdAt));
-            /** Answers Count */
-            const answersCount = document.createElement('span');
-            answersCount.setAttribute('slot', 'count');
-            answersCount.textContent =
-                post.answers.length === 1
-                    ? `${post.answers.length} Answer`
-                    : `${post.answers.length} Answers`;
-            postPreview.appendChild(postTitle);
-            postPreview.appendChild(postContent);
-            postPreview.appendChild(userName);
-            postPreview.appendChild(userImage);
-            postPreview.appendChild(postTime);
-            postPreview.appendChild(answersCount);
+            const postPreview = this.createPostPreviewElement(post);
             postsFragment.appendChild(postPreview);
         });
         const scrollRef = window.scrollY;
@@ -163,8 +169,15 @@ class HomeView extends HTMLElement {
     displayDetailsEnd(): void {
         const p = document.createElement('p');
         p.classList.add('home-end');
-        p.textContent = `You're all caught up.`;
+        p.textContent = 'You are all caught up.';
         this.el.posts.appendChild(p);
+    }
+
+    clearDetails(): void {
+        [...this.el.posts.children].forEach((child) => child.remove());
+        this.details = null;
+        this.offset = 0;
+        this.isExhausted = false;
     }
 
     handleIntersection(entries): void {
@@ -195,12 +208,25 @@ class HomeView extends HTMLElement {
         observer.observe(this.el.lazy);
     }
 
+    handleNewPost(details): void {
+        const postPreview = this.createPostPreviewElement(details);
+        this.el.posts.insertBefore(postPreview, this.el.posts.firstChild);
+    }
+
     connectedCallback(): void {
         (async () => {
             await this.loadDetails();
             this.displayDetails();
             this.createObserver();
+            /** Use null for now */
+            socket.io.emit('subscribeGroup', null);
         })();
+    }
+
+    disconnectedCallback(): void {
+        this.clearDetails();
+        /** Use null for now */
+        socket.io.emit('unsubscribeGroup', null);
     }
 }
 

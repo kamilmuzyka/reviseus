@@ -21,6 +21,26 @@ const initializeSocketIO = (): void => {
         client.on('postAnswer', (details) => {
             io.to(details.postId).emit('postAnswer', details);
         });
+
+        /** Subscribe to a particular group or the public group if no group ID
+         * provided. */
+        client.on('subscribeGroup', (groupId) => {
+            console.log('Connected to ', groupId ?? 'public');
+            client.join(groupId ?? 'public');
+        });
+
+        /** Unsubscribe from a particular group or the public group if no group
+         * ID provided. */
+        client.on('unsubscribeGroup', (groupId) => {
+            console.log('Disconnected from ', groupId ?? 'public');
+            client.leave(groupId ?? 'public');
+        });
+
+        /** Inform all clients subscribed to a particular group about a new
+         * post.  */
+        client.on('groupPost', (details) => {
+            io.to(details.groupId ?? 'public').emit('groupPost', details);
+        });
     });
 };
 
