@@ -4,6 +4,7 @@ import html from '../../utils/html-tag';
 import convertDate from '../../utils/convert-date';
 import activateLinks from '../../utils/activate-links';
 import Elements from '../../interfaces/elements-interface';
+import Post from '../../interfaces/post-interface';
 import BrowserRouter from '../browser-router/index';
 import '../primary-heading/index';
 import '../router-link/index';
@@ -107,7 +108,7 @@ class HomeView extends HTMLElement {
         this.offset += 10;
     }
 
-    createPostPreviewElement(post): HTMLElement {
+    createPostPreviewElement(post: Post): HTMLElement {
         /** Post Preview */
         const postPreview = document.createElement('post-preview');
         postPreview.dataset.id = post.id;
@@ -180,7 +181,7 @@ class HomeView extends HTMLElement {
         this.isExhausted = false;
     }
 
-    handleIntersection(entries): void {
+    handleIntersection(entries: IntersectionObserverEntry[]): void {
         if (entries[0].isIntersecting) {
             (async () => {
                 await this.loadDetails();
@@ -208,7 +209,7 @@ class HomeView extends HTMLElement {
         observer.observe(this.el.lazy);
     }
 
-    handleNewPost(details): void {
+    handleNewPost(details: Post): void {
         const postPreview = this.createPostPreviewElement(details);
         this.el.posts.insertBefore(postPreview, this.el.posts.firstChild);
     }
