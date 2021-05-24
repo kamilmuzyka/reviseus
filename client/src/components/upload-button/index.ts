@@ -1,3 +1,4 @@
+/** @module Component/UploadButton */
 import html from '../../utils/html-tag';
 import '../primary-button/index';
 

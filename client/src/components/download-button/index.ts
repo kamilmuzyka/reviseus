@@ -1,3 +1,4 @@
+/** @module Component/DownloadButton */
 import html from '../../utils/html-tag';
 import '../primary-button/index';
 
