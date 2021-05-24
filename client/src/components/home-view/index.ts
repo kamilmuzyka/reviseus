@@ -45,7 +45,7 @@ template.innerHTML = html`
                     />
                 </span>
                 <span slot="time">10 minutes ago</span>
-                <span slot="count">3 answers</span>
+                <span slot="count">3 Answers</span>
             </post-preview>
             <post-preview data-id="9116a734-540b-4dd7-850f-69cba4142543">
                 <span slot="author">Adam Smith</span>
@@ -55,7 +55,7 @@ template.innerHTML = html`
                     />
                 </span>
                 <span slot="time">22 minutes ago</span>
-                <span slot="count">5 answers</span>
+                <span slot="count">5 Answers</span>
             </post-preview>
         </div>
     </section>
