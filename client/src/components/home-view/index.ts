@@ -69,9 +69,16 @@ template.innerHTML = html`
 `;
 
 class HomeView extends HTMLElement {
+    /** Group's data fetched from the server. */
     private details;
+
+    /** Offset used in lazy loading or pagination. */
     private offset = 0;
+
+    /** Set to true when there is no more data to fetch using lazy loading. */
     private isExhausted = false;
+
+    /** Buffered HTML elements. */
     private el: Elements = {};
 
     constructor() {
@@ -82,6 +89,7 @@ class HomeView extends HTMLElement {
         socket.io.on('groupPost', (details) => this.handleNewPost(details));
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             posts: this.shadowRoot?.querySelector('.home-posts'),
@@ -94,6 +102,7 @@ class HomeView extends HTMLElement {
         }
     }
 
+    /** Requests group's posts from the server, controlling the offset. */
     async loadDetails(): Promise<void> {
         const currentGroupId = this.dataset.id ?? null;
         const groupPosts = await fetch(
@@ -108,6 +117,7 @@ class HomeView extends HTMLElement {
         this.offset += 10;
     }
 
+    /** Creates post-preview component based on provided properties. */
     createPostPreviewElement(post: Post): HTMLElement {
         /** Post Preview */
         const postPreview = document.createElement('post-preview');
@@ -153,6 +163,7 @@ class HomeView extends HTMLElement {
         return postPreview;
     }
 
+    /** Appends data stored in <i>this.details</i> to the DOM. */
     displayDetails(): void {
         if (!this.details) {
             return;
@@ -167,6 +178,7 @@ class HomeView extends HTMLElement {
         window.scrollTo(0, scrollRef);
     }
 
+    /** Displays information about reaching the end of the group's posts. */
     displayDetailsEnd(): void {
         const p = document.createElement('p');
         p.classList.add('home-end');
@@ -174,6 +186,7 @@ class HomeView extends HTMLElement {
         this.el.posts.appendChild(p);
     }
 
+    /** Removes rendered posts and resets the component's state. */
     clearDetails(): void {
         [...this.el.posts.children].forEach((child) => child.remove());
         this.details = null;
@@ -181,6 +194,7 @@ class HomeView extends HTMLElement {
         this.isExhausted = false;
     }
 
+    /** Fetches group's posts from the server and displays them. */
     handleIntersection(entries: IntersectionObserverEntry[]): void {
         if (entries[0].isIntersecting) {
             (async () => {
@@ -197,6 +211,7 @@ class HomeView extends HTMLElement {
         }
     }
 
+    /** Creates an intersection observer instance and makes it watch the DOM. */
     createObserver(): void {
         const observer = new IntersectionObserver(
             (entries) => this.handleIntersection(entries),
@@ -209,6 +224,7 @@ class HomeView extends HTMLElement {
         observer.observe(this.el.lazy);
     }
 
+    /** Renders a new post at the beginning of the list. */
     handleNewPost(details: Post): void {
         const postPreview = this.createPostPreviewElement(details);
         this.el.posts.insertBefore(postPreview, this.el.posts.firstChild);
