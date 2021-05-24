@@ -14,6 +14,7 @@ export const sendGroupPosts = async (
 ): Promise<void> => {
     try {
         const groupId = req.params.id;
+        const offset = Number(req.query.offset);
 
         /** Find and send group posts if a group ID has been provided. */
         if (groupId && testUUID(groupId)) {
@@ -23,6 +24,7 @@ export const sendGroupPosts = async (
                 },
                 order: [['createdAt', 'DESC']],
                 limit: 10,
+                offset,
                 include: [User, Answer],
             });
             res.json(groupPosts);
@@ -36,6 +38,7 @@ export const sendGroupPosts = async (
             },
             order: [['createdAt', 'DESC']],
             limit: 10,
+            offset,
             include: [User, Answer],
         });
         res.json(publicPosts);

@@ -16,6 +16,26 @@ template.innerHTML = html`
             display: block;
             margin-top: 5rem;
         }
+
+        .home-posts {
+            position: relative;
+        }
+
+        .home-lazy {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: -1;
+            width: 100%;
+            height: 175px;
+            background: transparent;
+        }
+
+        .home-end {
+            margin: 7.5rem 0 0 0;
+            text-align: center;
+            color: var(--secondary-text);
+        }
     </style>
     <a href="/posts/new" is="router-link">
         <primary-button
@@ -40,12 +60,16 @@ template.innerHTML = html`
     </a>
     <section>
         <primary-heading class="home-heading">Public Posts</primary-heading>
-        <div class="home-posts"></div>
+        <div class="home-posts">
+            <div class="home-lazy"></div>
+        </div>
     </section>
 `;
 
 class HomeView extends HTMLElement {
     private details;
+    private offset = 0;
+    private isExhausted = false;
 
     private el: Elements = {};
 
@@ -59,6 +83,7 @@ class HomeView extends HTMLElement {
     loadElements(): void {
         const requestedElements = {
             posts: this.shadowRoot?.querySelector('.home-posts'),
+            lazy: this.shadowRoot?.querySelector('.home-lazy'),
         };
         for (const element in requestedElements) {
             if (element) {
@@ -69,14 +94,16 @@ class HomeView extends HTMLElement {
 
     async loadDetails(): Promise<void> {
         const currentGroupId = this.dataset.id ?? null;
-        const groupPosts = await fetch(`/api/group/${currentGroupId}/posts`);
+        const groupPosts = await fetch(
+            `/api/group/${currentGroupId}/posts?offset=${this.offset}`
+        );
         if (!groupPosts.ok) {
             BrowserRouter.redirect('/404');
             return;
         }
         const details = await groupPosts.json();
         this.details = details;
-        console.log(this.details);
+        this.offset += 10;
     }
 
     displayDetails(): void {
@@ -128,13 +155,51 @@ class HomeView extends HTMLElement {
             postPreview.appendChild(answersCount);
             postsFragment.appendChild(postPreview);
         });
+        const scrollRef = window.scrollY;
         this.el.posts.appendChild(postsFragment);
+        window.scrollTo(0, scrollRef);
+    }
+
+    displayDetailsEnd(): void {
+        const p = document.createElement('p');
+        p.classList.add('home-end');
+        p.textContent = `You're all caught up.`;
+        this.el.posts.appendChild(p);
+    }
+
+    handleIntersection(entries): void {
+        if (entries[0].isIntersecting) {
+            (async () => {
+                await this.loadDetails();
+                if (!this.details.length && !this.isExhausted) {
+                    this.isExhausted = true;
+                    this.displayDetailsEnd();
+                    return;
+                }
+                if (this.details.length) {
+                    this.displayDetails();
+                }
+            })();
+        }
+    }
+
+    createObserver(): void {
+        const observer = new IntersectionObserver(
+            (entries) => this.handleIntersection(entries),
+            {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5,
+            }
+        );
+        observer.observe(this.el.lazy);
     }
 
     connectedCallback(): void {
         (async () => {
             await this.loadDetails();
             this.displayDetails();
+            this.createObserver();
         })();
     }
 }
