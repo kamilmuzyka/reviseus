@@ -2,6 +2,8 @@
 import { Request, Response } from 'express';
 import testUUID from '../utils/test-uuid.js';
 import Post from '../models/post-model.js';
+import User from '../models/user-model.js';
+import Answer from '../models/answer-model.js';
 
 /** Sends all posts belonging to a group given by ID passed as a URL parameter.
  * If there is no ID provided, it sends public posts that don't belong to any
@@ -19,6 +21,9 @@ export const sendGroupPosts = async (
                 where: {
                     groupId,
                 },
+                order: [['createdAt', 'DESC']],
+                limit: 10,
+                include: [User, Answer],
             });
             res.json(groupPosts);
             return;
@@ -29,6 +34,9 @@ export const sendGroupPosts = async (
             where: {
                 groupId: null,
             },
+            order: [['createdAt', 'DESC']],
+            limit: 10,
+            include: [User, Answer],
         });
         res.json(publicPosts);
         return;

@@ -87,32 +87,23 @@ template.innerHTML = html`
     <div class="post-preview">
         <a class="post-reference">
             <secondary-heading class="post-title" data-color="var(--accent)">
-                Lorem Ipsum dolor sit amet.
+                <slot name="title"></slot>
             </secondary-heading>
         </a>
         <p class="post-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi erat
-            nisl, tristique finibus consectetur in, placerat vel metus. Proin
-            faucibus neque nibh, quis imperdiet nibh commodo în. Aenean
-            fermentum ipsum justo, at sodales nibh pellentesque posuere. Cras
-            nisl enim, luctus eu leo nec, tempus faucibus nunc. Vivamus lobortis
-            laoreet sodales. Duis suscipit turpis a nisi ullamcorper cursus.
-            Nulla aliquam sit amet nibh ut aliquet. Quisque sodales faucibus
-            bibendum. Integer a sollicitudin purus.
+            <slot name="content"></slot>
         </p>
         <div class="post-details">
             <div class="post-detail">
                 <div class="post-author">
-                    <p>Posted by <slot name="author"></slot></p>
+                    <p>Posted by <slot name="name"></slot></p>
                     <div class="post-author-picture">
                         <slot name="picture"></slot>
                     </div>
                 </div>
             </div>
             <div class="post-detail">
-                <time>
-                    <slot name="time"></slot>
-                </time>
+                <slot name="time"></slot>
             </div>
             <div class="post-detail">
                 <p>

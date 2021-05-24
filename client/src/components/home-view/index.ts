@@ -1,5 +1,9 @@
 /** @module Component/HomeView */
 import html from '../../utils/html-tag';
+import convertDate from '../../utils/convert-date';
+import activateLinks from '../../utils/activate-links';
+import Elements from '../../interfaces/elements-interface';
+import BrowserRouter from '../browser-router/index';
 import '../primary-heading/index';
 import '../router-link/index';
 import '../primary-button/index';
@@ -36,36 +40,102 @@ template.innerHTML = html`
     </a>
     <section>
         <primary-heading class="home-heading">Public Posts</primary-heading>
-        <div>
-            <post-preview data-id="87aa4957-12ca-45fd-8930-c798e391afb9">
-                <span slot="author">John Doe</span>
-                <span slot="picture">
-                    <img
-                        src="https://i.picsum.photos/id/441/50/50.jpg?hmac=-GvWZdGDIITvZxSIX4lHcdHyZliGPkA4MuLNf4eiJMA"
-                    />
-                </span>
-                <span slot="time">10 minutes ago</span>
-                <span slot="count">3 Answers</span>
-            </post-preview>
-            <post-preview data-id="9116a734-540b-4dd7-850f-69cba4142543">
-                <span slot="author">Adam Smith</span>
-                <span slot="picture">
-                    <img
-                        src="https://i.picsum.photos/id/441/50/50.jpg?hmac=-GvWZdGDIITvZxSIX4lHcdHyZliGPkA4MuLNf4eiJMA"
-                    />
-                </span>
-                <span slot="time">22 minutes ago</span>
-                <span slot="count">5 Answers</span>
-            </post-preview>
-        </div>
+        <div class="home-posts"></div>
     </section>
 `;
 
 class HomeView extends HTMLElement {
+    private details;
+
+    private el: Elements = {};
+
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.loadElements();
+    }
+
+    loadElements(): void {
+        const requestedElements = {
+            posts: this.shadowRoot?.querySelector('.home-posts'),
+        };
+        for (const element in requestedElements) {
+            if (element) {
+                this.el[element] = requestedElements[element];
+            }
+        }
+    }
+
+    async loadDetails(): Promise<void> {
+        const currentGroupId = this.dataset.id ?? null;
+        const groupPosts = await fetch(`/api/group/${currentGroupId}/posts`);
+        if (!groupPosts.ok) {
+            BrowserRouter.redirect('/404');
+            return;
+        }
+        const details = await groupPosts.json();
+        this.details = details;
+        console.log(this.details);
+    }
+
+    displayDetails(): void {
+        if (!this.details) {
+            return;
+        }
+        const postsFragment = document.createDocumentFragment();
+        this.details.forEach((post) => {
+            /** Post Preview */
+            const postPreview = document.createElement('post-preview');
+            postPreview.dataset.id = post.id;
+            /** Post Title */
+            const postTitle = document.createElement('span');
+            postTitle.setAttribute('slot', 'title');
+            postTitle.textContent = post.title;
+            /** Post Content */
+            const postContent = document.createElement('span');
+            postContent.setAttribute('slot', 'content');
+            postContent.innerHTML = activateLinks(post.content);
+            /** User Name */
+            const userName = document.createElement('span');
+            userName.setAttribute('slot', 'name');
+            userName.textContent = `${post.user.firstName} ${post.user.lastName}`;
+            /** User Image */
+            const userImage = document.createElement('img');
+            userImage.setAttribute('slot', 'picture');
+            userImage.setAttribute(
+                'alt',
+                `${post.user.firstName}'s profile picture`
+            );
+            userImage.setAttribute('src', post.user.profilePhoto);
+            /** Post Time */
+            const postTime = document.createElement('time');
+            postTime.setAttribute('slot', 'time');
+            postTime.setAttribute('datetime', post.createdAt);
+            postTime.textContent = convertDate(new Date(post.createdAt));
+            /** Answers Count */
+            const answersCount = document.createElement('span');
+            answersCount.setAttribute('slot', 'count');
+            answersCount.textContent =
+                post.answers.length === 1
+                    ? `${post.answers.length} Answer`
+                    : `${post.answers.length} Answers`;
+            postPreview.appendChild(postTitle);
+            postPreview.appendChild(postContent);
+            postPreview.appendChild(userName);
+            postPreview.appendChild(userImage);
+            postPreview.appendChild(postTime);
+            postPreview.appendChild(answersCount);
+            postsFragment.appendChild(postPreview);
+        });
+        this.el.posts.appendChild(postsFragment);
+    }
+
+    connectedCallback(): void {
+        (async () => {
+            await this.loadDetails();
+            this.displayDetails();
+        })();
     }
 }
 
