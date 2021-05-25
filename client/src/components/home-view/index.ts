@@ -147,6 +147,9 @@ class HomeView extends HTMLElement {
         postTime.setAttribute('slot', 'time');
         postTime.setAttribute('datetime', post.createdAt);
         postTime.textContent = convertDate(new Date(post.createdAt));
+        setInterval(() => {
+            postTime.textContent = convertDate(new Date(post.createdAt));
+        }, 36000);
         /** Answers Count */
         const answersCount = document.createElement('span');
         answersCount.setAttribute('slot', 'count');

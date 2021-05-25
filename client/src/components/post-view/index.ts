@@ -182,6 +182,9 @@ class PostView extends HTMLElement {
         userTime.setAttribute('slot', 'time');
         userTime.setAttribute('datetime', details.createdAt);
         userTime.textContent = convertDate(new Date(details.createdAt));
+        setInterval(() => {
+            userTime.textContent = convertDate(new Date(details.createdAt));
+        }, 36000);
         const user = document.createElement('user-entry');
         user.setAttribute('slot', 'user');
         user.appendChild(userImage);
