@@ -19,7 +19,7 @@ template.innerHTML = html`
             overflow: hidden;
         }
 
-        .user-entry-image img {
+        ::slotted(img) {
             width: 100%;
             height: 100%;
             object-fit: cover;
