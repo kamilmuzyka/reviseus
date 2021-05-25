@@ -1,0 +1,44 @@
+/** @module Controllers/Search */
+import { Request, Response } from 'express';
+import Fuse from 'fuse.js';
+import Post from '../models/post-model.js';
+import User from '../models/user-model.js';
+import Tag from '../models/tag-model.js';
+
+/** Searches for all public posts based on a query provided in the URL query
+ * string. Properties taken into consideration by the search algorithm are
+ * title, content, tags and author. */
+export const sendSearchResults = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const query = String(req.query.query);
+
+        /** Gather data to search in. */
+        const posts = await Post.findAll({
+            where: {
+                groupId: null,
+            },
+            include: [User, Tag],
+        });
+
+        /** Create Fuse instance and define properties to be considered when
+         * searching. */
+        const fuse = new Fuse(posts, {
+            keys: [
+                'title',
+                'content',
+                'tags.name',
+                'user.firstName',
+                'user.lastName',
+            ],
+        });
+
+        /** Search and send the results. */
+        const results = fuse.search(query);
+        res.json(results);
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+};

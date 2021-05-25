@@ -10,7 +10,7 @@ import Tag from '../models/tag-model.js';
 import File from '../models/file-model.js';
 import Answer from '../models/answer-model.js';
 
-/**  Creates a new post based on data attached to a request body. Use on
+/** Creates a new post based on data attached to a request body. Use on
  * protected routes only. */
 export const createNewPost = async (
     req: Request,
