@@ -19,7 +19,7 @@ template.innerHTML = html`
             margin-top: 5rem;
         }
 
-        .home-posts {
+        .home-section {
             position: relative;
         }
 
@@ -60,17 +60,19 @@ template.innerHTML = html`
             <span>New Post</span>
         </primary-button>
     </a>
-    <section>
+    <section class="home-section">
         <primary-heading class="home-heading">Public Posts</primary-heading>
-        <div class="home-posts">
-            <div class="home-lazy"></div>
-        </div>
+        <div class="home-posts"></div>
+        <div class="home-lazy"></div>
     </section>
 `;
 
 class HomeView extends HTMLElement {
     /** Group's data fetched from the server. */
     private details;
+
+    /** Intersection observer instance. */
+    private observer;
 
     /** Offset used in lazy loading or pagination. */
     private offset = 0;
@@ -214,17 +216,18 @@ class HomeView extends HTMLElement {
         }
     }
 
-    /** Creates an intersection observer instance and makes it watch the DOM. */
+    /** Creates an intersection observer instance if not exists. */
     createObserver(): void {
-        const observer = new IntersectionObserver(
-            (entries) => this.handleIntersection(entries),
-            {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.5,
-            }
-        );
-        observer.observe(this.el.lazy);
+        if (!this.observer) {
+            this.observer = new IntersectionObserver(
+                (entries) => this.handleIntersection(entries),
+                {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.5,
+                }
+            );
+        }
     }
 
     /** Renders a new post at the beginning of the list. */
@@ -238,6 +241,7 @@ class HomeView extends HTMLElement {
             await this.loadDetails();
             this.displayDetails();
             this.createObserver();
+            this.observer.observe(this.el.lazy);
             /** Use 'public' for now */
             socket.io.emit('subscribeGroup', 'public');
         })();
@@ -245,6 +249,7 @@ class HomeView extends HTMLElement {
 
     disconnectedCallback(): void {
         this.clearDetails();
+        this.observer.unobserve(this.el.lazy);
         /** Use 'public' for now */
         socket.io.emit('unsubscribeGroup', 'public');
     }
