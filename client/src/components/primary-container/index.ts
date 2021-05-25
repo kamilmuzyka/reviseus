@@ -9,6 +9,7 @@ template.innerHTML = html`
             padding: 7.5rem 2.5rem;
             width: 1320px;
             max-width: 100%;
+            box-sizing: border-box;
         }
     </style>
     <div class="container">

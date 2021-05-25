@@ -34,6 +34,7 @@ template.innerHTML = html`
 
         .post-content {
             margin: 1.5rem 0 0 0;
+            word-break: break-word;
         }
 
         .post-content > a {

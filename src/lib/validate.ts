@@ -18,16 +18,16 @@ export const validateNewPost = (post: NewPost): NewPost => {
     if (!title) {
         throw Error('Your post needs a title!');
     }
-    if (title.length < 10) {
+    if (title.trim().length < 10) {
         throw Error('Your post title should be at least 10 characters long.');
     }
-    if (title.length > 255) {
+    if (title.trim().length > 255) {
         throw Error('Your post title should be at most 255 characters long.');
     }
-    if (!content) {
+    if (!content.trim().length) {
         throw Error('Please describe your problem in a few words.');
     }
-    if (content.length > 50000) {
+    if (content.trim().length > 50000) {
         throw Error('Your post is too long!');
     }
     return post;
@@ -39,10 +39,10 @@ export const validatePostAnswer = (answer: PostAnswer): PostAnswer => {
     if (!postId) {
         throw Error('No post ID provided.');
     }
-    if (!content) {
+    if (!content.trim().length) {
         throw Error('Please type in your answer.');
     }
-    if (content.length > 50000) {
+    if (content.trim().length > 50000) {
         throw Error('Your answer is too long!');
     }
     return answer;

@@ -181,6 +181,7 @@ export const sendPostAnswers = async (
                 where: {
                     postId,
                 },
+                order: [['createdAt', 'ASC']],
                 include: [User],
             });
             if (!answers) {

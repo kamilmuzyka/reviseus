@@ -11,6 +11,7 @@ template.innerHTML = html`
             background-color: var(--secondary-bg);
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
+            word-break: break-word;
         }
     </style>
     <div class="post-answer">

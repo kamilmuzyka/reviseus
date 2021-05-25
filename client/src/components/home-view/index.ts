@@ -104,7 +104,7 @@ class HomeView extends HTMLElement {
 
     /** Requests group's posts from the server, controlling the offset. */
     async loadDetails(): Promise<void> {
-        const currentGroupId = this.dataset.id ?? null;
+        const currentGroupId = this.dataset.id ?? 'public';
         const groupPosts = await fetch(
             `/api/group/${currentGroupId}/posts?offset=${this.offset}`
         );
@@ -235,15 +235,15 @@ class HomeView extends HTMLElement {
             await this.loadDetails();
             this.displayDetails();
             this.createObserver();
-            /** Use null for now */
-            socket.io.emit('subscribeGroup', null);
+            /** Use 'public' for now */
+            socket.io.emit('subscribeGroup', 'public');
         })();
     }
 
     disconnectedCallback(): void {
         this.clearDetails();
-        /** Use null for now */
-        socket.io.emit('unsubscribeGroup', null);
+        /** Use 'public' for now */
+        socket.io.emit('unsubscribeGroup', 'public');
     }
 }
 

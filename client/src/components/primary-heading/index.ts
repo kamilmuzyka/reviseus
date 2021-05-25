@@ -11,6 +11,8 @@ template.innerHTML = html`
 
         .heading {
             margin: 0;
+            max-width: 100%;
+            word-break: break-word;
             font-family: 'Open Sans', sans-serif;
             font-size: 3.2rem;
             font-weight: 700;

@@ -8,7 +8,7 @@ const linkRegExp = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#/%=
 const activateLinks = (text: string): string => {
     const escapedText = escapeHTML(text);
     return escapedText.replace(linkRegExp, (href) => {
-        return `<a href="${href}" target="_blank" style="color: var(--accent)">${href}</a>`;
+        return `<a href="${href}" target="_blank" style="word-break: break-all; color: var(--accent)">${href}</a>`;
     });
 };
 

@@ -26,6 +26,15 @@ template.innerHTML = html`
             cursor: pointer;
         }
 
+        .post-title {
+            display: -webkit-box;
+            margin: 0;
+            overflow: hidden;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+        }
+
         .post-content {
             display: -webkit-box;
             margin: 0;
@@ -70,6 +79,7 @@ template.innerHTML = html`
         }
 
         .post-author-picture {
+            position: relative;
             margin-left: 1rem;
             width: 15px;
             height: 15px;
@@ -78,7 +88,10 @@ template.innerHTML = html`
             border: 1px solid var(--border);
         }
 
-        .post-author-picture > img {
+        ::slotted(img) {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;

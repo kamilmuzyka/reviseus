@@ -8,6 +8,7 @@ template.innerHTML = html`
             margin: 0 auto;
             width: 650px;
             max-width: 100%;
+            box-sizing: border-box;
         }
     </style>
     <div class="container">
