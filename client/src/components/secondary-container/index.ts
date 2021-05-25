@@ -5,6 +5,7 @@ const template = document.createElement('template');
 template.innerHTML = html`
     <style>
         .container {
+            position: relative;
             margin: 0 auto;
             width: 650px;
             max-width: 100%;

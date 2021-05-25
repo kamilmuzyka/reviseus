@@ -5,11 +5,21 @@ const template = document.createElement('template');
 template.innerHTML = html`
     <style>
         .container {
+            display: flex;
+            flex-direction: column;
+            position: relative;
             margin: 0 auto;
             padding: 7.5rem 2.5rem;
             width: 1320px;
             max-width: 100%;
             box-sizing: border-box;
+        }
+
+        @media (min-width: 1320px) {
+            .container {
+                display: grid;
+                grid-template-columns: 150px 1fr 250px;
+            }
         }
     </style>
     <div class="container">

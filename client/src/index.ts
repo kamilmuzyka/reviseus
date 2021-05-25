@@ -11,17 +11,16 @@ import './components/new-post-view/index';
 import './components/post-view/index';
 import './components/login-view/index';
 import './components/primary-heading/index';
+import './components/search-panel/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
     <primary-container>
-        <!-- Navigation -->
-        <nav>
+        <nav style="order: -2;">
             <a href="/" is="router-link">Home</a>
             <a href="/posts/new" is="router-link">New Post</a>
             <a href="/login" is="router-link">Login</a>
         </nav>
-        <!-- Main -->
         <main>
             <secondary-container>
                 <!-- Router -->
@@ -53,8 +52,7 @@ template.innerHTML = html`
                 </browser-router>
             </secondary-container>
         </main>
-        <!-- Search -->
-        <section></section>
+        <search-panel></search-panel>
     </primary-container>
 `;
 
