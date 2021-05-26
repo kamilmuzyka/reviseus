@@ -70,17 +70,26 @@ class SearchBar extends HTMLElement {
         }
     }
 
-    goToSearchResults(e): void {
-        const query = e.target.value.trim();
-        if (query) {
-            BrowserRouter.redirect(`/search?query=${query}`);
+    goToSearchResults(): void {
+        if (this.el.input instanceof HTMLInputElement) {
+            const query = this.el.input.value.trim();
+            if (query) {
+                BrowserRouter.redirect(`/search?query=${query}`);
+            }
+        }
+    }
+
+    clearInput(): void {
+        if (!location.href.includes('search')) {
+            if (this.el.input instanceof HTMLInputElement) {
+                this.el.input.value = '';
+            }
         }
     }
 
     addEventListeners(): void {
-        this.el.input.addEventListener('keyup', (e) =>
-            this.goToSearchResults(e)
-        );
+        this.el.input.addEventListener('keyup', () => this.goToSearchResults());
+        window.addEventListener('popstate', () => this.clearInput());
     }
 }
 
