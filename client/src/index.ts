@@ -9,6 +9,8 @@ import './components/main-menu/index';
 import './components/menu-button/index';
 import './components/secondary-container/index';
 import './components/home-view/index';
+import './components/groups-view/index';
+import './components/preferences-view/index';
 import './components/new-post-view/index';
 import './components/post-view/index';
 import './components/login-view/index';
@@ -29,11 +31,11 @@ template.innerHTML = html`
                     </single-route>
                     <!-- Groups -->
                     <single-route data-path="/groups" data-exact="true">
-                        <div>Groups</div>
+                        <groups-view></groups-view>
                     </single-route>
                     <!-- Preferences -->
                     <single-route data-path="/preferences" data-exact="true">
-                        <div>Preferences</div>
+                        <preferences-view></preferences-view>
                     </single-route>
                     <!-- New Post -->
                     <single-route

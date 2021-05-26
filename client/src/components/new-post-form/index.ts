@@ -50,10 +50,6 @@ template.innerHTML = html`
         }
 
         .form-file-group {
-            margin-top: 2.5rem;
-        }
-
-        .form-upload-button {
             margin-top: 1rem;
         }
 

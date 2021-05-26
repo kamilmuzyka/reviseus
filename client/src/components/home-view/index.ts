@@ -23,12 +23,6 @@ template.innerHTML = html`
             margin-top: 2.5rem;
         }
 
-        @media (min-width: 1320px) {
-            .home-heading {
-                margin-top: 5rem;
-            }
-        }
-
         .home-lazy {
             position: absolute;
             left: 0;
