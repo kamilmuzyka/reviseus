@@ -1,4 +1,6 @@
 /** @module Component/SearchBar */
+import Elements from '../../interfaces/elements-interface';
+import BrowserRouter from '../browser-router';
 import html from '../../utils/html-tag';
 
 const template = document.createElement('template');
@@ -47,10 +49,38 @@ template.innerHTML = html`
 `;
 
 class SearchBar extends HTMLElement {
+    private el: Elements = {};
+
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.loadElements();
+        this.addEventListeners();
+    }
+
+    loadElements(): void {
+        const requestedElements = {
+            input: this.shadowRoot?.querySelector('.search-bar-input'),
+        };
+        for (const element in requestedElements) {
+            if (element) {
+                this.el[element] = requestedElements[element];
+            }
+        }
+    }
+
+    goToSearchResults(e): void {
+        const query = e.target.value.trim();
+        if (query) {
+            BrowserRouter.redirect(`/search?query=${query}`);
+        }
+    }
+
+    addEventListeners(): void {
+        this.el.input.addEventListener('keyup', (e) =>
+            this.goToSearchResults(e)
+        );
     }
 }
 

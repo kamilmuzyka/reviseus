@@ -11,6 +11,7 @@ import './components/secondary-container/index';
 import './components/home-view/index';
 import './components/groups-view/index';
 import './components/preferences-view/index';
+import './components/search-view/index';
 import './components/new-post-view/index';
 import './components/post-view/index';
 import './components/login-view/index';
@@ -36,6 +37,10 @@ template.innerHTML = html`
                     <!-- Preferences -->
                     <single-route data-path="/preferences" data-exact="true">
                         <preferences-view></preferences-view>
+                    </single-route>
+                    <!-- Search Results -->
+                    <single-route data-path="/search">
+                        <search-view></search-view>
                     </single-route>
                     <!-- New Post -->
                     <single-route
