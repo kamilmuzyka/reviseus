@@ -34,6 +34,18 @@ class Auth {
         })();
     }
 
+    logOut(): void {
+        (async () => {
+            const response = await fetch('/auth/logout');
+            if (response.ok) {
+                this.isAuth = false;
+                this.currentUser = null;
+                this.dispatch();
+                return;
+            }
+        })();
+    }
+
     get ok(): boolean {
         return this.isAuth;
     }

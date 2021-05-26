@@ -1,5 +1,7 @@
 /** @module Component/MainMenu */
+import auth from '../../contexts/auth';
 import html from '../../utils/html-tag';
+import Elements from '../../interfaces/elements-interface';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -41,9 +43,17 @@ template.innerHTML = html`
         }
 
         .menu-logo {
+            display: none;
             margin: 0;
             font-size: 3.2rem;
+            font-weight: 700;
             color: var(--primary-text);
+        }
+
+        @media (min-width: 1320px) {
+            .menu-logo {
+                display: block;
+            }
         }
 
         .menu-accent {
@@ -57,12 +67,8 @@ template.innerHTML = html`
         }
 
         .menu-item {
+            display: none;
             margin-top: 2.5rem;
-        }
-
-        /** Temporary */
-        .menu-item-protected {
-            /* display: none; */
         }
 
         .menu-link {
@@ -93,9 +99,9 @@ template.innerHTML = html`
     </style>
     <menu-button></menu-button>
     <nav class="main-menu">
-        <h1 class="menu-logo">Revise<span class="menu-accent">.us</span></h1>
+        <div class="menu-logo">Revise<span class="menu-accent">.us</span></div>
         <ol class="menu-list">
-            <li class="menu-item">
+            <li class="menu-item protected replaced">
                 <a class="menu-link" href="/" is="router-link">
                     <div class="menu-group">
                         <svg
@@ -114,8 +120,8 @@ template.innerHTML = html`
                     </div>
                 </a>
             </li>
-            <li class="menu-item menu-item-protected">
-                <a class="menu-link" href="#" is="router-link">
+            <li class="menu-item protected">
+                <a class="menu-link" href="/groups" is="router-link">
                     <div class="menu-group">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -133,8 +139,8 @@ template.innerHTML = html`
                     </div>
                 </a>
             </li>
-            <li class="menu-item menu-item-protected">
-                <a class="menu-link" href="#" is="router-link">
+            <li class="menu-item protected">
+                <a class="menu-link" href="/preferences" is="router-link">
                     <div class="menu-group">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +158,7 @@ template.innerHTML = html`
                     </div>
                 </a>
             </li>
-            <li class="menu-item menu-item-protected">
+            <li class="menu-item protected">
                 <button class="menu-logout">
                     <div class="menu-group">
                         <svg
@@ -185,8 +191,8 @@ template.innerHTML = html`
                     </div>
                 </button>
             </li>
-            <li class="menu-item">
-                <a href="/login" class="menu-link">
+            <li class="menu-item replaced">
+                <a href="/login" class="menu-link" is="router-link">
                     <div class="menu-group">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -223,10 +229,66 @@ template.innerHTML = html`
 `;
 
 class MainMenu extends HTMLElement {
+    private el: Elements = {};
+
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.loadElements();
+        this.addEventListeners();
+    }
+
+    loadElements(): void {
+        const requestedElements = {
+            menu: this.shadowRoot?.querySelector('.main-menu'),
+            list: this.shadowRoot?.querySelector('.menu-list'),
+            button: this.shadowRoot?.querySelector('menu-button'),
+            logout: this.shadowRoot?.querySelector('.menu-logout'),
+        };
+        for (const element in requestedElements) {
+            if (element) {
+                this.el[element] = requestedElements[element];
+            }
+        }
+    }
+
+    /** Shows or hides selected menu items based on the user's auth status. */
+    protectItems(): void {
+        [...this.el.list.children].forEach((item) => {
+            if (item instanceof HTMLElement) {
+                item.style.display = 'none';
+                if (item.classList.contains('protected') && auth.ok === true) {
+                    item.style.display = 'block';
+                    return;
+                }
+                if (item.classList.contains('replaced') && auth.ok === false) {
+                    item.style.display = 'block';
+                }
+            }
+        });
+    }
+
+    /** Toggles the menu on mobiles. */
+    toggleMenu(): void {
+        this.el.menu.classList.toggle('active');
+    }
+
+    /** Closes the menu on mobiles. */
+    closeMenu(): void {
+        this.el.menu.classList.remove('active');
+    }
+
+    addEventListeners(): void {
+        window.addEventListener('authchange', () => this.protectItems());
+        window.addEventListener('click', () => this.closeMenu());
+        [...this.el.list.children].forEach((item) => {
+            const link = item.firstElementChild;
+            link?.addEventListener('click', () => this.closeMenu());
+        });
+        this.el.button.addEventListener('click', () => this.toggleMenu());
+        this.el.logout.addEventListener('click', () => auth.logOut());
+        this.addEventListener('click', (e) => e.stopPropagation());
     }
 }
 

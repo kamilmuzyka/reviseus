@@ -76,15 +76,15 @@ template.innerHTML = html`<style>
         <search-bar></search-bar>
         <ul class="search-panel-tags">
             <li class="tag">
-                <a class="tag-name" href="#"> #lorem </a>
+                <a class="tag-name" href="#" is="router-link">#lorem</a>
                 <div class="tag-count">93 Posts</div>
             </li>
             <li class="tag">
-                <a class="tag-name" href="#"> #lorem </a>
+                <a class="tag-name" href="#" is="router-link">#lorem</a>
                 <div class="tag-count">93 Posts</div>
             </li>
             <li class="tag">
-                <a class="tag-name" href="#"> #lorem </a>
+                <a class="tag-name" href="#" is="router-link">#lorem</a>
                 <div class="tag-count">93 Posts</div>
             </li>
         </ul>

@@ -27,6 +27,14 @@ template.innerHTML = html`
                     <single-route data-path="/" data-exact="true">
                         <home-view></home-view>
                     </single-route>
+                    <!-- Groups -->
+                    <single-route data-path="/groups" data-exact="true">
+                        <div>Groups</div>
+                    </single-route>
+                    <!-- Preferences -->
+                    <single-route data-path="/preferences" data-exact="true">
+                        <div>Preferences</div>
+                    </single-route>
                     <!-- New Post -->
                     <single-route
                         data-path="/posts/new"

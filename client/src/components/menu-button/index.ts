@@ -13,7 +13,19 @@ template.innerHTML = html`
 
         .menu-button-position {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-logo {
+            margin: 0;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--primary-text);
+        }
+
+        .menu-accent {
+            color: var(--accent);
         }
 
         .menu-button {
@@ -22,10 +34,14 @@ template.innerHTML = html`
             border-radius: 5px;
             background: transparent;
             cursor: pointer;
+            /* align-self: center; */
         }
     </style>
     <secondary-container>
         <div class="menu-button-position">
+            <div class="menu-logo">
+                Revise<span class="menu-accent">.us</span>
+            </div>
             <button class="menu-button">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

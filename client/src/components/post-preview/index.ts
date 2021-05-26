@@ -1,6 +1,7 @@
 /** @module Component/PostPreview */
 import html from '../../utils/html-tag';
 import '../secondary-heading/index';
+import '../router-link/index';
 import Elements from '../../interfaces/elements-interface';
 
 const template = document.createElement('template');
@@ -98,7 +99,7 @@ template.innerHTML = html`
         }
     </style>
     <div class="post-preview">
-        <a class="post-reference">
+        <a class="post-reference" is="router-link">
             <secondary-heading class="post-title" data-color="var(--accent)">
                 <slot name="title"></slot>
             </secondary-heading>
