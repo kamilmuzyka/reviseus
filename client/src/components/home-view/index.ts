@@ -14,13 +14,19 @@ import '../post-preview/index';
 const template = document.createElement('template');
 template.innerHTML = html`
     <style>
-        .home-heading {
-            display: block;
-            margin-top: 5rem;
-        }
-
         .home-section {
             position: relative;
+        }
+
+        .home-heading {
+            display: block;
+            margin-top: 2.5rem;
+        }
+
+        @media (min-width: 1320px) {
+            .home-heading {
+                margin-top: 5 rem;
+            }
         }
 
         .home-lazy {
@@ -39,27 +45,29 @@ template.innerHTML = html`
             color: var(--secondary-text);
         }
     </style>
-    <a href="/posts/new" is="router-link">
-        <primary-button
-            data-background="transparent"
-            data-border="var(--subtle)"
-        >
-            <svg
-                slot="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="10.264"
-                height="10.264"
-                viewBox="0 0 10.264 10.264"
+    <div>
+        <a href="/posts/new" is="router-link">
+            <primary-button
+                data-background="transparent"
+                data-border="var(--subtle)"
             >
-                <path
-                    d="M6.75,12.566H11.2v4.448h1.368V12.566h4.448V11.2H12.566V6.75H11.2V11.2H6.75Z"
-                    transform="translate(-6.75 -6.75)"
-                    fill="var(--primary-text)"
-                />
-            </svg>
-            <span>New Post</span>
-        </primary-button>
-    </a>
+                <svg
+                    slot="icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10.264"
+                    height="10.264"
+                    viewBox="0 0 10.264 10.264"
+                >
+                    <path
+                        d="M6.75,12.566H11.2v4.448h1.368V12.566h4.448V11.2H12.566V6.75H11.2V11.2H6.75Z"
+                        transform="translate(-6.75 -6.75)"
+                        fill="var(--primary-text)"
+                    />
+                </svg>
+                <span>New Post</span>
+            </primary-button>
+        </a>
+    </div>
     <section class="home-section">
         <primary-heading class="home-heading">Public Posts</primary-heading>
         <div class="home-posts"></div>

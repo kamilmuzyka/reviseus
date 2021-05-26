@@ -15,7 +15,7 @@ template.innerHTML = html`<style>
         }
 
         .search-panel {
-            margin: 0 auto;
+            margin: 3.5rem auto;
             padding: 2.5rem;
             width: 100%;
             max-width: 650px;
@@ -27,6 +27,7 @@ template.innerHTML = html`<style>
 
         @media (min-width: 1320px) {
             .search-panel {
+                margin: 0;
                 position: sticky;
                 top: 7.5rem;
                 transform: translateX(0);
