@@ -9,7 +9,7 @@ template.innerHTML = html`
             flex-direction: column;
             position: relative;
             margin: 0 auto;
-            padding: 7.5rem 2.5rem;
+            padding: 5rem 2.5rem;
             width: 1320px;
             max-width: 100%;
             box-sizing: border-box;
@@ -19,6 +19,7 @@ template.innerHTML = html`
             .container {
                 display: grid;
                 grid-template-columns: 150px 1fr 250px;
+                padding: 7.5rem 2.5rem;
             }
         }
     </style>
