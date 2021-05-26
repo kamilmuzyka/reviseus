@@ -9,6 +9,12 @@ template.innerHTML = html`
             order: -2;
         }
 
+        @media (min-width: 1320px) {
+            :host {
+                display: none;
+            }
+        }
+
         .menu-button-position {
             display: flex;
             justify-content: flex-end;

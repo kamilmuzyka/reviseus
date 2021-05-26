@@ -5,6 +5,7 @@ import './components/browser-router/index';
 import './components/single-route/index';
 import './components/router-link/index';
 import './components/primary-container/index';
+import './components/main-menu/index';
 import './components/menu-button/index';
 import './components/secondary-container/index';
 import './components/home-view/index';
@@ -17,12 +18,8 @@ import './components/search-panel/index';
 const template = document.createElement('template');
 template.innerHTML = html`
     <primary-container>
-        <!-- <nav style="order: -2;">
-            <a href="/" is="router-link">Home</a>
-            <a href="/posts/new" is="router-link">New Post</a>
-            <a href="/login" is="router-link">Login</a>
-        </nav> -->
         <menu-button></menu-button>
+        <main-menu></main-menu>
         <main>
             <secondary-container>
                 <!-- Router -->
