@@ -18,7 +18,6 @@ import './components/search-panel/index';
 const template = document.createElement('template');
 template.innerHTML = html`
     <primary-container>
-        <menu-button></menu-button>
         <main-menu></main-menu>
         <main>
             <secondary-container>

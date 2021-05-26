@@ -4,18 +4,36 @@ import html from '../../utils/html-tag';
 const template = document.createElement('template');
 template.innerHTML = html`
     <style>
+        :host {
+            order: -1;
+        }
+
         .main-menu {
             position: fixed;
             top: 0;
             left: 0;
             z-index: 2;
-            overflow-y: scroll;
+            padding: 2.5rem 3.5rem;
             height: 100vh;
             transform: translateX(-100%);
             transition: transform 0.3s ease-in-out;
             background-color: var(--secondary-bg);
             box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2);
-            padding: 2.5rem 3.5rem;
+            overflow-y: scroll;
+        }
+
+        @media (min-width: 1320px) {
+            .main-menu {
+                position: sticky;
+                top: 7.5rem;
+                padding: 0;
+                height: auto;
+                transform: translateX(0);
+                transition: none;
+                overflow-y: auto;
+                box-shadow: none;
+                background: transparent;
+            }
         }
 
         .main-menu.active {
@@ -73,6 +91,7 @@ template.innerHTML = html`
             cursor: pointer;
         }
     </style>
+    <menu-button></menu-button>
     <nav class="main-menu">
         <h1 class="menu-logo">Revise<span class="menu-accent">.us</span></h1>
         <ol class="menu-list">

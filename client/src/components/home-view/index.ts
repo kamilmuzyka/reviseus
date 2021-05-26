@@ -25,7 +25,7 @@ template.innerHTML = html`
 
         @media (min-width: 1320px) {
             .home-heading {
-                margin-top: 5 rem;
+                margin-top: 5rem;
             }
         }
 

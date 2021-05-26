@@ -18,7 +18,7 @@ template.innerHTML = html`
         @media (min-width: 1320px) {
             .container {
                 display: grid;
-                grid-template-columns: 150px 1fr 250px;
+                grid-template-columns: 175px 1fr 250px;
                 padding: 7.5rem 2.5rem;
             }
         }

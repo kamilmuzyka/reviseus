@@ -5,10 +5,6 @@ import '../secondary-container/index';
 const template = document.createElement('template');
 template.innerHTML = html`
     <style>
-        :host {
-            order: -2;
-        }
-
         @media (min-width: 1320px) {
             :host {
                 display: none;
