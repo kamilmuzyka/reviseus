@@ -1,8 +1,22 @@
-:root {
+html {
     font-size: 62.5%;
     --accent: #1d8dee;
     --google: #ef501e;
     --error: #891c23;
+}
+
+html,
+html.dark {
+    --primary-bg: #131314;
+    --secondary-bg: #1b1c1c;
+    --tertiary-bg: #2c2d2e;
+    --primary-text: #dedede;
+    --secondary-text: #b0b3b8;
+    --subtle: #555555;
+    --border: #555555;
+}
+
+html.light {
     --primary-bg: #eff2f5;
     --secondary-bg: #ffffff;
     --tertiary-bg: #eff2f5;
@@ -10,18 +24,6 @@
     --secondary-text: #555555;
     --subtle: #cccccc;
     --border: #dedede;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --primary-bg: #131314;
-        --secondary-bg: #1b1c1c;
-        --tertiary-bg: #2c2d2e;
-        --primary-text: #dedede;
-        --secondary-text: #b0b3b8;
-        --subtle: #555555;
-        --border: #555555;
-    }
 }
 
 *,

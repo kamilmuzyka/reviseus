@@ -1,6 +1,7 @@
 /** @module Component/App */
 import html from './utils/html-tag';
 import auth from './contexts/auth';
+import theme from './contexts/theme';
 import './components/browser-router/index';
 import './components/single-route/index';
 import './components/router-link/index';
@@ -80,6 +81,7 @@ class App extends HTMLElement {
 
     connectedCallback(): void {
         auth.check();
+        theme.load();
     }
 }
 
