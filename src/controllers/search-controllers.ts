@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import Fuse from 'fuse.js';
 import Post from '../models/post-model.js';
+import Answer from '../models/answer-model.js';
 import User from '../models/user-model.js';
 import Tag from '../models/tag-model.js';
 
@@ -20,7 +21,7 @@ export const sendSearchResults = async (
             where: {
                 groupId: null,
             },
-            include: [User, Tag],
+            include: [User, Tag, Answer],
         });
 
         /** Create Fuse instance and define properties to be considered when
@@ -36,7 +37,9 @@ export const sendSearchResults = async (
         });
 
         /** Search and send the results. */
-        const results = fuse.search(query);
+        const results = fuse.search(query, {
+            limit: 10,
+        });
         res.json(results);
     } catch (error) {
         res.status(400).json(error.message);

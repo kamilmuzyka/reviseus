@@ -189,7 +189,7 @@ class HomeView extends HTMLElement {
     displayDetailsEnd(): void {
         const p = document.createElement('p');
         p.classList.add('home-end');
-        p.textContent = 'You are all caught up.';
+        p.textContent = 'You are all caught up 😎';
         this.el.posts.appendChild(p);
     }
 
