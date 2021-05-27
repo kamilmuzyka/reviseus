@@ -5,19 +5,32 @@ class Theme {
     /** Current theme available for the app components. */
     private currentTheme;
 
+    private dispatch(): void {
+        window.dispatchEvent(
+            new CustomEvent('themechange', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
     /** System preferred theme. */
     get preferred(): string {
         const media = window.matchMedia('(prefers-color-scheme: dark)');
         return media.matches ? 'dark' : 'light';
     }
 
+    get current() {
+        return this.currentTheme;
+    }
+
     /** Saves provided theme to the local storage. */
-    save(name: string): void {
+    private save(name: string): void {
         localStorage.setItem('theme', name);
     }
 
     /** Activates the current theme by overwriting styles. */
-    activate(): void {
+    private activate(): void {
         document.documentElement.className = this.currentTheme;
     }
 
@@ -25,6 +38,7 @@ class Theme {
     toggle(): void {
         const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
         this.currentTheme = newTheme;
+        this.dispatch();
         this.activate();
         this.save(newTheme);
     }
@@ -35,11 +49,13 @@ class Theme {
         const theme = localStorage.getItem('theme');
         if (theme) {
             this.currentTheme = theme;
+            this.dispatch();
             this.activate();
             return;
         }
         const preferredTheme = this.preferred;
         this.currentTheme = preferredTheme;
+        this.dispatch();
         this.activate();
         this.save(preferredTheme);
     }
