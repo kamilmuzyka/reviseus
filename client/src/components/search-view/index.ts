@@ -16,7 +16,10 @@ template.innerHTML = html`
 `;
 
 class SearchView extends HTMLElement {
+    /** Buffered HTML elements. */
     private el: Elements = {};
+
+    /** Searched term. */
     private query;
 
     constructor() {
@@ -26,6 +29,7 @@ class SearchView extends HTMLElement {
         this.loadElements();
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             query: this.shadowRoot?.querySelector('.query'),
@@ -37,15 +41,20 @@ class SearchView extends HTMLElement {
         }
     }
 
+    /** Shows the searched term on the screen. */
+    displaySearchQuery(): void {
+        this.el.query.textContent = this.query;
+    }
+
+    /** Retrieves the search query from the URL and stores it. */
     saveSearchQuery(): void {
         const searchParams = new URLSearchParams(location.search);
         this.query = searchParams.get('query');
+        this.displaySearchQuery();
     }
 
     connectedCallback(): void {
         this.saveSearchQuery();
-        /** Temporary */
-        this.el.query.textContent = this.query;
     }
 }
 

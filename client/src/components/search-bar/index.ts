@@ -49,7 +49,15 @@ template.innerHTML = html`
 `;
 
 class SearchBar extends HTMLElement {
+    /** Buffered HTML elements. */
     private el: Elements = {};
+
+    /** The ID of the timer used in search debouncing. */
+    private timer;
+
+    /** Time after which the search starts, counted from the moment user stops
+     * typing. */
+    private delay = 400;
 
     constructor() {
         super();
@@ -59,6 +67,7 @@ class SearchBar extends HTMLElement {
         this.addEventListeners();
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             input: this.shadowRoot?.querySelector('.search-bar-input'),
@@ -70,6 +79,7 @@ class SearchBar extends HTMLElement {
         }
     }
 
+    /** Redirects the user to the search results page. */
     goToSearchResults(): void {
         if (this.el.input instanceof HTMLInputElement) {
             const query = this.el.input.value.trim();
@@ -79,6 +89,7 @@ class SearchBar extends HTMLElement {
         }
     }
 
+    /** Clears the search bar. */
     clearInput(): void {
         if (!location.href.includes('search')) {
             if (this.el.input instanceof HTMLInputElement) {
@@ -87,8 +98,23 @@ class SearchBar extends HTMLElement {
         }
     }
 
+    /** Slows down the searching process to prevent excessive requests sent to
+     * the server and to preserve meaningful window history. */
+    debouncedSearch(): void {
+        if (this.el.input instanceof HTMLInputElement) {
+            clearTimeout(this.timer);
+            if (this.el.input.value) {
+                this.timer = setTimeout(
+                    () => this.goToSearchResults(),
+                    this.delay
+                );
+            }
+        }
+    }
+
+    /** Adds global and local event listeners. */
     addEventListeners(): void {
-        this.el.input.addEventListener('keyup', () => this.goToSearchResults());
+        this.el.input.addEventListener('keyup', () => this.debouncedSearch());
         window.addEventListener('popstate', () => this.clearInput());
     }
 }
