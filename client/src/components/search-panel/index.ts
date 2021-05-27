@@ -1,5 +1,7 @@
 /** @module Component/SearchPanel */
 import html from '../../utils/html-tag';
+import Elements from '../../interfaces/elements-interface';
+import Tag from '../../interfaces/tag-interface';
 import '../search-bar/index';
 
 const template = document.createElement('template');
@@ -74,27 +76,73 @@ template.innerHTML = html`<style>
     </style>
     <section class="search-panel">
         <search-bar></search-bar>
-        <ul class="search-panel-tags">
-            <li class="tag">
-                <a class="tag-name" href="#" is="router-link">#lorem</a>
-                <div class="tag-count">93 Posts</div>
-            </li>
-            <li class="tag">
-                <a class="tag-name" href="#" is="router-link">#lorem</a>
-                <div class="tag-count">93 Posts</div>
-            </li>
-            <li class="tag">
-                <a class="tag-name" href="#" is="router-link">#lorem</a>
-                <div class="tag-count">93 Posts</div>
-            </li>
-        </ul>
+        <ul class="search-panel-tags"></ul>
     </section>`;
 
 class SearchPanel extends HTMLElement {
+    /** Popular tags fetched from the server. */
+    private tags;
+
+    /** Buffered HTML elements. */
+    private el: Elements = {};
+
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.loadElements();
+    }
+
+    /** Buffers required HTML elements. */
+    loadElements(): void {
+        const requestedElements = {
+            tags: this.shadowRoot?.querySelector('.search-panel-tags'),
+        };
+        for (const element in requestedElements) {
+            if (element) {
+                this.el[element] = requestedElements[element];
+            }
+        }
+    }
+
+    /** Requests popular tags from the server. */
+    async loadPopularTags(): Promise<void> {
+        const response = await fetch('/api/search/tags');
+        if (response.ok) {
+            const tags = await response.json();
+            this.tags = tags;
+        }
+    }
+
+    /** Populates DOM with fetched popular tags. */
+    displayPopularTags(): void {
+        const tagsFragment = document.createDocumentFragment();
+        this.tags.forEach((tag: Tag) => {
+            const tagElement = document.createElement('li');
+            tagElement.classList.add('tag');
+            const name = document.createElement('a');
+            name.classList.add('tag-name');
+            name.href = `/search?query=${tag.name}`;
+            name.textContent = `#${tag.name}`;
+            name.setAttribute('is', 'router-link');
+            const count = document.createElement('div');
+            count.classList.add('tag-count');
+            count.textContent =
+                tag.posts.length === 1
+                    ? `${tag.posts.length} Posts`
+                    : `${tag.posts.length} Posts`;
+            tagElement.appendChild(name);
+            tagElement.appendChild(count);
+            tagsFragment.appendChild(tagElement);
+        });
+        this.el.tags.appendChild(tagsFragment);
+    }
+
+    connectedCallback(): void {
+        (async () => {
+            await this.loadPopularTags();
+            this.displayPopularTags();
+        })();
     }
 }
 

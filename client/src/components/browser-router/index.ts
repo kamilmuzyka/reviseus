@@ -179,7 +179,6 @@ class BrowserRouter extends HTMLElement implements IBrowserRouter {
 
     addEventListeners(): void {
         window.addEventListener('popstate', () => this.changeRoute());
-        window.addEventListener('authchange', () => this.changeRoute());
     }
 }
 

@@ -34,6 +34,7 @@ export const sendSearchResults = async (
                 'user.firstName',
                 'user.lastName',
             ],
+            threshold: 0.25,
         });
 
         /** Search and send the results. */
