@@ -38,20 +38,27 @@ template.innerHTML = html`<style>
             }
         }
 
-        .search-panel-tags {
+        .popular {
             display: none;
-            margin: 0;
-            padding: 1rem 0 0 0;
-            list-style-type: none;
         }
 
         @media (min-width: 1320px) {
-            .search-panel-tags {
+            .popular {
                 display: block;
             }
         }
 
-        .tag {
+        .popular-heading {
+            margin: 2rem 0 1rem 0;
+        }
+
+        .popular-tags {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .tag:not(:first-child) {
             margin-top: 1.5rem;
         }
 
@@ -76,7 +83,12 @@ template.innerHTML = html`<style>
     </style>
     <section class="search-panel">
         <search-bar></search-bar>
-        <ul class="search-panel-tags"></ul>
+        <div class="popular">
+            <secondary-heading class="popular-heading">
+                Popular 🔥
+            </secondary-heading>
+            <ul class="popular-tags"></ul>
+        </div>
     </section>`;
 
 class SearchPanel extends HTMLElement {
@@ -96,7 +108,7 @@ class SearchPanel extends HTMLElement {
     /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
-            tags: this.shadowRoot?.querySelector('.search-panel-tags'),
+            tags: this.shadowRoot?.querySelector('.popular-tags'),
         };
         for (const element in requestedElements) {
             if (element) {
