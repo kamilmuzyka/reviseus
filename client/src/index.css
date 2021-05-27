@@ -1,15 +1,15 @@
 :root {
     font-size: 62.5%;
+    --accent: #1d8dee;
+    --google: #ef501e;
+    --error: #891c23;
     --primary-bg: #eff2f5;
     --secondary-bg: #ffffff;
     --tertiary-bg: #eff2f5;
-    --primary-text: #333;
+    --primary-text: #333333;
     --secondary-text: #555555;
-    --accent: #1d8dee;
     --subtle: #cccccc;
     --border: #dedede;
-    --google: #ef501e;
-    --error: #891c23;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,11 +19,8 @@
         --tertiary-bg: #2c2d2e;
         --primary-text: #dedede;
         --secondary-text: #b0b3b8;
-        --accent: #1d8dee;
         --subtle: #555555;
         --border: #555555;
-        --google: #ef501e;
-        --error: #891c23;
     }
 }
 
