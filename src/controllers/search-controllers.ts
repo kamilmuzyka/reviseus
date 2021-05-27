@@ -45,3 +45,23 @@ export const sendSearchResults = async (
         res.status(400).json(error.message);
     }
 };
+
+/** Sends the top four tags used by users. Includes tag posts. */
+export const sendPopularTags = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const tags = await Tag.findAll({
+            include: [Post],
+        });
+        const popularTags = tags
+            .sort((a, b) => {
+                return b.posts.length - a.posts.length;
+            })
+            .slice(0, 4);
+        res.json(popularTags);
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+};
