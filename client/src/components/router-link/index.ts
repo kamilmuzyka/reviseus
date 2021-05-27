@@ -6,18 +6,59 @@ import BrowserRouter from '../browser-router';
  * <i>"a"</i> tag with <i>"is"</i> attribute:
  * ```html
  * <a href="#" is="router-link">Link</a>
- * ``` */
+ * ```
+ * If you would like the link to receive "active" class whenever it's matching
+ * the current location, use <i>data-check="true"</i> attribute:
+ * ```html
+ * <a href="#" is="router-link" data-check="true">Link</a>
+ * ```
+ * You can use this technique to style the link based on the current location.
+ * */
 class RouterLink extends HTMLAnchorElement {
     constructor() {
         super();
+        this.addEventListeners();
+    }
+
+    addEventListeners(): void {
+        this.addEventListener('click', (e) => {
+            e.preventDefault();
+            BrowserRouter.redirect(this.href);
+        });
+        if (this.dataset.check) {
+            window.addEventListener('popstate', () => this.checkIfActive());
+        }
+    }
+
+    removeEventListeners(): void {
+        window.removeEventListener('popstate', () => this.checkIfActive());
+    }
+
+    addActive(): void {
+        this.classList.add('active');
+    }
+
+    removeActive(): void {
+        this.classList.remove('active');
+    }
+
+    checkIfActive(): void {
+        this.removeActive();
+        if (this.href === location.href) {
+            this.addActive();
+        }
     }
 
     connectedCallback(): void {
-        this.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = this.href;
-            BrowserRouter.redirect(href);
-        });
+        if (this.dataset.check) {
+            this.checkIfActive();
+        }
+    }
+
+    disconnectedCallback(): void {
+        if (this.dataset.check) {
+            this.removeEventListeners();
+        }
     }
 }
 
