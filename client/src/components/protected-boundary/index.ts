@@ -8,9 +8,14 @@ const template = document.createElement('template');
 template.innerHTML = html`
     <style>
         .boundary-buttons {
-            margin-top: 3.5rem;
+            margin-top: 2.5rem;
             display: flex;
             flex-wrap: wrap;
+        }
+
+        .boundary-message {
+            margin: 0;
+            margin-top: 1.5rem;
         }
 
         .boundary-buttons > *:first-child {
@@ -19,7 +24,9 @@ template.innerHTML = html`
     </style>
     <section>
         <primary-heading>Login Required</primary-heading>
-        <p>You must be logged in to access this page.</p>
+        <p class="boundary-message">
+            You must be logged in to access this page.
+        </p>
         <div class="boundary-buttons">
             <a href="/login" is="router-link">
                 <primary-button data-color="#f0f0f0">

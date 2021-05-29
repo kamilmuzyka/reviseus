@@ -17,8 +17,8 @@ template.innerHTML = html`
             align-items: center;
             justify-content: space-between;
             position: relative;
-            width: 55px;
-            height: 25px;
+            width: 50px;
+            height: 24px;
             padding: 0 1px;
             background-color: var(--accent);
             border-radius: 50px;
@@ -30,8 +30,8 @@ template.innerHTML = html`
             position: absolute;
             top: -1px;
             left: -1px;
-            width: 25px;
-            height: 25px;
+            width: 24px;
+            height: 24px;
             background-color: #ffffff;
             border-radius: 50%;
             border: 1px solid #aaaaaa;
@@ -39,18 +39,20 @@ template.innerHTML = html`
         }
 
         .checkbox {
+            position: absolute;
             visibility: hidden;
             opacity: 0;
         }
 
         .checkbox:checked + .label .pointer {
-            transform: translateX(31px);
+            transform: translateX(27px);
         }
     </style>
     <div class="container">
         <input class="checkbox" type="checkbox" id="checkbox" />
         <label for="checkbox" class="label">
-            🌞 🌚
+            <span>🌞</span>
+            <span>🌚</span>
             <div class="pointer"></div>
         </label>
     </div>

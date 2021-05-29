@@ -161,7 +161,8 @@ template.innerHTML = html`
                     </div>
                 </a>
             </li>
-            <li class="menu-item protected">
+            <!-- Preferences - not needed yet. -->
+            <!-- <li class="menu-item protected">
                 <a
                     class="menu-link"
                     href="/preferences"
@@ -183,7 +184,7 @@ template.innerHTML = html`
                         <div>Preferences</div>
                     </div>
                 </a>
-            </li>
+            </li> -->
             <li class="menu-item protected">
                 <button class="menu-logout">
                     <div class="menu-group">

@@ -10,6 +10,7 @@ import '../primary-heading/index';
 import '../router-link/index';
 import '../primary-button/index';
 import '../post-preview/index';
+import '../theme-toggle/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -21,6 +22,12 @@ template.innerHTML = html`
         .home-heading {
             display: block;
             margin-top: 2.5rem;
+        }
+
+        .home-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .home-lazy {
@@ -39,7 +46,7 @@ template.innerHTML = html`
             color: var(--secondary-text);
         }
     </style>
-    <div>
+    <div class="home-controls">
         <a href="/posts/new" is="router-link">
             <primary-button
                 data-background="transparent"
@@ -61,6 +68,7 @@ template.innerHTML = html`
                 <span>New Post</span>
             </primary-button>
         </a>
+        <theme-toggle></theme-toggle>
     </div>
     <section class="home-section">
         <primary-heading class="home-heading">Public Posts</primary-heading>
