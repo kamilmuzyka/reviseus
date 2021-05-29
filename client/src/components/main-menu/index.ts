@@ -298,6 +298,16 @@ class MainMenu extends HTMLElement {
         });
     }
 
+    /** Opens a modal window to confirm the logout operation. */
+    openLogoutModal(): void {
+        window.dispatchEvent(
+            new CustomEvent('openlogout', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
     /** Toggles the menu on mobiles. */
     toggleMenu(): void {
         this.el.menu.classList.toggle('active');
@@ -316,7 +326,7 @@ class MainMenu extends HTMLElement {
             link?.addEventListener('click', () => this.closeMenu());
         });
         this.el.button.addEventListener('click', () => this.toggleMenu());
-        this.el.logout.addEventListener('click', () => auth.logOut());
+        this.el.logout.addEventListener('click', () => this.openLogoutModal());
         this.addEventListener('click', (e) => e.stopPropagation());
     }
 }

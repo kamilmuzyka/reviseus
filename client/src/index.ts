@@ -18,6 +18,7 @@ import './components/post-view/index';
 import './components/login-view/index';
 import './components/primary-heading/index';
 import './components/search-panel/index';
+import './components/logout-modal/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -76,6 +77,7 @@ template.innerHTML = html`
         </main>
         <search-panel></search-panel>
     </primary-container>
+    <logout-modal></logout-modal>
 `;
 
 /** A top-level component installed in index.html as an entry point to the
