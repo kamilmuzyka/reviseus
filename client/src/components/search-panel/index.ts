@@ -132,11 +132,10 @@ class SearchPanel extends HTMLElement {
         this.tags.forEach((tag: Tag) => {
             const tagElement = document.createElement('li');
             tagElement.classList.add('tag');
-            const name = document.createElement('a');
+            const name = document.createElement('a', { is: 'router-link' });
             name.classList.add('tag-name');
             name.href = `/search?query=${tag.name}`;
             name.textContent = `#${tag.name}`;
-            name.setAttribute('is', 'router-link');
             const count = document.createElement('div');
             count.classList.add('tag-count');
             count.textContent =

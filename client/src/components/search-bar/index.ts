@@ -57,7 +57,7 @@ class SearchBar extends HTMLElement {
 
     /** Time after which the search starts, counted from the moment user stops
      * typing. */
-    private delay = 400;
+    private delay = 300;
 
     constructor() {
         super();
