@@ -32,11 +32,19 @@ template.innerHTML = html`
                         <home-view></home-view>
                     </single-route>
                     <!-- Groups -->
-                    <single-route data-path="/groups" data-exact="true">
+                    <single-route
+                        data-path="/groups"
+                        data-exact="true"
+                        data-protect="true"
+                    >
                         <groups-view></groups-view>
                     </single-route>
                     <!-- Preferences -->
-                    <single-route data-path="/preferences" data-exact="true">
+                    <single-route
+                        data-path="/preferences"
+                        data-exact="true"
+                        data-protect="true"
+                    >
                         <preferences-view></preferences-view>
                     </single-route>
                     <!-- Search Results -->

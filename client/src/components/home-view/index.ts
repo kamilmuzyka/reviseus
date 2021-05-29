@@ -1,5 +1,6 @@
 /** @module Component/HomeView */
 import socket from '../../contexts/socketio';
+import auth from '../../contexts/auth';
 import html from '../../utils/html-tag';
 import convertDate from '../../utils/convert-date';
 import activateLinks from '../../utils/activate-links';
@@ -30,6 +31,10 @@ template.innerHTML = html`
             align-items: center;
         }
 
+        .home-toggle {
+            margin-left: auto;
+        }
+
         .home-lazy {
             position: absolute;
             left: 0;
@@ -47,28 +52,30 @@ template.innerHTML = html`
         }
     </style>
     <div class="home-controls">
-        <a href="/posts/new" is="router-link">
-            <primary-button
-                data-background="transparent"
-                data-border="var(--subtle)"
-            >
-                <svg
-                    slot="icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10.264"
-                    height="10.264"
-                    viewBox="0 0 10.264 10.264"
+        <div class="protected">
+            <a href="/posts/new" is="router-link">
+                <primary-button
+                    data-background="transparent"
+                    data-border="var(--subtle)"
                 >
-                    <path
-                        d="M6.75,12.566H11.2v4.448h1.368V12.566h4.448V11.2H12.566V6.75H11.2V11.2H6.75Z"
-                        transform="translate(-6.75 -6.75)"
-                        fill="var(--primary-text)"
-                    />
-                </svg>
-                <span>New Post</span>
-            </primary-button>
-        </a>
-        <theme-toggle></theme-toggle>
+                    <svg
+                        slot="icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="10.264"
+                        height="10.264"
+                        viewBox="0 0 10.264 10.264"
+                    >
+                        <path
+                            d="M6.75,12.566H11.2v4.448h1.368V12.566h4.448V11.2H12.566V6.75H11.2V11.2H6.75Z"
+                            transform="translate(-6.75 -6.75)"
+                            fill="var(--primary-text)"
+                        />
+                    </svg>
+                    <span>New Post</span>
+                </primary-button>
+            </a>
+        </div>
+        <theme-toggle class="home-toggle"></theme-toggle>
     </div>
     <section class="home-section">
         <primary-heading class="home-heading">Public Posts</primary-heading>
@@ -98,12 +105,16 @@ class HomeView extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.loadElements();
+        this.addEventListeners();
         socket.io.on('groupPost', (details) => this.handleNewPost(details));
     }
 
     /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
+            controls: this.shadowRoot?.querySelector(
+                '.home-controls .protected'
+            ),
             posts: this.shadowRoot?.querySelector('.home-posts'),
             lazy: this.shadowRoot?.querySelector('.home-lazy'),
         };
@@ -112,6 +123,10 @@ class HomeView extends HTMLElement {
                 this.el[element] = requestedElements[element];
             }
         }
+    }
+
+    addEventListeners(): void {
+        window.addEventListener('authchange', () => this.protectControls());
     }
 
     /** Requests group's posts from the server, controlling the offset. */
@@ -176,6 +191,15 @@ class HomeView extends HTMLElement {
         postPreview.appendChild(postTime);
         postPreview.appendChild(answersCount);
         return postPreview;
+    }
+
+    /** Shows or hides controls based on the user's auth status. */
+    protectControls(): void {
+        if (auth.ok) {
+            this.el.controls.style.display = 'block';
+            return;
+        }
+        this.el.controls.style.display = 'none';
     }
 
     /** Appends data stored in <i>this.details</i> to the DOM. */
