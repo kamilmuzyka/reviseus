@@ -1,6 +1,7 @@
 /** @module Controllers/User */
 import { Request, Response } from 'express';
 import User from '../models/user-model.js';
+import Group from '../models/group-model.js';
 import testUUID from '../utils/test-uuid.js';
 
 /** Sends data of any user based on user ID passed as a URL parameter. */
@@ -31,7 +32,10 @@ export const getCurrentUser = async (
     try {
         const { userId } = req.user;
         if (userId && testUUID(userId)) {
-            const user = await User.findOne({ where: { id: userId } });
+            const user = await User.findOne({
+                where: { id: userId },
+                include: [Group],
+            });
             if (!user) {
                 throw Error(
                     'Could not find a user with the corresponding user ID.'

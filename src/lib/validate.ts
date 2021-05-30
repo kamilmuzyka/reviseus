@@ -12,6 +12,11 @@ interface PostAnswer {
     content: string;
 }
 
+interface NewGroup {
+    name: string;
+    type: string;
+}
+
 /** Validates attributes required to create a new <i>Post</i> instance. */
 export const validateNewPost = (post: NewPost): NewPost => {
     const { title, content } = post;
@@ -46,4 +51,24 @@ export const validatePostAnswer = (answer: PostAnswer): PostAnswer => {
         throw Error('Your answer is too long!');
     }
     return answer;
+};
+
+export const validateNewGroup = (group: NewGroup): NewGroup => {
+    const { name, type } = group;
+    if (!name) {
+        throw Error('Your group needs a name!');
+    }
+    if (name.trim().length < 3) {
+        throw Error('Group name should be at least 3 characters long.');
+    }
+    if (name.trim().length > 255) {
+        throw Error('Group name should be at most 255 characters long.');
+    }
+    if (!type) {
+        throw Error('No group type provided.');
+    }
+    if (type !== 'public' && type !== 'private') {
+        throw Error('Incorrect group type provided.');
+    }
+    return group;
 };
