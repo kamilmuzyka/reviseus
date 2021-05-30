@@ -1,12 +1,27 @@
 /** @module Component/GroupsView */
 import html from '../../utils/html-tag';
 import '../primary-heading/index';
+import '../group-preview/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
     <style>
         .groups-heading {
             margin-top: 2.5rem;
+        }
+
+        .groups {
+            display: grid;
+            gap: 2.5rem;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+            margin-top: 2.5rem;
+        }
+
+        @media (min-width: 700px) {
+            .groups {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
     <a href="/groups/new" is="router-link">
@@ -31,6 +46,12 @@ template.innerHTML = html`
         </primary-button>
     </a>
     <primary-heading class="groups-heading">Your Groups</primary-heading>
+    <div class="groups">
+        <group-preview></group-preview>
+        <group-preview></group-preview>
+        <group-preview></group-preview>
+        <group-preview></group-preview>
+    </div>
 `;
 
 class GroupsView extends HTMLElement {

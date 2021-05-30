@@ -63,11 +63,11 @@ template.innerHTML = html`
         }
 
         .post-detail:not(:last-child)::after {
+            content: '';
             position: absolute;
             top: 50%;
             left: calc(100% + 10px);
             transform: translateY(-50%);
-            content: '';
             width: 4px;
             height: 4px;
             background-color: var(--secondary-text);
