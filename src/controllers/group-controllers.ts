@@ -212,30 +212,6 @@ export const sendGroupPosts = async (
     }
 };
 
-/** Sends global posts that don't belong to any group. Anyone can access these
- * posts. */
-export const sendGlobalPosts = async (
-    req: Request,
-    res: Response
-): Promise<void> => {
-    try {
-        const offset = req.query.offset ?? 0;
-        const publicPosts = await Post.findAll({
-            where: {
-                groupId: null,
-            },
-            order: [['createdAt', 'DESC']],
-            limit: 10,
-            offset: Number(offset),
-            include: [User, Answer],
-        });
-        res.json(publicPosts);
-        return;
-    } catch (error) {
-        res.status(400).json(error.message);
-    }
-};
-
 /** Sends basic information about a group specified by ID passed as a URL
  * parameter. */
 export const sendGroupDetails = async (

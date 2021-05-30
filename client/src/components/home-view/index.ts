@@ -6,7 +6,6 @@ import convertDate from '../../utils/convert-date';
 import activateLinks from '../../utils/activate-links';
 import Elements from '../../interfaces/elements-interface';
 import Post from '../../interfaces/post-interface';
-import BrowserRouter from '../browser-router/index';
 import '../primary-heading/index';
 import '../router-link/index';
 import '../primary-button/index';
@@ -131,12 +130,10 @@ class HomeView extends HTMLElement {
 
     /** Requests group's posts from the server, controlling the offset. */
     async loadDetails(): Promise<void> {
-        const currentGroupId = this.dataset.id ?? 'global';
         const groupPosts = await fetch(
-            `/api/group/${currentGroupId}/posts?offset=${this.offset}`
+            `/api/post/global?offset=${this.offset}`
         );
         if (!groupPosts.ok) {
-            BrowserRouter.redirect('/404');
             return;
         }
         const details = await groupPosts.json();
