@@ -17,6 +17,18 @@ export const createNewGroup = async (
         const { name, type } = validateNewGroup(req.body);
         const { userId } = req.user;
 
+        /** Prevent creating groups with the same name. */
+        const existingGroup = await Group.findOne({
+            where: {
+                name,
+            },
+        });
+        if (existingGroup) {
+            throw Error(
+                'This group name has already been taken. Please choose a different name.'
+            );
+        }
+
         /** Find the current user. */
         const user = await User.findOne({
             where: { id: userId },
@@ -79,6 +91,54 @@ export const joinGroup = async (req: Request, res: Response): Promise<void> => {
         await group.$set('users', [...group.users, user]);
 
         /** Send the group that the user has joined to the client. */
+        res.json(group);
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+};
+
+/** Breaks the association between the current user and a group specified by the
+group ID attached to a request body. Use on protected routes only. */
+export const leaveGroup = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const { groupId } = req.body;
+        const { userId } = req.user;
+
+        /** Check if the group ID has been provided. */
+        if (!groupId || !testUUID(groupId)) {
+            throw Error('Incorrect or missing group ID.');
+        }
+
+        /** Find the group that the user wants to leave. */
+        const group = await Group.findOne({
+            where: { id: groupId },
+            include: [User],
+        });
+        if (!group) {
+            throw Error(
+                'Could not find a group with the corresponding group ID.'
+            );
+        }
+
+        /** Find the current user. */
+        const user = await User.findOne({
+            where: { id: userId },
+            include: [Group],
+        });
+        if (!user) {
+            throw Error(
+                'Could not find a user with the corresponding user ID.'
+            );
+        }
+
+        /** Break the association between the user and the group. */
+        await user.$remove('groups', group);
+        await group.$remove('user', user);
+
+        /** Send the group that the user has left to the client. */
         res.json(group);
     } catch (error) {
         res.status(400).json(error.message);
