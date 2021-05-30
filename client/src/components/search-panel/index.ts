@@ -140,7 +140,7 @@ class SearchPanel extends HTMLElement {
             count.classList.add('tag-count');
             count.textContent =
                 tag.posts.length === 1
-                    ? `${tag.posts.length} Posts`
+                    ? `${tag.posts.length} Post`
                     : `${tag.posts.length} Posts`;
             tagElement.appendChild(name);
             tagElement.appendChild(count);

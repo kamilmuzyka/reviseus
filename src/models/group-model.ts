@@ -15,11 +15,17 @@ import Post from './post-model.js';
 export interface GroupAttributes {
     id: string;
     name: string;
+    type: string;
     users?: User[];
     posts?: Post[];
 }
 
 interface GroupCreationAttributes extends Optional<GroupAttributes, 'id'> {}
+
+enum GroupType {
+    'public',
+    'private',
+}
 
 @Table({
     timestamps: false,
@@ -37,6 +43,12 @@ class Group extends Model<GroupAttributes, GroupCreationAttributes> {
         allowNull: false,
     })
     name: string;
+
+    @Column({
+        type: DataType.ENUM('public', 'private'),
+        allowNull: false,
+    })
+    type: GroupType;
 
     @BelongsToMany(() => User, () => UserGroups)
     users: User[];
