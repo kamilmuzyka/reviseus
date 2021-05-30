@@ -42,7 +42,11 @@ template.innerHTML = html`
                         <groups-view></groups-view>
                     </single-route>
                     <!-- New Group -->
-                    <single-route data-path="/groups/new" data-exact="true">
+                    <single-route
+                        data-path="/groups/new"
+                        data-exact="true"
+                        data-protect="true"
+                    >
                         <new-group-view></new-group-view>
                     </single-route>
                     <!-- Preferences -->
