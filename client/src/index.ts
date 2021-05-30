@@ -11,6 +11,7 @@ import './components/menu-button/index';
 import './components/secondary-container/index';
 import './components/home-view/index';
 import './components/groups-view/index';
+import './components/new-group-view/index';
 import './components/preferences-view/index';
 import './components/search-view/index';
 import './components/new-post-view/index';
@@ -39,6 +40,10 @@ template.innerHTML = html`
                         data-protect="true"
                     >
                         <groups-view></groups-view>
+                    </single-route>
+                    <!-- New Group -->
+                    <single-route data-path="/groups/new" data-exact="true">
+                        <new-group-view></new-group-view>
                     </single-route>
                     <!-- Preferences -->
                     <single-route

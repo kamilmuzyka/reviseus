@@ -14,12 +14,26 @@ template.innerHTML = html`
 
         .modal-buttons {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
+        @media (min-width: 400px) {
+            .modal-buttons {
+                flex-direction: row;
+            }
+        }
+
         .modal-buttons > *:first-child {
-            margin-right: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 400px) {
+            .modal-buttons > *:first-child {
+                margin-bottom: 0;
+                margin-right: 1.5rem;
+            }
         }
     </style>
     <modal-window data-name="logout">

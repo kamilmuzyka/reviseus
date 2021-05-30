@@ -73,6 +73,15 @@ template.innerHTML = html`
         .post-tags > *:not(:last-child) {
             margin-right: 1.5rem;
         }
+
+        .post-tags a {
+            text-decoration: none;
+            color: var(--accent);
+        }
+
+        .post-tags a:hover {
+            text-decoration: underline;
+        }
     </style>
     <article class="post">
         <section class="post-section">
@@ -261,7 +270,10 @@ class PostView extends HTMLElement {
         const tagsFragment = document.createDocumentFragment();
         this.details.tags.forEach((tag) => {
             const item = document.createElement('li');
-            item.textContent = `#${tag.name}`;
+            const link = document.createElement('a', { is: 'router-link' });
+            link.href = `/search?query=${tag.name}`;
+            link.textContent = `#${tag.name}`;
+            item.appendChild(link);
             tagsFragment.appendChild(item);
         });
         this.el.tags.appendChild(tagsFragment);

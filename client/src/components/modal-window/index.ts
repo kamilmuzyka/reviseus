@@ -28,7 +28,7 @@ template.innerHTML = html`
         }
 
         .modal-inner {
-            padding: 5rem;
+            padding: 3.5rem;
             background-color: var(--primary-bg);
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
