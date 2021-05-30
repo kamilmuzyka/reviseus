@@ -40,6 +40,51 @@ export const createNewGroup = async (
     }
 };
 
+/** Associates the current user with a group specified by the group ID attached
+to a request body. Use on protected routes only. */
+export const joinGroup = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { groupId } = req.body;
+        const { userId } = req.user;
+
+        /** Check if the group ID has been provided. */
+        if (!groupId || !testUUID(groupId)) {
+            throw Error('Incorrect or missing group ID.');
+        }
+
+        /** Find the group that the user wants to join. */
+        const group = await Group.findOne({
+            where: { id: groupId },
+            include: [User],
+        });
+        if (!group) {
+            throw Error(
+                'Could not find a group with the corresponding group ID.'
+            );
+        }
+
+        /** Find the current user. */
+        const user = await User.findOne({
+            where: { id: userId },
+            include: [Group],
+        });
+        if (!user) {
+            throw Error(
+                'Could not find a user with the corresponding user ID.'
+            );
+        }
+
+        /** Associate user with the group. */
+        await user.$set('groups', [...user.groups, group]);
+        await group.$set('users', [...group.users, user]);
+
+        /** Send the group that the user has joined to the client. */
+        res.json(group);
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+};
+
 /** Sends all posts belonging to a group given by ID passed as a URL parameter.
  * If there is no ID provided, it sends public posts that don't belong to any
  * group. */
