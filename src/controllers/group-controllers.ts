@@ -145,40 +145,88 @@ export const leaveGroup = async (
     }
 };
 
-/** Sends all posts belonging to a group given by ID passed as a URL parameter.
- * If there is no ID provided, it sends public posts that don't belong to any
- * group. */
+/** Sends posts belonging to a group specified by ID passed as a URL parameter.
+ * The current user must be a member of the group to access its posts. Use on
+ * protected routes only. */
 export const sendGroupPosts = async (
     req: Request,
     res: Response
 ): Promise<void> => {
     try {
         const groupId = req.params.id;
-        const offset = Number(req.query.offset);
+        const { userId } = req.user;
+        const offset = req.query.offset ?? 0;
 
-        /** Find and send group posts if a group ID has been provided. */
-        if (groupId && testUUID(groupId)) {
-            const groupPosts = await Post.findAll({
-                where: {
-                    groupId,
-                },
-                order: [['createdAt', 'DESC']],
-                limit: 10,
-                offset,
-                include: [User, Answer],
-            });
-            res.json(groupPosts);
-            return;
+        /** Check if the group ID has been provided. */
+        if (!groupId || !testUUID(groupId)) {
+            throw Error('Incorrect group ID.');
         }
 
-        /** Find and send public posts if no group ID has been provided. */
+        /** Find the specified group. */
+        const group = await Group.findOne({
+            where: {
+                id: groupId,
+            },
+            include: [User],
+        });
+        if (!group) {
+            throw Error(
+                'Could not find a group with the corresponding group ID.'
+            );
+        }
+
+        /** Find the current user. */
+        const user = await User.findOne({
+            where: {
+                id: userId,
+            },
+        });
+        if (!user) {
+            throw Error(
+                'Could not find a user with the corresponding user ID.'
+            );
+        }
+
+        /** Check if the current user is a member of the group. */
+        const isMember = await group.$has('users', user);
+        if (!isMember) {
+            throw Error(
+                'You must be a member of this group to access its posts.'
+            );
+        }
+
+        /** Find and send group posts. */
+        const groupPosts = await Post.findAll({
+            where: {
+                groupId,
+            },
+            order: [['createdAt', 'DESC']],
+            limit: 10,
+            offset: Number(offset),
+            include: [User, Answer],
+        });
+        res.json(groupPosts);
+        return;
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+};
+
+/** Sends global posts that don't belong to any group. Anyone can access these
+ * posts. */
+export const sendGlobalPosts = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const offset = req.query.offset ?? 0;
         const publicPosts = await Post.findAll({
             where: {
                 groupId: null,
             },
             order: [['createdAt', 'DESC']],
             limit: 10,
-            offset,
+            offset: Number(offset),
             include: [User, Answer],
         });
         res.json(publicPosts);

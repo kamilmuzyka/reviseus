@@ -6,6 +6,7 @@ import {
     joinGroup,
     leaveGroup,
     sendGroupPosts,
+    sendGlobalPosts,
 } from '../controllers/group-controllers.js';
 
 const router = Router();
@@ -13,6 +14,7 @@ const router = Router();
 router.post('/', protect, createNewGroup);
 router.put('/join', protect, joinGroup);
 router.put('/leave', protect, leaveGroup);
-router.get('/:id/posts', sendGroupPosts);
+router.get('/global/posts', sendGlobalPosts);
+router.get('/:id/posts', protect, sendGroupPosts);
 
 export default router;

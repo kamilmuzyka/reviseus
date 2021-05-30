@@ -131,7 +131,7 @@ class HomeView extends HTMLElement {
 
     /** Requests group's posts from the server, controlling the offset. */
     async loadDetails(): Promise<void> {
-        const currentGroupId = this.dataset.id ?? 'public';
+        const currentGroupId = this.dataset.id ?? 'global';
         const groupPosts = await fetch(
             `/api/group/${currentGroupId}/posts?offset=${this.offset}`
         );
