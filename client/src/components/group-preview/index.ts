@@ -7,6 +7,11 @@ const template = document.createElement('template');
 template.innerHTML = html`
     <style>
         .group-preview {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
             padding: 2.5rem;
             background-color: var(--secondary-bg);
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -78,31 +83,33 @@ template.innerHTML = html`
         }
     </style>
     <div class="group-preview">
-        <secondary-heading class="group-name"
-            >Lorem ipsum dolor sit amet</secondary-heading
-        >
-        <div class="group-details">
-            <div class="group-detail">24 Members</div>
-            <div class="group-detail">Public Group</div>
-        </div>
-        <div class="group-members">
-            <div class="group-member">
-                <img
-                    class="group-member-picture"
-                    src="https://picsum.photos/100/100"
-                />
+        <div>
+            <secondary-heading class="group-name"
+                >Lorem ipsum dolor sit amet</secondary-heading
+            >
+            <div class="group-details">
+                <div class="group-detail">24 Members</div>
+                <div class="group-detail">Public Group</div>
             </div>
-            <div class="group-member">
-                <img
-                    class="group-member-picture"
-                    src="https://picsum.photos/101/101"
-                />
-            </div>
-            <div class="group-member">
-                <img
-                    class="group-member-picture"
-                    src="https://picsum.photos/102/102"
-                />
+            <div class="group-members">
+                <div class="group-member">
+                    <img
+                        class="group-member-picture"
+                        src="https://picsum.photos/100/100"
+                    />
+                </div>
+                <div class="group-member">
+                    <img
+                        class="group-member-picture"
+                        src="https://picsum.photos/101/101"
+                    />
+                </div>
+                <div class="group-member">
+                    <img
+                        class="group-member-picture"
+                        src="https://picsum.photos/102/102"
+                    />
+                </div>
             </div>
         </div>
         <div class="group-controls group-controls-danger">Leave Group</div>
