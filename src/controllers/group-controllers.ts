@@ -235,3 +235,38 @@ export const sendGlobalPosts = async (
         res.status(400).json(error.message);
     }
 };
+
+/** Sends basic information about a group specified by ID passed as a URL
+ * parameter. */
+export const sendGroupDetails = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const groupId = req.params.id;
+
+        /** Check if the group ID has been provided. */
+        if (!groupId || !testUUID(groupId)) {
+            throw Error('Incorrect group ID.');
+        }
+
+        /** Find the specified group. */
+        const group = await Group.findOne({
+            where: {
+                id: groupId,
+            },
+            include: [User],
+        });
+        if (!group) {
+            throw Error(
+                'Could not find a group with the corresponding group ID.'
+            );
+        }
+
+        /** Send the group details. */
+        res.json(group);
+        return;
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+};
