@@ -2,7 +2,7 @@ html {
     font-size: 62.5%;
     --accent: #1d8dee;
     --google: #ef501e;
-    --error: #891c23;
+    --danger: #dc143c;
 }
 
 html,

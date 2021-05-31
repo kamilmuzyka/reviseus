@@ -49,6 +49,13 @@ template.innerHTML = html`
                     >
                         <new-group-view></new-group-view>
                     </single-route>
+                    <!-- New Group Message -->
+                    <single-route
+                        data-path="/groups/new/:id"
+                        data-protect="true"
+                    >
+                        <div>Created</div>
+                    </single-route>
                     <!-- Preferences -->
                     <single-route
                         data-path="/preferences"

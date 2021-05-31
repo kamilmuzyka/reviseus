@@ -79,7 +79,7 @@ template.innerHTML = html`
         }
 
         .group-controls-danger {
-            color: crimson;
+            color: var(--danger);
         }
     </style>
     <div class="group-preview">

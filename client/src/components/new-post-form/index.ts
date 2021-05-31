@@ -70,22 +70,14 @@ template.innerHTML = html`
         .form-error {
             display: none;
             margin-top: 2.5rem;
-            padding: 1rem;
-            background-color: var(--error);
-            border-radius: 5px;
-            color: #dedede;
+            color: var(--danger);
         }
 
         .form-error.active {
             display: block;
         }
     </style>
-    <form
-        method="POST"
-        action="/api/post"
-        enctype="multipart/form-data"
-        class="form"
-    >
+    <form class="form">
         <div class="form-group">
             <label for="title">Title</label>
             <input
@@ -189,18 +181,6 @@ class NewPostForm extends HTMLElement {
         }
     }
 
-    addEventListeners(): void {
-        this.el.submitButton.addEventListener('click', () =>
-            this.submitNewPost()
-        );
-        this.el.uploadButton.addEventListener('click', () =>
-            this.openFileInput()
-        );
-        this.el.fileInput.addEventListener('change', () =>
-            this.updateFileInput()
-        );
-    }
-
     openFileInput(): void {
         if (this.el.fileInput instanceof HTMLInputElement) {
             this.el.fileInput.click();
@@ -240,6 +220,18 @@ class NewPostForm extends HTMLElement {
             }
             this.displayErrors(result);
         }
+    }
+
+    addEventListeners(): void {
+        this.el.submitButton.addEventListener('click', () =>
+            this.submitNewPost()
+        );
+        this.el.uploadButton.addEventListener('click', () =>
+            this.openFileInput()
+        );
+        this.el.fileInput.addEventListener('change', () =>
+            this.updateFileInput()
+        );
     }
 
     disconnectedCallback(): void {

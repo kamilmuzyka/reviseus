@@ -1,6 +1,7 @@
 /** @module Component/NewGroupForm */
 import html from '../../utils/html-tag';
 import Elements from '../../interfaces/elements-interface';
+import BrowserRouter from '../browser-router/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -89,10 +90,11 @@ template.innerHTML = html`
         .form-error {
             display: none;
             margin-top: 2.5rem;
-            padding: 1rem;
-            background-color: var(--error);
-            border-radius: 5px;
-            color: #dedede;
+            color: var(--danger);
+        }
+
+        .form-error.active {
+            display: block;
         }
     </style>
     <form class="form">
@@ -115,13 +117,19 @@ template.innerHTML = html`
                         class="radio-input"
                         type="radio"
                         name="type"
+                        value="public"
                         checked
                     />
                     <div class="radio-pointer"></div>
                 </label>
                 <label class="radio-label">
                     <span>Private</span>
-                    <input class="radio-input" type="radio" name="type" />
+                    <input
+                        class="radio-input"
+                        type="radio"
+                        name="type"
+                        value="private"
+                    />
                     <div class="radio-pointer"></div>
                 </label>
             </div>
@@ -160,15 +168,62 @@ class NewGroupForm extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.loadElements();
+        this.addEventListeners();
     }
 
     loadElements(): void {
-        const requestedElements = {};
+        const requestedElements = {
+            form: this.shadowRoot?.querySelector('form'),
+            submitButton: this.shadowRoot?.querySelector('.form-submit-button'),
+            error: this.shadowRoot?.querySelector('.form-error'),
+        };
         for (const element in requestedElements) {
             if (element) {
                 this.el[element] = requestedElements[element];
             }
         }
+    }
+
+    displayErrors(message: string): void {
+        this.el.error.textContent = message;
+        this.el.error.classList.add('active');
+    }
+
+    removeErrors(): void {
+        this.el.error.textContent = '';
+        this.el.error.classList.remove('active');
+    }
+
+    async submitNewGroup(): Promise<void> {
+        if (this.el.form instanceof HTMLFormElement) {
+            const formData = new FormData(this.el.form);
+            const payload = {};
+            formData.forEach((value, key) => (payload[key] = value));
+            const response = await fetch('/api/group', {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+                body: JSON.stringify(payload),
+            });
+            const result = await response.json();
+            if (response.ok) {
+                this.el.form.reset();
+                this.removeErrors();
+                BrowserRouter.redirect(`/groups/new/${result.id}`);
+                return;
+            }
+            this.displayErrors(result);
+        }
+    }
+
+    addEventListeners(): void {
+        this.el.submitButton.addEventListener('click', () =>
+            this.submitNewGroup()
+        );
+    }
+    disconnectedCallback(): void {
+        this.removeErrors();
     }
 }
 
