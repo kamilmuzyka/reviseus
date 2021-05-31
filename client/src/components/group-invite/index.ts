@@ -164,7 +164,7 @@ class GroupInvite extends HTMLElement {
 
     displayDetails(): void {
         if (this.el.input instanceof HTMLInputElement) {
-            this.el.input.value = `${location.origin}/groups/invite/${this.details.id}`;
+            this.el.input.value = `${location.origin}/join/group/${this.details.id}`;
         }
         this.el.name.textContent = this.details.name;
         this.el.members.textContent =

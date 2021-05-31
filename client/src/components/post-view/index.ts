@@ -146,11 +146,6 @@ class PostView extends HTMLElement {
         window.addEventListener('authchange', () => this.protectForm());
     }
 
-    /** Removes global event listeners. */
-    removeEventListeners(): void {
-        window.removeEventListener('authchange', () => this.protectForm());
-    }
-
     /** Shows or hides the answer form based on the user's auth status. */
     protectForm(): void {
         if (auth.ok) {
@@ -320,6 +315,7 @@ class PostView extends HTMLElement {
     connectedCallback(): void {
         (async () => {
             await this.loadDetails();
+            this.clearDetails();
             this.displayDetails();
             socket.io.emit('subscribePost', this.dataset.id);
         })();
@@ -327,7 +323,6 @@ class PostView extends HTMLElement {
 
     disconnectedCallback(): void {
         this.clearDetails();
-        this.removeEventListeners();
         socket.io.emit('unsubscribePost', this.dataset.id);
     }
 }

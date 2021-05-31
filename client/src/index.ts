@@ -13,6 +13,7 @@ import './components/home-view/index';
 import './components/groups-view/index';
 import './components/new-group-view/index';
 import './components/new-group-message/index';
+import './components/group-join/index';
 import './components/preferences-view/index';
 import './components/search-view/index';
 import './components/new-post-view/index';
@@ -56,6 +57,13 @@ template.innerHTML = html`
                         data-protect="true"
                     >
                         <new-group-message></new-group-message>
+                    </single-route>
+                    <!-- Join Group -->
+                    <single-route
+                        data-path="/join/group/:id"
+                        data-protect="true"
+                    >
+                        <group-join></group-join>
                     </single-route>
                     <!-- Preferences -->
                     <single-route
