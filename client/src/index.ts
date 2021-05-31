@@ -12,6 +12,7 @@ import './components/secondary-container/index';
 import './components/home-view/index';
 import './components/groups-view/index';
 import './components/new-group-view/index';
+import './components/new-group-message/index';
 import './components/preferences-view/index';
 import './components/search-view/index';
 import './components/new-post-view/index';
@@ -54,7 +55,7 @@ template.innerHTML = html`
                         data-path="/groups/new/:id"
                         data-protect="true"
                     >
-                        <div>Created</div>
+                        <new-group-message></new-group-message>
                     </single-route>
                     <!-- Preferences -->
                     <single-route

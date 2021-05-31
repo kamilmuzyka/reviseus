@@ -21,13 +21,16 @@ template.innerHTML = html`
         .group-details {
             display: flex;
             flex-wrap: wrap;
-            margin-top: 1.5rem;
+            margin-top: 0.5rem;
             font-size: 1.4rem;
             color: var(--secondary-text);
         }
 
         .group-detail {
             position: relative;
+        }
+
+        .group-detail:not(:last-child) {
             margin-right: 2.4rem;
         }
 

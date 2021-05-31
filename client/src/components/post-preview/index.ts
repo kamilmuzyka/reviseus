@@ -59,6 +59,9 @@ template.innerHTML = html`
 
         .post-detail {
             position: relative;
+        }
+
+        .post-detail:not(:last-child) {
             margin-right: 2.4rem;
         }
 
