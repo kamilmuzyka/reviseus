@@ -1,6 +1,7 @@
 /** @module Component/GroupInvite */
 import html from '../../utils/html-tag';
 import Elements from '../../interfaces/elements-interface';
+import BrowserRouter from '../browser-router/index';
 import '../secondary-heading/index';
 
 const template = document.createElement('template');
@@ -81,20 +82,15 @@ template.innerHTML = html`
         }
     </style>
     <div class="group-invite">
-        <secondary-heading>Sed a tempor neque non semper</secondary-heading>
+        <secondary-heading class="group-name"></secondary-heading>
         <div class="group-details">
-            <span class="group-detail">1 Member</span>
-            <span class="group-detail">Private Group</span>
+            <span class="group-detail group-members"></span>
+            <span class="group-detail group-type"></span>
         </div>
         <div class="invite-container">
             <label for="link">Invite others</label>
             <div class="invite-group">
-                <input
-                    class="invite-input"
-                    name="link"
-                    value="http://revise.us/groups/join/ef2ea026-c85d-4a3c-9729-476288da7143"
-                    readonly
-                />
+                <input class="invite-input" name="link" readonly />
                 <button class="invite-button">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -130,6 +126,7 @@ template.innerHTML = html`
 
 class GroupInvite extends HTMLElement {
     private el: Elements = {};
+    private details;
 
     constructor() {
         super();
@@ -143,12 +140,41 @@ class GroupInvite extends HTMLElement {
         const requestedElements = {
             input: this.shadowRoot?.querySelector('.invite-input'),
             button: this.shadowRoot?.querySelector('.invite-button'),
+            name: this.shadowRoot?.querySelector('.group-name'),
+            members: this.shadowRoot?.querySelector('.group-members'),
+            type: this.shadowRoot?.querySelector('.group-type'),
         };
         for (const element in requestedElements) {
             if (element) {
                 this.el[element] = requestedElements[element];
             }
         }
+    }
+
+    async loadDetails(): Promise<void> {
+        const groupId = this.dataset.id;
+        const response = await fetch(`/api/group/${groupId}`);
+        if (!response.ok) {
+            BrowserRouter.redirect('/404');
+            return;
+        }
+        const details = await response.json();
+        this.details = details;
+    }
+
+    displayDetails(): void {
+        if (this.el.input instanceof HTMLInputElement) {
+            this.el.input.value = `${location.origin}/groups/invite/${this.details.id}`;
+        }
+        this.el.name.textContent = this.details.name;
+        this.el.members.textContent =
+            this.details.users.length === 1
+                ? `${this.details.users.length} Member`
+                : `${this.details.users.length} Members`;
+        this.el.type.textContent = `${
+            this.details.type.charAt(0).toUpperCase() +
+            this.details.type.slice(1)
+        } Group`;
     }
 
     copyToClipboard(): void {
@@ -164,7 +190,12 @@ class GroupInvite extends HTMLElement {
         this.el.button.addEventListener('click', () => this.copyToClipboard());
     }
 
-    /* dataset.id => fetch */
+    connectedCallback(): void {
+        (async () => {
+            await this.loadDetails();
+            this.displayDetails();
+        })();
+    }
 }
 
 if (!customElements.get('group-invite')) {
