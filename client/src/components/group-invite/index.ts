@@ -1,5 +1,6 @@
 /** @module Component/GroupInvite */
 import html from '../../utils/html-tag';
+import Elements from '../../interfaces/elements-interface';
 import '../secondary-heading/index';
 
 const template = document.createElement('template');
@@ -88,9 +89,12 @@ template.innerHTML = html`
         <div class="invite-container">
             <label for="link">Invite others</label>
             <div class="invite-group">
-                <input class="invite-input" name="link"
-                value="http://revise.us/groups/join/ef2ea026-c85d-4a3c-9729-476288da7143"/
-                readonly >
+                <input
+                    class="invite-input"
+                    name="link"
+                    value="http://revise.us/groups/join/ef2ea026-c85d-4a3c-9729-476288da7143"
+                    readonly
+                />
                 <button class="invite-button">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -125,10 +129,39 @@ template.innerHTML = html`
 `;
 
 class GroupInvite extends HTMLElement {
+    private el: Elements = {};
+
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
+        this.loadElements();
+        this.addEventListeners();
+    }
+
+    loadElements(): void {
+        const requestedElements = {
+            input: this.shadowRoot?.querySelector('.invite-input'),
+            button: this.shadowRoot?.querySelector('.invite-button'),
+        };
+        for (const element in requestedElements) {
+            if (element) {
+                this.el[element] = requestedElements[element];
+            }
+        }
+    }
+
+    copyToClipboard(): void {
+        const input = this.el.input;
+        if (input instanceof HTMLInputElement) {
+            input.select();
+            input.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+        }
+    }
+
+    addEventListeners(): void {
+        this.el.button.addEventListener('click', () => this.copyToClipboard());
     }
 
     /* dataset.id => fetch */
