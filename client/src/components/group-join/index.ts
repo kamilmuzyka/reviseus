@@ -192,8 +192,7 @@ class GroupJoin extends HTMLElement {
             })
         );
         if (isMember) {
-            /** To do: Redirect to the group page. */
-            BrowserRouter.redirect('/');
+            BrowserRouter.redirect('/groups');
             return;
         }
         (async () => {
@@ -214,8 +213,8 @@ class GroupJoin extends HTMLElement {
             }),
         });
         if (response.ok) {
-            /** To do: Redirect to the group page. */
-            BrowserRouter.redirect('/');
+            auth.check();
+            BrowserRouter.redirect('/groups');
             return;
         }
     }

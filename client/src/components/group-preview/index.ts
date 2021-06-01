@@ -1,7 +1,9 @@
 /** @module Component/GroupPreview */
 import html from '../../utils/html-tag';
-import '../secondary-heading/index';
+import auth from '../../contexts/auth';
 import Elements from '../../interfaces/elements-interface';
+import '../secondary-heading/index';
+import BrowserRouter from '../browser-router';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -46,35 +48,16 @@ template.innerHTML = html`
             border-radius: 50%;
         }
 
-        .group-members {
-            display: flex;
-            margin-top: 1.5rem;
-        }
-
-        .group-member {
-            width: 35px;
-            height: 35px;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        .group-member:nth-child(2) {
-            transform: translateX(-10px);
-        }
-
-        .group-member:nth-child(3) {
-            transform: translateX(-20px);
-        }
-
-        .group-member-picture {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .group-controls {
             margin-top: 1.5rem;
+        }
+
+        .group-control {
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: inherit;
+            cursor: pointer;
         }
 
         .group-controls-accent {
@@ -87,35 +70,22 @@ template.innerHTML = html`
     </style>
     <div class="group-preview">
         <div>
-            <secondary-heading class="group-name"
-                >Lorem ipsum dolor sit amet</secondary-heading
-            >
+            <secondary-heading class="group-name">
+                <slot name="name"></slot>
+            </secondary-heading>
             <div class="group-details">
-                <div class="group-detail">24 Members</div>
-                <div class="group-detail">Public Group</div>
+                <div class="group-detail">
+                    <slot name="count"></slot>
+                </div>
+                <div class="group-detail">
+                    <slot name="type"></slot>
+                </div>
             </div>
-            <div class="group-members">
-                <div class="group-member">
-                    <img
-                        class="group-member-picture"
-                        src="https://picsum.photos/100/100"
-                    />
-                </div>
-                <div class="group-member">
-                    <img
-                        class="group-member-picture"
-                        src="https://picsum.photos/101/101"
-                    />
-                </div>
-                <div class="group-member">
-                    <img
-                        class="group-member-picture"
-                        src="https://picsum.photos/102/102"
-                    />
-                </div>
+            <div>
+                <slot name="members"></slot>
             </div>
         </div>
-        <div class="group-controls group-controls-danger">Leave Group</div>
+        <div class="group-controls"></div>
     </div>
 `;
 
@@ -130,12 +100,85 @@ class GroupPreview extends HTMLElement {
     }
 
     loadElements(): void {
-        const requestedElements = {};
+        const requestedElements = {
+            controls: this.shadowRoot?.querySelector('.group-controls'),
+        };
         for (const element in requestedElements) {
             if (element) {
                 this.el[element] = requestedElements[element];
             }
         }
+    }
+
+    async leaveGroup(): Promise<void> {
+        const groupId = this.dataset.id;
+        const response = await fetch('/api/group/leave', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                groupId,
+            }),
+        });
+        if (response.ok) {
+            auth.check();
+            this.remove();
+        }
+    }
+
+    async joinGroup(): Promise<void> {
+        const groupId = this.dataset.id;
+        const response = await fetch('/api/group/join', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                groupId,
+            }),
+        });
+        if (response.ok) {
+            auth.check();
+            BrowserRouter.redirect('/groups');
+        }
+    }
+
+    createLeaveButton(): HTMLElement {
+        const leaveButton = document.createElement('button');
+        leaveButton.classList.add('group-control');
+        leaveButton.classList.add('group-controls-danger');
+        leaveButton.textContent = 'Leave Group';
+        leaveButton.addEventListener('click', () => this.leaveGroup());
+        return leaveButton;
+    }
+
+    createJoinButton(): HTMLElement {
+        const joinButton = document.createElement('button');
+        joinButton.classList.add('group-control');
+        joinButton.classList.add('group-controls-accent');
+        joinButton.textContent = 'Join Group';
+        joinButton.addEventListener('click', () => this.joinGroup());
+        return joinButton;
+    }
+
+    displayControls(): void {
+        const isMember = Boolean(
+            auth.user.groups?.find((group) => {
+                return group.id === this.dataset.id;
+            })
+        );
+        if (isMember) {
+            const leaveButton = this.createLeaveButton();
+            this.el.controls.appendChild(leaveButton);
+            return;
+        }
+        const joinButton = this.createJoinButton();
+        this.el.controls.appendChild(joinButton);
+    }
+
+    connectedCallback(): void {
+        this.displayControls();
     }
 }
 

@@ -34,7 +34,12 @@ export const getCurrentUser = async (
         if (userId && testUUID(userId)) {
             const user = await User.findOne({
                 where: { id: userId },
-                include: [Group],
+                include: [
+                    {
+                        model: Group,
+                        include: [User],
+                    },
+                ],
             });
             if (!user) {
                 throw Error(

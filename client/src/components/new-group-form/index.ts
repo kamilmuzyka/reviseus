@@ -1,5 +1,6 @@
 /** @module Component/NewGroupForm */
 import html from '../../utils/html-tag';
+import auth from '../../contexts/auth';
 import Elements from '../../interfaces/elements-interface';
 import BrowserRouter from '../browser-router/index';
 
@@ -208,6 +209,7 @@ class NewGroupForm extends HTMLElement {
             });
             const result = await response.json();
             if (response.ok) {
+                auth.check();
                 this.el.form.reset();
                 this.removeErrors();
                 BrowserRouter.redirect(`/groups/new/${result.id}`);
