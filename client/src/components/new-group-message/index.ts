@@ -12,10 +12,10 @@ template.innerHTML = html`
             margin-top: 2.5rem;
         }
     </style>
-    <div>
+    <section>
         <primary-heading>Group created ✨</primary-heading>
         <div class="invite-container"></div>
-    </div>
+    </section>
 `;
 
 class NewGroupMessage extends HTMLElement {

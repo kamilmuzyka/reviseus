@@ -18,7 +18,6 @@ template.innerHTML = html`
         .group-details {
             display: flex;
             flex-wrap: wrap;
-            margin-top: 0.5rem;
             font-size: 1.4rem;
             color: var(--secondary-text);
         }

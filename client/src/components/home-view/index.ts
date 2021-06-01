@@ -280,7 +280,9 @@ class HomeView extends HTMLElement {
 
     disconnectedCallback(): void {
         this.clearDetails();
-        this.observer.unobserve(this.el.lazy);
+        if (this.observer) {
+            this.observer.unobserve(this.el.lazy);
+        }
         /** Use 'public' for now */
         socket.io.emit('unsubscribeGroup', 'public');
     }

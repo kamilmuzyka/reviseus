@@ -27,14 +27,8 @@ export const sendSearchResults = async (
         /** Create Fuse instance and define properties to be considered when
          * searching. */
         const fuse = new Fuse(posts, {
-            keys: [
-                'title',
-                'content',
-                'tags.name',
-                'user.firstName',
-                'user.lastName',
-            ],
-            threshold: 0.4,
+            keys: ['title', 'tags.name', 'user.firstName', 'user.lastName'],
+            threshold: 0.5,
         });
 
         /** Search and send the results. */
