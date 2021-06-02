@@ -60,12 +60,39 @@ template.innerHTML = html`
             cursor: pointer;
         }
 
-        .group-controls-accent {
+        .group-control-leave {
+            display: none;
+            color: var(--danger);
+        }
+
+        .group-control-join {
+            display: none;
             color: var(--accent);
         }
 
-        .group-controls-danger {
+        .group-confirm {
+            display: none;
+        }
+
+        .group-confirm-control {
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .group-confirm-control:hover {
+            text-decoration: underline;
+        }
+
+        .danger {
             color: var(--danger);
+        }
+
+        .accent {
+            color: var(--accent);
+        }
+
+        .active {
+            display: block;
         }
     </style>
     <div class="group-preview">
@@ -85,7 +112,26 @@ template.innerHTML = html`
                 <slot name="members"></slot>
             </div>
         </div>
-        <div class="group-controls"></div>
+        <div class="group-controls">
+            <button class="group-control group-control-join">Join Group</button>
+            <button class="group-control group-control-leave">
+                Leave Group
+            </button>
+            <span class="group-confirm">
+                <span>Are you sure?</span>
+                <button
+                    class="group-control group-confirm-control group-confirm-yes"
+                >
+                    Yes
+                </button>
+                <span>/</span>
+                <button
+                    class="group-control group-confirm-control group-confirm-no"
+                >
+                    No
+                </button>
+            </span>
+        </div>
     </div>
 `;
 
@@ -97,11 +143,16 @@ class GroupPreview extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: 'open' });
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.loadElements();
+        this.addEventListeners();
     }
 
     loadElements(): void {
         const requestedElements = {
-            controls: this.shadowRoot?.querySelector('.group-controls'),
+            leave: this.shadowRoot?.querySelector('.group-control-leave'),
+            join: this.shadowRoot?.querySelector('.group-control-join'),
+            confirm: this.shadowRoot?.querySelector('.group-confirm'),
+            confirmYes: this.shadowRoot?.querySelector('.group-confirm-yes'),
+            confirmNo: this.shadowRoot?.querySelector('.group-confirm-no'),
         };
         for (const element in requestedElements) {
             if (element) {
@@ -123,7 +174,6 @@ class GroupPreview extends HTMLElement {
         });
         if (response.ok) {
             auth.check();
-            this.remove();
         }
     }
 
@@ -144,24 +194,6 @@ class GroupPreview extends HTMLElement {
         }
     }
 
-    createLeaveButton(): HTMLElement {
-        const leaveButton = document.createElement('button');
-        leaveButton.classList.add('group-control');
-        leaveButton.classList.add('group-controls-danger');
-        leaveButton.textContent = 'Leave Group';
-        leaveButton.addEventListener('click', () => this.leaveGroup());
-        return leaveButton;
-    }
-
-    createJoinButton(): HTMLElement {
-        const joinButton = document.createElement('button');
-        joinButton.classList.add('group-control');
-        joinButton.classList.add('group-controls-accent');
-        joinButton.textContent = 'Join Group';
-        joinButton.addEventListener('click', () => this.joinGroup());
-        return joinButton;
-    }
-
     displayControls(): void {
         const isMember = Boolean(
             auth.user.groups?.find((group) => {
@@ -169,12 +201,48 @@ class GroupPreview extends HTMLElement {
             })
         );
         if (isMember) {
-            const leaveButton = this.createLeaveButton();
-            this.el.controls.appendChild(leaveButton);
+            this.el.leave.classList.add('active');
             return;
         }
-        const joinButton = this.createJoinButton();
-        this.el.controls.appendChild(joinButton);
+        this.el.join.classList.add('active');
+    }
+
+    hideControls(): void {
+        this.el.leave.classList.remove('active');
+        this.el.join.classList.remove('active');
+    }
+
+    displayConfirm(action: string): void {
+        if (action === 'join') {
+            this.el.confirmYes.addEventListener('click', () =>
+                this.joinGroup()
+            );
+            this.el.confirm.classList.add('accent');
+        } else {
+            this.el.confirmYes.addEventListener('click', () =>
+                this.leaveGroup()
+            );
+            this.el.confirm.classList.add('danger');
+        }
+        this.el.confirm.classList.add('active');
+        this.hideControls();
+    }
+
+    hideConfirm(): void {
+        this.el.confirm.classList.remove('active');
+        this.displayControls();
+    }
+
+    addEventListeners(): void {
+        this.el.leave.addEventListener('click', () =>
+            this.displayConfirm('leave')
+        );
+        this.el.join.addEventListener('click', () =>
+            this.displayConfirm('join')
+        );
+        this.el.confirmNo.addEventListener('click', () => this.hideConfirm());
+        window.addEventListener('click', () => this.hideConfirm());
+        this.addEventListener('click', (e) => e.stopPropagation());
     }
 
     connectedCallback(): void {

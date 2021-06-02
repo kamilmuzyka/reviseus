@@ -185,22 +185,6 @@ class GroupJoin extends HTMLElement {
         } Group`;
     }
 
-    loadOrRedirect(): void {
-        const isMember = Boolean(
-            auth.user.groups?.find((group) => {
-                return group.id === this.dataset.id;
-            })
-        );
-        if (isMember) {
-            BrowserRouter.redirect('/groups');
-            return;
-        }
-        (async () => {
-            await this.loadDetails();
-            this.displayDetails();
-        })();
-    }
-
     async joinGroup(): Promise<void> {
         const groupId = this.dataset.id;
         const response = await fetch('/api/group/join', {
@@ -224,7 +208,10 @@ class GroupJoin extends HTMLElement {
     }
 
     connectedCallback(): void {
-        this.loadOrRedirect();
+        (async () => {
+            await this.loadDetails();
+            this.displayDetails();
+        })();
     }
 }
 
