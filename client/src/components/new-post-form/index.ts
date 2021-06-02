@@ -189,7 +189,10 @@ class NewPostForm extends HTMLElement {
 
     updateFileInput(): void {
         if (this.el.fileInput instanceof HTMLInputElement) {
-            this.el.fileCount.textContent = `${this.el.fileInput.files?.length} Files Selected`;
+            this.el.fileCount.textContent =
+                this.el.fileInput.files?.length === 1
+                    ? `${this.el.fileInput.files?.length} File Selected`
+                    : `${this.el.fileInput.files?.length} Files Selected`;
         }
     }
 

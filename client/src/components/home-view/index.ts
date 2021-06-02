@@ -270,6 +270,7 @@ class HomeView extends HTMLElement {
     connectedCallback(): void {
         (async () => {
             await this.loadDetails();
+            this.clearDetails();
             this.displayDetails();
             this.createObserver();
             this.observer.observe(this.el.lazy);
