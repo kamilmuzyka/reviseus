@@ -5,10 +5,10 @@ import Post from '../models/post-model.js';
 import Answer from '../models/answer-model.js';
 import User from '../models/user-model.js';
 import Tag from '../models/tag-model.js';
+import Group from '../models/group-model.js';
 
-/** Searches for all public posts based on a query provided in the URL query
- * string. Properties taken into consideration by the search algorithm are
- * title, content, tags and author. */
+/** Searches for all public posts and groups based on a query provided in the
+ * URL query string. */
 export const sendSearchResults = async (
     req: Request,
     res: Response
@@ -23,18 +23,33 @@ export const sendSearchResults = async (
             },
             include: [User, Tag, Answer],
         });
+        const groups = await Group.findAll({
+            where: {
+                type: 'public',
+            },
+            include: [User],
+        });
 
-        /** Create Fuse instance and define properties to be considered when
+        /** Create Fuse instances and define properties to be considered when
          * searching. */
-        const fuse = new Fuse(posts, {
+        const postsFuse = new Fuse(posts, {
             keys: ['title', 'tags.name', 'user.firstName', 'user.lastName'],
+            threshold: 0.5,
+        });
+        const groupsFuse = new Fuse(groups, {
+            keys: ['name'],
             threshold: 0.5,
         });
 
         /** Search and send the results. */
-        const results = fuse.search(query, {
-            limit: 10,
-        });
+        const results = {
+            posts: postsFuse.search(query, {
+                limit: 10,
+            }),
+            groups: groupsFuse.search(query, {
+                limit: 10,
+            }),
+        };
         res.json(results);
     } catch (error) {
         res.status(400).json(error.message);

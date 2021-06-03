@@ -195,16 +195,18 @@ class GroupPreview extends HTMLElement {
     }
 
     displayControls(): void {
-        const isMember = Boolean(
-            auth.user.groups?.find((group) => {
-                return group.id === this.dataset.id;
-            })
-        );
-        if (isMember) {
-            this.el.leave.classList.add('active');
-            return;
+        if (auth.ok && auth.user) {
+            const isMember = Boolean(
+                auth.user.groups?.find((group) => {
+                    return group.id === this.dataset.id;
+                })
+            );
+            if (isMember) {
+                this.el.leave.classList.add('active');
+                return;
+            }
+            this.el.join.classList.add('active');
         }
-        this.el.join.classList.add('active');
     }
 
     hideControls(): void {
@@ -213,19 +215,21 @@ class GroupPreview extends HTMLElement {
     }
 
     displayConfirm(action: string): void {
-        if (action === 'join') {
-            this.el.confirmYes.addEventListener('click', () =>
-                this.joinGroup()
-            );
-            this.el.confirm.classList.add('accent');
-        } else {
-            this.el.confirmYes.addEventListener('click', () =>
-                this.leaveGroup()
-            );
-            this.el.confirm.classList.add('danger');
+        if (auth.ok && auth.user) {
+            if (action === 'join') {
+                this.el.confirmYes.addEventListener('click', () =>
+                    this.joinGroup()
+                );
+                this.el.confirm.classList.add('accent');
+            } else {
+                this.el.confirmYes.addEventListener('click', () =>
+                    this.leaveGroup()
+                );
+                this.el.confirm.classList.add('danger');
+            }
+            this.el.confirm.classList.add('active');
+            this.hideControls();
         }
-        this.el.confirm.classList.add('active');
-        this.hideControls();
     }
 
     hideConfirm(): void {

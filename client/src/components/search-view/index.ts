@@ -4,13 +4,68 @@ import convertDate from '../../utils/convert-date';
 import activateLinks from '../../utils/activate-links';
 import Elements from '../../interfaces/elements-interface';
 import Post from '../../interfaces/post-interface';
+import Group from '../../interfaces/group-interface';
 import '../primary-heading/index';
+import '../secondary-heading/index';
 
 const template = document.createElement('template');
 template.innerHTML = html`
     <style>
         .query {
             color: var(--accent);
+        }
+
+        .results-heading {
+            margin-top: 2.5rem;
+        }
+
+        .results-container {
+            display: none;
+        }
+
+        .group-results {
+            display: grid;
+            gap: 2.5rem;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+            margin-top: 2.5rem;
+        }
+
+        @media (min-width: 700px) {
+            .group-results {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .group-members {
+            display: flex;
+            margin-top: 1.5rem;
+        }
+
+        .group-member {
+            width: 35px;
+            height: 35px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .group-member:nth-child(2) {
+            transform: translateX(-10px);
+        }
+
+        .group-member:nth-child(3) {
+            transform: translateX(-20px);
+        }
+
+        .group-member-picture {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .active {
+            display: block;
         }
 
         .error {
@@ -21,7 +76,16 @@ template.innerHTML = html`
         <primary-heading>
             Search results for <span class="query"></span>
         </primary-heading>
-        <div class="results"></div>
+        <div class="results-container post-results-container">
+            <secondary-heading class="results-heading">Posts</secondary-heading>
+            <div class="post-results"></div>
+        </div>
+        <div class="results-container group-results-container">
+            <secondary-heading class="results-heading"
+                >Groups</secondary-heading
+            >
+            <div class="group-results"></div>
+        </div>
         <div class="error"></div>
     </section>
 `;
@@ -47,7 +111,14 @@ class SearchView extends HTMLElement {
     loadElements(): void {
         const requestedElements = {
             query: this.shadowRoot?.querySelector('.query'),
-            results: this.shadowRoot?.querySelector('.results'),
+            postResults: this.shadowRoot?.querySelector('.post-results'),
+            postResultsContainer: this.shadowRoot?.querySelector(
+                '.post-results-container'
+            ),
+            groupResults: this.shadowRoot?.querySelector('.group-results'),
+            groupResultsContainer: this.shadowRoot?.querySelector(
+                '.group-results-container'
+            ),
             error: this.shadowRoot?.querySelector('.error'),
         };
         for (const element in requestedElements) {
@@ -127,23 +198,82 @@ class SearchView extends HTMLElement {
         return postPreview;
     }
 
+    createGroupPreviewElement(group: Group): HTMLElement {
+        /** Group Preview Element */
+        const groupPreview = document.createElement('group-preview');
+        groupPreview.dataset.id = group.id;
+        /** Group Name Slot */
+        const groupName = document.createElement('span');
+        groupName.setAttribute('slot', 'name');
+        groupName.textContent = group.name;
+        /** Group Count */
+        const groupCount = document.createElement('span');
+        groupCount.setAttribute('slot', 'count');
+        groupCount.textContent =
+            group.users.length === 1
+                ? `${group.users.length} Member`
+                : `${group.users.length} Members`;
+        /** Group Type */
+        const groupType = document.createElement('span');
+        groupType.setAttribute('slot', 'type');
+        groupType.textContent = `${
+            group.type.charAt(0).toUpperCase() + group.type.slice(1)
+        } Group`;
+        /** Group Members */
+        const groupMembers = document.createElement('span');
+        groupMembers.setAttribute('slot', 'members');
+        groupMembers.classList.add('group-members');
+        group.users.slice(0, 3).forEach((user) => {
+            /** Group Member */
+            const groupMember = document.createElement('div');
+            groupMember.classList.add('group-member');
+            /** Group Member Picture */
+            const groupMemberPicture = document.createElement('img');
+            groupMemberPicture.classList.add('group-member-picture');
+            groupMemberPicture.alt = `${user.firstName}'s profile picture`;
+            groupMemberPicture.src = user.profilePhoto;
+            groupMember.appendChild(groupMemberPicture);
+            groupMembers.appendChild(groupMember);
+        });
+        groupPreview.appendChild(groupName);
+        groupPreview.appendChild(groupCount);
+        groupPreview.appendChild(groupType);
+        groupPreview.appendChild(groupMembers);
+        return groupPreview;
+    }
+
     /** Populates the search-view component with results received from the server. */
     displaySearchResults(): void {
-        if (!this.results?.length) {
+        if (!this.results.posts.length && !this.results.groups.length) {
             this.el.error.textContent = 'We could not find any results 😥';
             return;
         }
-        const postsFragment = document.createDocumentFragment();
-        this.results.forEach((result) => {
-            const postPreview = this.createPostPreviewElement(result.item);
-            postsFragment.appendChild(postPreview);
-        });
-        this.el.results.appendChild(postsFragment);
+        if (this.results.posts.length) {
+            const postsFragment = document.createDocumentFragment();
+            this.results.posts.forEach((post) => {
+                const postPreview = this.createPostPreviewElement(post.item);
+                postsFragment.appendChild(postPreview);
+            });
+            this.el.postResultsContainer.classList.add('active');
+            this.el.postResults.appendChild(postsFragment);
+        }
+        if (this.results.groups.length) {
+            const groupsFragment = document.createDocumentFragment();
+            this.results.groups.forEach((group) => {
+                const groupPreview = this.createGroupPreviewElement(group.item);
+                groupsFragment.appendChild(groupPreview);
+            });
+            this.el.groupResultsContainer.classList.add('active');
+            this.el.groupResults.appendChild(groupsFragment);
+        }
     }
 
     /** Removes data from all populated HTML elements. */
     clearSearchResults(): void {
-        [...this.el.results.children].forEach((child) => child.remove());
+        [...this.el.postResults.children].forEach((child) => child.remove());
+        this.el.postResultsContainer.classList.remove('active');
+        [...this.el.groupResults.children].forEach((child) => child.remove());
+        this.el.groupResultsContainer.classList.remove('active');
         this.el.error.textContent = '';
     }
 
@@ -151,6 +281,7 @@ class SearchView extends HTMLElement {
         (async () => {
             this.saveSearchQuery();
             await this.loadSearchResults();
+            this.clearSearchResults();
             this.displaySearchResults();
         })();
     }

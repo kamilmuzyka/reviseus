@@ -6,7 +6,7 @@ interface Group {
     name: string;
     type: string;
     users: User[];
-    UserGroups: {
+    UserGroups?: {
         groupId: string;
         userId: string;
     };
