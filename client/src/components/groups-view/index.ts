@@ -60,7 +60,7 @@ template.innerHTML = html`
         }
     </style>
     <section>
-        <a href="/groups/new" is="router-link">
+        <a href="/group/new" is="router-link">
             <primary-button
                 data-background="transparent"
                 data-border="var(--subtle)"

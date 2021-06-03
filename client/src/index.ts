@@ -9,7 +9,7 @@ import './components/primary-container/index';
 import './components/main-menu/index';
 import './components/menu-button/index';
 import './components/secondary-container/index';
-import './components/home-view/index';
+import './components/group-view/index';
 import './components/groups-view/index';
 import './components/new-group-view/index';
 import './components/new-group-message/index';
@@ -33,9 +33,9 @@ template.innerHTML = html`
                 <browser-router>
                     <!-- Home -->
                     <single-route data-path="/" data-exact="true">
-                        <home-view></home-view>
+                        <group-view></group-view>
                     </single-route>
-                    <!-- Groups -->
+                    <!-- User Groups -->
                     <single-route
                         data-path="/groups"
                         data-exact="true"
@@ -45,7 +45,7 @@ template.innerHTML = html`
                     </single-route>
                     <!-- New Group -->
                     <single-route
-                        data-path="/groups/new"
+                        data-path="/group/new"
                         data-exact="true"
                         data-protect="true"
                     >
@@ -53,10 +53,14 @@ template.innerHTML = html`
                     </single-route>
                     <!-- New Group Message -->
                     <single-route
-                        data-path="/groups/new/:id"
+                        data-path="/group/new/:id"
                         data-protect="true"
                     >
                         <new-group-message></new-group-message>
+                    </single-route>
+                    <!-- Single Group -->
+                    <single-route data-path="/groups/:id">
+                        <group-view></group-view>
                     </single-route>
                     <!-- Join Group -->
                     <single-route

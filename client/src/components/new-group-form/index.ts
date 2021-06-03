@@ -212,7 +212,7 @@ class NewGroupForm extends HTMLElement {
                 auth.check();
                 this.el.form.reset();
                 this.removeErrors();
-                BrowserRouter.redirect(`/groups/new/${result.id}`);
+                BrowserRouter.redirect(`/group/new/${result.id}`);
                 return;
             }
             this.displayErrors(result);

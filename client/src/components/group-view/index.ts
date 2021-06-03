@@ -1,4 +1,4 @@
-/** @module Component/HomeView */
+/** @module Component/GroupView */
 import socket from '../../contexts/socketio';
 import auth from '../../contexts/auth';
 import html from '../../utils/html-tag';
@@ -15,26 +15,26 @@ import '../theme-toggle/index';
 const template = document.createElement('template');
 template.innerHTML = html`
     <style>
-        .home-section {
+        .group-section {
             position: relative;
         }
 
-        .home-heading {
+        .group-heading {
             display: block;
             margin-top: 2.5rem;
         }
 
-        .home-controls {
+        .group-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .home-toggle {
+        .group-toggle {
             margin-left: auto;
         }
 
-        .home-lazy {
+        .group-lazy {
             position: absolute;
             left: 0;
             bottom: 0;
@@ -44,13 +44,17 @@ template.innerHTML = html`
             background: transparent;
         }
 
-        .home-end {
+        .group-end {
             margin: 7.5rem 0 0 0;
             text-align: center;
             color: var(--secondary-text);
         }
+
+        .group-error {
+            margin-top: 2.5rem;
+        }
     </style>
-    <div class="home-controls">
+    <div class="group-controls">
         <div class="protected">
             <a href="/posts/new" is="router-link">
                 <primary-button
@@ -74,18 +78,27 @@ template.innerHTML = html`
                 </primary-button>
             </a>
         </div>
-        <theme-toggle class="home-toggle"></theme-toggle>
+        <theme-toggle class="group-toggle"></theme-toggle>
     </div>
-    <section class="home-section">
-        <primary-heading class="home-heading">Public Posts</primary-heading>
-        <div class="home-posts"></div>
-        <div class="home-lazy"></div>
+    <section class="group-section">
+        <primary-heading class="group-heading"> </primary-heading>
+        <div class="group-posts"></div>
+        <div class="group-lazy"></div>
+        <div class="group-error"></div>
     </section>
 `;
 
-class HomeView extends HTMLElement {
-    /** Group's data fetched from the server. */
+class GroupView extends HTMLElement {
+    private isMember;
+
+    /** Group ID extracted from the URL. */
+    private groupId;
+
+    /** Group's details fetched from the server. */
     private details;
+
+    /** Group's posts fetched from the server. */
+    private posts;
 
     /** Intersection observer instance. */
     private observer;
@@ -105,17 +118,20 @@ class HomeView extends HTMLElement {
         shadowRoot.appendChild(template.content.cloneNode(true));
         this.loadElements();
         this.addEventListeners();
-        socket.io.on('groupPost', (details) => this.handleNewPost(details));
+        socket.io.on('groupPost', (post) => this.handleNewPost(post));
     }
 
     /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             controls: this.shadowRoot?.querySelector(
-                '.home-controls .protected'
+                '.group-controls .protected'
             ),
-            posts: this.shadowRoot?.querySelector('.home-posts'),
-            lazy: this.shadowRoot?.querySelector('.home-lazy'),
+            details: this.shadowRoot?.querySelector('.group-details'),
+            heading: this.shadowRoot?.querySelector('.group-heading'),
+            posts: this.shadowRoot?.querySelector('.group-posts'),
+            lazy: this.shadowRoot?.querySelector('.group-lazy'),
+            error: this.shadowRoot?.querySelector('.group-error'),
         };
         for (const element in requestedElements) {
             if (element) {
@@ -124,20 +140,36 @@ class HomeView extends HTMLElement {
         }
     }
 
-    addEventListeners(): void {
-        window.addEventListener('authchange', () => this.protectControls());
+    saveGroupId(): void {
+        this.groupId = this.dataset.id ?? 'public';
+    }
+
+    async loadDetails(): Promise<void> {
+        if (this.groupId === 'public') {
+            return;
+        }
+        const groupDetails = await fetch(`/api/group/${this.groupId}`);
+        const details = await groupDetails.json();
+        this.details = details;
     }
 
     /** Requests group's posts from the server, controlling the offset. */
-    async loadDetails(): Promise<void> {
-        const groupPosts = await fetch(
-            `/api/post/global?offset=${this.offset}`
-        );
+    async loadPosts(): Promise<void> {
+        let groupPosts;
+        if (this.groupId === 'public') {
+            groupPosts = await fetch(`/api/post/public?offset=${this.offset}`);
+        } else {
+            groupPosts = await fetch(
+                `/api/group/${this.groupId}/posts?offset=${this.offset}`
+            );
+        }
+        const posts = await groupPosts.json();
         if (!groupPosts.ok) {
+            this.isMember = false;
             return;
         }
-        const details = await groupPosts.json();
-        this.details = details;
+        this.isMember = true;
+        this.posts = posts;
         this.offset += 10;
     }
 
@@ -156,7 +188,7 @@ class HomeView extends HTMLElement {
         postContent.innerHTML = activateLinks(post.content);
         /** User Name */
         const userName = document.createElement('span');
-        userName.setAttribute('slot', 'name');
+        userName.setAttribute('slot', 'heading');
         userName.textContent = `${post.user.firstName} ${post.user.lastName}`;
         /** User Image */
         const userImage = document.createElement('img');
@@ -192,20 +224,32 @@ class HomeView extends HTMLElement {
 
     /** Shows or hides controls based on the user's auth status. */
     protectControls(): void {
-        if (auth.ok) {
+        const isLoggedIn = auth.ok;
+        if (isLoggedIn) {
             this.el.controls.style.display = 'block';
             return;
         }
         this.el.controls.style.display = 'none';
     }
 
-    /** Appends data stored in <i>this.details</i> to the DOM. */
     displayDetails(): void {
+        if (this.groupId === 'public') {
+            this.el.heading.textContent = 'Public Posts';
+            return;
+        }
         if (!this.details) {
             return;
         }
+        this.el.heading.textContent = `${this.details.name} Posts`;
+    }
+
+    /** Appends data stored in <i>this.posts</i> to the DOM. */
+    displayPosts(): void {
+        if (!this.posts) {
+            return;
+        }
         const postsFragment = document.createDocumentFragment();
-        this.details.forEach((post) => {
+        this.posts.forEach((post) => {
             const postPreview = this.createPostPreviewElement(post);
             postsFragment.appendChild(postPreview);
         });
@@ -215,17 +259,17 @@ class HomeView extends HTMLElement {
     }
 
     /** Displays information about reaching the end of the group's posts. */
-    displayDetailsEnd(): void {
+    displayPostsEnd(): void {
         const p = document.createElement('p');
-        p.classList.add('home-end');
+        p.classList.add('group-end');
         p.textContent = 'You are all caught up 😎';
         this.el.posts.appendChild(p);
     }
 
     /** Removes rendered posts and resets the component's state. */
-    clearDetails(): void {
+    clearPosts(): void {
         [...this.el.posts.children].forEach((child) => child.remove());
-        this.details = null;
+        this.posts = null;
         this.offset = 0;
         this.isExhausted = false;
     }
@@ -234,14 +278,14 @@ class HomeView extends HTMLElement {
     handleIntersection(entries: IntersectionObserverEntry[]): void {
         if (entries[0].isIntersecting) {
             (async () => {
-                await this.loadDetails();
-                if (!this.details.length && !this.isExhausted) {
+                await this.loadPosts();
+                if (!this.posts.length && !this.isExhausted) {
                     this.isExhausted = true;
-                    this.displayDetailsEnd();
+                    this.displayPostsEnd();
                     return;
                 }
-                if (this.details.length) {
-                    this.displayDetails();
+                if (this.posts.length) {
+                    this.displayPosts();
                 }
             })();
         }
@@ -262,35 +306,49 @@ class HomeView extends HTMLElement {
     }
 
     /** Renders a new post at the beginning of the list. */
-    handleNewPost(details: Post): void {
-        const postPreview = this.createPostPreviewElement(details);
+    handleNewPost(post: Post): void {
+        const postPreview = this.createPostPreviewElement(post);
         this.el.posts.insertBefore(postPreview, this.el.posts.firstChild);
+    }
+
+    displayBoundary(): void {
+        console.log('Not allowed');
+    }
+
+    addEventListeners(): void {
+        window.addEventListener('authchange', () => this.protectControls());
     }
 
     connectedCallback(): void {
         (async () => {
+            this.saveGroupId();
             await this.loadDetails();
-            this.clearDetails();
-            this.displayDetails();
-            this.createObserver();
-            this.observer.observe(this.el.lazy);
-            /** Use 'public' for now */
-            socket.io.emit('subscribeGroup', 'public');
+            await this.loadPosts();
+            if (this.isMember) {
+                // this.clearDetails();
+                this.clearPosts();
+                this.displayDetails();
+                this.displayPosts();
+                this.createObserver();
+                this.observer.observe(this.el.lazy);
+                socket.io.emit('subscribeGroup', this.groupId);
+                return;
+            }
+            this.displayBoundary();
         })();
     }
 
     disconnectedCallback(): void {
-        this.clearDetails();
+        this.clearPosts();
         if (this.observer) {
             this.observer.unobserve(this.el.lazy);
         }
-        /** Use 'public' for now */
-        socket.io.emit('unsubscribeGroup', 'public');
+        socket.io.emit('unsubscribeGroup', this.groupId);
     }
 }
 
-if (!customElements.get('home-view')) {
-    customElements.define('home-view', HomeView);
+if (!customElements.get('group-view')) {
+    customElements.define('group-view', GroupView);
 }
 
-export default HomeView;
+export default GroupView;

@@ -169,8 +169,8 @@ export const sendSinglePost = async (
     }
 };
 
-/** Sends global posts that don't belong to any group. */
-export const sendGlobalPosts = async (
+/** Sends public posts that don't belong to any group. */
+export const sendPublicPosts = async (
     req: Request,
     res: Response
 ): Promise<void> => {

@@ -187,9 +187,11 @@ export const sendGroupPosts = async (
             );
         }
 
-        /** Check if the current user is a member of the group. */
+        /** Check if the current user is a member of the group and if the group
+         * is private. */
         const isMember = await group.$has('users', user);
-        if (!isMember) {
+        const isPrivate = group.type === 'private';
+        if (!isMember && isPrivate) {
             throw Error(
                 'You must be a member of this group to access its posts.'
             );

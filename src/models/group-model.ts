@@ -22,11 +22,6 @@ export interface GroupAttributes {
 
 interface GroupCreationAttributes extends Optional<GroupAttributes, 'id'> {}
 
-enum GroupType {
-    'public',
-    'private',
-}
-
 @Table({
     timestamps: false,
 })
@@ -45,10 +40,10 @@ class Group extends Model<GroupAttributes, GroupCreationAttributes> {
     name: string;
 
     @Column({
-        type: DataType.ENUM('public', 'private'),
+        type: DataType.STRING,
         allowNull: false,
     })
-    type: GroupType;
+    type: string;
 
     @BelongsToMany(() => User, () => UserGroups)
     users: User[];

@@ -19,6 +19,11 @@ template.innerHTML = html`
             border-radius: 10px;
         }
 
+        .group-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
         .group-details {
             display: flex;
             flex-wrap: wrap;
@@ -96,9 +101,11 @@ template.innerHTML = html`
     </style>
     <div class="group-preview">
         <div>
-            <secondary-heading class="group-name">
-                <slot name="name"></slot>
-            </secondary-heading>
+            <a class="group-link">
+                <secondary-heading class="group-name">
+                    <slot name="name"></slot>
+                </secondary-heading>
+            </a>
             <div class="group-details">
                 <div class="group-detail">
                     <slot name="count"></slot>
@@ -147,6 +154,7 @@ class GroupPreview extends HTMLElement {
 
     loadElements(): void {
         const requestedElements = {
+            link: this.shadowRoot?.querySelector('.group-link'),
             leave: this.shadowRoot?.querySelector('.group-control-leave'),
             join: this.shadowRoot?.querySelector('.group-control-join'),
             confirm: this.shadowRoot?.querySelector('.group-confirm'),
@@ -207,6 +215,12 @@ class GroupPreview extends HTMLElement {
         }
     }
 
+    activateLinks(): void {
+        if (this.el.link instanceof HTMLAnchorElement) {
+            this.el.link.href = `/groups/${this.dataset.id}`;
+        }
+    }
+
     hideControls(): void {
         this.el.leave.classList.remove('active');
         this.el.join.classList.remove('active');
@@ -249,6 +263,7 @@ class GroupPreview extends HTMLElement {
 
     connectedCallback(): void {
         this.displayControls();
+        this.activateLinks();
     }
 }
 
