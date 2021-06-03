@@ -6,6 +6,7 @@ import convertDate from '../../utils/convert-date';
 import activateLinks from '../../utils/activate-links';
 import Elements from '../../interfaces/elements-interface';
 import Post from '../../interfaces/post-interface';
+import BrowserRouter from '../browser-router';
 import '../primary-heading/index';
 import '../router-link/index';
 import '../primary-button/index';
@@ -44,14 +45,10 @@ template.innerHTML = html`
             background: transparent;
         }
 
-        .group-end {
-            margin: 7.5rem 0 0 0;
-            text-align: center;
-            color: var(--secondary-text);
-        }
-
         .group-error {
             margin-top: 2.5rem;
+            text-align: center;
+            color: var(--secondary-text);
         }
     </style>
     <div class="group-controls">
@@ -89,6 +86,7 @@ template.innerHTML = html`
 `;
 
 class GroupView extends HTMLElement {
+    /** Specifies if the current user is a member of the group. */
     private isMember;
 
     /** Group ID extracted from the URL. */
@@ -105,9 +103,6 @@ class GroupView extends HTMLElement {
 
     /** Offset used in lazy loading or pagination. */
     private offset = 0;
-
-    /** Set to true when there is no more data to fetch using lazy loading. */
-    private isExhausted = false;
 
     /** Buffered HTML elements. */
     private el: Elements = {};
@@ -140,10 +135,12 @@ class GroupView extends HTMLElement {
         }
     }
 
+    /** Saves group ID extracted from the URL. */
     saveGroupId(): void {
         this.groupId = this.dataset.id ?? 'public';
     }
 
+    /** Loads group details from the server. */
     async loadDetails(): Promise<void> {
         if (this.groupId === 'public') {
             return;
@@ -232,6 +229,7 @@ class GroupView extends HTMLElement {
         this.el.controls.style.display = 'none';
     }
 
+    /** Displays group details such as group name. */
     displayDetails(): void {
         if (this.groupId === 'public') {
             this.el.heading.textContent = 'Public Posts';
@@ -258,20 +256,11 @@ class GroupView extends HTMLElement {
         window.scrollTo(0, scrollRef);
     }
 
-    /** Displays information about reaching the end of the group's posts. */
-    displayPostsEnd(): void {
-        const p = document.createElement('p');
-        p.classList.add('group-end');
-        p.textContent = 'You are all caught up 😎';
-        this.el.posts.appendChild(p);
-    }
-
     /** Removes rendered posts and resets the component's state. */
     clearPosts(): void {
         [...this.el.posts.children].forEach((child) => child.remove());
         this.posts = null;
         this.offset = 0;
-        this.isExhausted = false;
     }
 
     /** Fetches group's posts from the server and displays them. */
@@ -279,9 +268,12 @@ class GroupView extends HTMLElement {
         if (entries[0].isIntersecting) {
             (async () => {
                 await this.loadPosts();
-                if (!this.posts.length && !this.isExhausted) {
-                    this.isExhausted = true;
-                    this.displayPostsEnd();
+                if (!this.posts.length && this.offset === 10) {
+                    this.el.error.textContent = 'No posts yet.';
+                    return;
+                }
+                if (!this.posts.length && this.offset > 10) {
+                    this.el.error.textContent = 'You are all caught up 😎';
                     return;
                 }
                 if (this.posts.length) {
@@ -311,10 +303,6 @@ class GroupView extends HTMLElement {
         this.el.posts.insertBefore(postPreview, this.el.posts.firstChild);
     }
 
-    displayBoundary(): void {
-        console.log('Not allowed');
-    }
-
     addEventListeners(): void {
         window.addEventListener('authchange', () => this.protectControls());
     }
@@ -334,7 +322,7 @@ class GroupView extends HTMLElement {
                 socket.io.emit('subscribeGroup', this.groupId);
                 return;
             }
-            this.displayBoundary();
+            BrowserRouter.redirect('/');
         })();
     }
 
