@@ -3,7 +3,6 @@ import html from '../../utils/html-tag';
 import auth from '../../contexts/auth';
 import Elements from '../../interfaces/elements-interface';
 import '../secondary-heading/index';
-import BrowserRouter from '../browser-router';
 
 const template = document.createElement('template');
 template.innerHTML = html`
@@ -190,7 +189,6 @@ class GroupPreview extends HTMLElement {
         });
         if (response.ok) {
             auth.check();
-            BrowserRouter.redirect('/groups');
         }
     }
 
