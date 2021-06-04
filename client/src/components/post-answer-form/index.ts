@@ -85,6 +85,7 @@ template.innerHTML = html`
 `;
 
 class PostAnswerForm extends HTMLElement {
+    /** Buffered required HTML elements. */
     private el: Elements = {};
 
     constructor() {
@@ -95,6 +96,7 @@ class PostAnswerForm extends HTMLElement {
         this.addEventListeners();
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             form: this.shadowRoot?.querySelector('form'),
@@ -108,22 +110,19 @@ class PostAnswerForm extends HTMLElement {
         }
     }
 
-    addEventListeners(): void {
-        this.el.submitButton.addEventListener('click', () =>
-            this.submitPostAnswer()
-        );
-    }
-
+    /** Displays errors returned from the server. */
     displayErrors(message: string): void {
         this.el.error.textContent = message;
         this.el.error.classList.add('active');
     }
 
+    /** Removes displayed errors. */
     removeErrors(): void {
         this.el.error.textContent = '';
         this.el.error.classList.remove('active');
     }
 
+    /** Requests the server to create a new post answer based on the form data. */
     async submitPostAnswer(): Promise<void> {
         if (this.el.form instanceof HTMLFormElement) {
             const payload = {
@@ -146,6 +145,12 @@ class PostAnswerForm extends HTMLElement {
             }
             this.displayErrors(result);
         }
+    }
+
+    addEventListeners(): void {
+        this.el.submitButton.addEventListener('click', () =>
+            this.submitPostAnswer()
+        );
     }
 
     disconnectedCallback(): void {

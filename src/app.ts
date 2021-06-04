@@ -33,6 +33,7 @@ app.get('*', (req, res) => {
 const httpServer = app.listen(PORT, async () => {
     await sequelize.sync({
         // force: true,
+        // ^ Uncomment to reset the database. Use in development only.
     });
     initializePassport();
     console.log(`Server running at port ${PORT}`);

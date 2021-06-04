@@ -142,6 +142,7 @@ template.innerHTML = html`
 `;
 
 class GroupPreview extends HTMLElement {
+    /** Buffers required HTML elements. */
     private el: Elements = {};
 
     constructor() {
@@ -152,6 +153,7 @@ class GroupPreview extends HTMLElement {
         this.addEventListeners();
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             link: this.shadowRoot?.querySelector('.group-link'),
@@ -168,6 +170,8 @@ class GroupPreview extends HTMLElement {
         }
     }
 
+    /** Requests the server to break the association of the current user and a
+     * given group. */
     async leaveGroup(): Promise<void> {
         const groupId = this.dataset.id;
         const response = await fetch('/api/group/leave', {
@@ -184,6 +188,7 @@ class GroupPreview extends HTMLElement {
         }
     }
 
+    /** Requests the server to associate the current user with a given group. */
     async joinGroup(): Promise<void> {
         const groupId = this.dataset.id;
         const response = await fetch('/api/group/join', {
@@ -200,6 +205,8 @@ class GroupPreview extends HTMLElement {
         }
     }
 
+    /** Displays action controls (join, leave) based on the user's association
+     * with a group. */
     displayControls(): void {
         if (auth.ok && auth.user) {
             const isMember = Boolean(
@@ -215,17 +222,21 @@ class GroupPreview extends HTMLElement {
         }
     }
 
+    /** Activates links that depend on properties from the outside. */
     activateLinks(): void {
         if (this.el.link instanceof HTMLAnchorElement) {
             this.el.link.href = `/groups/${this.dataset.id}`;
         }
     }
 
+    /** Hides action controls (join, leave). */
     hideControls(): void {
         this.el.leave.classList.remove('active');
         this.el.join.classList.remove('active');
     }
 
+    /** Displays confirmation controls (yes, no) and associates them with
+     * relevant events. */
     displayConfirm(action: string): void {
         if (auth.ok && auth.user) {
             if (action === 'join') {
@@ -244,6 +255,7 @@ class GroupPreview extends HTMLElement {
         }
     }
 
+    /** Hides confirmation controls. */
     hideConfirm(): void {
         this.el.confirm.classList.remove('active');
         this.displayControls();

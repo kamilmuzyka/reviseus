@@ -12,7 +12,6 @@ import './components/secondary-container/index';
 import './components/group-view/index';
 import './components/groups-view/index';
 import './components/new-group-view/index';
-import './components/new-group-message/index';
 import './components/group-join/index';
 import './components/group-invite-view/index';
 import './components/preferences-view/index';
@@ -27,16 +26,17 @@ import './components/logout-modal/index';
 const template = document.createElement('template');
 template.innerHTML = html`
     <primary-container>
+        <!-- Navigation -->
         <main-menu></main-menu>
+        <!-- Main Content -->
         <main>
             <secondary-container>
-                <!-- Router -->
                 <browser-router>
-                    <!-- Home -->
+                    <!-- Home View -->
                     <single-route data-path="/" data-exact="true">
                         <group-view></group-view>
                     </single-route>
-                    <!-- User Groups -->
+                    <!-- User Groups View -->
                     <single-route
                         data-path="/groups"
                         data-exact="true"
@@ -44,7 +44,7 @@ template.innerHTML = html`
                     >
                         <groups-view></groups-view>
                     </single-route>
-                    <!-- New Group -->
+                    <!-- New Group View -->
                     <single-route
                         data-path="/group/new"
                         data-exact="true"
@@ -52,32 +52,25 @@ template.innerHTML = html`
                     >
                         <new-group-view></new-group-view>
                     </single-route>
-                    <!-- New Group Message -->
-                    <single-route
-                        data-path="/group/new/:id"
-                        data-protect="true"
-                    >
-                        <new-group-message></new-group-message>
-                    </single-route>
-                    <!-- Single Group -->
+                    <!-- Single Group View -->
                     <single-route data-path="/groups/:id">
                         <group-view></group-view>
                     </single-route>
-                    <!-- Join Group -->
+                    <!-- Group Invitation View -->
                     <single-route
                         data-path="/join/group/:id"
                         data-protect="true"
                     >
                         <group-join></group-join>
                     </single-route>
-                    <!-- Invite -->
+                    <!-- Group Invitation Link View -->
                     <single-route
                         data-path="/invite/group/:id"
                         data-protect="true"
                     >
                         <group-invite-view></group-invite-view>
                     </single-route>
-                    <!-- Preferences -->
+                    <!-- Preferences View -->
                     <single-route
                         data-path="/preferences"
                         data-exact="true"
@@ -85,11 +78,11 @@ template.innerHTML = html`
                     >
                         <preferences-view></preferences-view>
                     </single-route>
-                    <!-- Search Results -->
+                    <!-- Search Results View -->
                     <single-route data-path="/search">
                         <search-view></search-view>
                     </single-route>
-                    <!-- New Post -->
+                    <!-- New Post View -->
                     <single-route
                         data-path="/posts/new"
                         data-exact="true"
@@ -97,21 +90,22 @@ template.innerHTML = html`
                     >
                         <new-post-view></new-post-view>
                     </single-route>
-                    <!-- Single Post -->
+                    <!-- Single Post View -->
                     <single-route data-path="/posts/:id">
                         <post-view></post-view>
                     </single-route>
-                    <!-- Login -->
+                    <!-- Login View -->
                     <single-route data-path="/login" data-exact="true">
                         <login-view></login-view>
                     </single-route>
-                    <!-- 404 -->
+                    <!-- 404 View -->
                     <single-route>
                         <primary-heading>404</primary-heading>
                     </single-route>
                 </browser-router>
             </secondary-container>
         </main>
+        <!-- Search Panel -->
         <search-panel></search-panel>
     </primary-container>
     <logout-modal></logout-modal>

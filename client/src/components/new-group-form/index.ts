@@ -162,6 +162,7 @@ template.innerHTML = html`
 `;
 
 class NewGroupForm extends HTMLElement {
+    /** Buffered required HTML elements. */
     private el: Elements = {};
 
     constructor() {
@@ -172,6 +173,7 @@ class NewGroupForm extends HTMLElement {
         this.addEventListeners();
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             form: this.shadowRoot?.querySelector('form'),
@@ -185,16 +187,19 @@ class NewGroupForm extends HTMLElement {
         }
     }
 
+    /** Displays errors returned from the server. */
     displayErrors(message: string): void {
         this.el.error.textContent = message;
         this.el.error.classList.add('active');
     }
 
+    /** Removes displayed errors. */
     removeErrors(): void {
         this.el.error.textContent = '';
         this.el.error.classList.remove('active');
     }
 
+    /** Requests the server to create a new group based on the form data. */
     async submitNewGroup(): Promise<void> {
         if (this.el.form instanceof HTMLFormElement) {
             const formData = new FormData(this.el.form);

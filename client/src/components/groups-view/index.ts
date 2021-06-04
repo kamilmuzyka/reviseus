@@ -87,6 +87,7 @@ template.innerHTML = html`
 `;
 
 class GroupsView extends HTMLElement {
+    /** Buffers required HTML elements. */
     private el: Elements = {};
 
     constructor() {
@@ -96,6 +97,7 @@ class GroupsView extends HTMLElement {
         this.loadElements();
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             groups: this.shadowRoot?.querySelector('.groups'),
@@ -107,6 +109,7 @@ class GroupsView extends HTMLElement {
         }
     }
 
+    /** Displays groups the current user is member of. */
     displayGroups(): void {
         const groups = auth.user.groups;
         const groupsFragment = document.createDocumentFragment();
@@ -163,6 +166,7 @@ class GroupsView extends HTMLElement {
         this.el.groups.appendChild(message);
     }
 
+    /** Removes rendered groups from the DOM. */
     clearGroups(): void {
         [...this.el.groups.children].forEach((child) => child.remove());
     }

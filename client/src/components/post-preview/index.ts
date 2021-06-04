@@ -15,13 +15,13 @@ template.innerHTML = html`
             border-radius: 10px;
         }
 
-        .post-reference {
+        .post-link {
             margin-bottom: 1.5rem;
             text-decoration: none;
             display: inline-block;
         }
 
-        .post-reference:hover {
+        .post-link:hover {
             text-decoration: underline;
             color: var(--accent);
             cursor: pointer;
@@ -102,7 +102,7 @@ template.innerHTML = html`
         }
     </style>
     <div class="post-preview">
-        <a class="post-reference" is="router-link">
+        <a class="post-link" is="router-link">
             <secondary-heading class="post-title" data-color="var(--accent)">
                 <slot name="title"></slot>
             </secondary-heading>
@@ -132,6 +132,7 @@ template.innerHTML = html`
 `;
 
 class PostPreview extends HTMLElement {
+    /** Buffered required HTML elements. */
     private el: Elements = {};
 
     constructor() {
@@ -141,9 +142,10 @@ class PostPreview extends HTMLElement {
         this.loadElements();
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
-            reference: this.shadowRoot?.querySelector('.post-reference'),
+            link: this.shadowRoot?.querySelector('.post-link'),
         };
         for (const element in requestedElements) {
             if (element) {
@@ -152,14 +154,15 @@ class PostPreview extends HTMLElement {
         }
     }
 
-    activatePostReference(): void {
-        if (this.el.reference instanceof HTMLAnchorElement) {
-            this.el.reference.href = `/posts/${this.dataset.id}`;
+    /** Activates links that base on properties from the outside. */
+    activateLinks(): void {
+        if (this.el.link instanceof HTMLAnchorElement) {
+            this.el.link.href = `/posts/${this.dataset.id}`;
         }
     }
 
     connectedCallback(): void {
-        this.activatePostReference();
+        this.activateLinks();
     }
 }
 

@@ -53,6 +53,7 @@ export const validatePostAnswer = (answer: PostAnswer): PostAnswer => {
     return answer;
 };
 
+/** Validates attributes required to create a new <i>Group</i> instance. */
 export const validateNewGroup = (group: NewGroup): NewGroup => {
     const { name, type } = group;
     if (!name) {

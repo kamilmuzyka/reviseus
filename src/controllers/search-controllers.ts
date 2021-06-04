@@ -16,7 +16,7 @@ export const sendSearchResults = async (
     try {
         const query = String(req.query.query);
 
-        /** Gather data to search in. */
+        /** Gather posts and groups to search in. */
         const posts = await Post.findAll({
             where: {
                 groupId: null,
@@ -56,7 +56,7 @@ export const sendSearchResults = async (
     }
 };
 
-/** Sends the top four tags used by users. Includes tag posts. */
+/** Sends the top four tags used by the users. */
 export const sendPopularTags = async (
     req: Request,
     res: Response

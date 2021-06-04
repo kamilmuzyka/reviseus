@@ -59,6 +59,7 @@ template.innerHTML = html`
 `;
 
 class ThemeToggle extends HTMLElement {
+    /** Buffered required HTML elements. */
     private el: Elements = {};
 
     constructor() {
@@ -69,6 +70,7 @@ class ThemeToggle extends HTMLElement {
         this.addEventListeners();
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             checkbox: this.shadowRoot?.querySelector('.checkbox'),
@@ -80,6 +82,7 @@ class ThemeToggle extends HTMLElement {
         }
     }
 
+    /** Updates checkbox appearance based on the current theme. */
     updateCheckbox(): void {
         if (theme.current === 'dark') {
             this.el.checkbox.setAttribute('checked', '');

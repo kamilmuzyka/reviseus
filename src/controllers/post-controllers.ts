@@ -106,6 +106,8 @@ export const createNewPost = async (
     });
 };
 
+/** Creates a post answer based on data attached to a request body and
+associates it with a post specified by ID. Use on protected routes only. */
 export const createPostAnswer = async (
     req: Request,
     res: Response
@@ -186,7 +188,8 @@ export const sendSinglePost = async (
     }
 };
 
-/** Sends public posts that don't belong to any group. */
+/** Sends public posts that don't belong to any group. Anyone should be able to
+ * access public posts. */
 export const sendPublicPosts = async (
     req: Request,
     res: Response

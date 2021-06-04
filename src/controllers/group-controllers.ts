@@ -145,6 +145,9 @@ export const leaveGroup = async (
     }
 };
 
+/** Sends posts belonging to a private group specified by ID passed as a URL
+ * parameter. The current user must be a member of the group to access its
+ * posts. Use on protected routes only. */
 export const sendPrivateGroupPosts = async (
     req: Request,
     res: Response
@@ -210,9 +213,8 @@ export const sendPrivateGroupPosts = async (
     }
 };
 
-/** Sends posts belonging to a group specified by ID passed as a URL parameter.
- * The current user must be a member of the group to access its posts. Use on
- * protected routes only. */
+/** Sends posts belonging to a public group specified by ID passed as a URL
+ * parameter. Anyone should be able to access public groups posts. */
 export const sendPublicGroupPosts = async (
     req: Request,
     res: Response
