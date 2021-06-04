@@ -92,6 +92,10 @@ class ThemeToggle extends HTMLElement {
         this.el.checkbox.addEventListener('click', () => theme.toggle());
         window.addEventListener('themechange', () => this.updateCheckbox());
     }
+
+    connectedCallback(): void {
+        this.updateCheckbox();
+    }
 }
 
 if (!customElements.get('theme-toggle')) {
