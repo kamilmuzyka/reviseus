@@ -11,7 +11,7 @@ template.innerHTML = html`
             margin-top: 2.5rem;
         }
     </style>
-    <primary-heading>Invitation Link</primary-heading>
+    <primary-heading>Invite New Members</primary-heading>
     <div class="container"></div>
 `;
 
