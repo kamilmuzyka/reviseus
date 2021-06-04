@@ -92,14 +92,14 @@ template.innerHTML = html`
                 <button class="invite-button">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 17.256 17.256"
+                        width="17.231"
+                        height="17.215"
+                        viewBox="0 0 17.231 17.215"
                     >
-                        <g transform="translate(-2.5 -2.5)">
+                        <g transform="translate(-2.493 -2.508)">
                             <path
-                                d="M15.126,13.5h7.315a1.626,1.626,0,0,1,1.626,1.626v7.315a1.626,1.626,0,0,1-1.626,1.626H15.126A1.626,1.626,0,0,1,13.5,22.441V15.126A1.626,1.626,0,0,1,15.126,13.5Z"
-                                transform="translate(-4.81 -4.81)"
+                                d="M15,11.926a4.056,4.056,0,0,0,6.116.438L23.55,9.931A4.055,4.055,0,1,0,17.814,4.2L16.42,5.583"
+                                transform="translate(-5.514 0)"
                                 fill="none"
                                 stroke="var(--primary-text)"
                                 stroke-linecap="round"
@@ -107,7 +107,8 @@ template.innerHTML = html`
                                 stroke-width="1"
                             />
                             <path
-                                d="M5.438,13.567H4.626A1.626,1.626,0,0,1,3,11.941V4.626A1.626,1.626,0,0,1,4.626,3h7.315a1.626,1.626,0,0,1,1.626,1.626v.813"
+                                d="M12.73,15.119a4.056,4.056,0,0,0-6.116-.438L4.181,17.114a4.055,4.055,0,1,0,5.735,5.735L11.3,21.462"
+                                transform="translate(0 -4.815)"
                                 fill="none"
                                 stroke="var(--primary-text)"
                                 stroke-linecap="round"

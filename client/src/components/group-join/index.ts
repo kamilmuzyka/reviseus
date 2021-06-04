@@ -45,8 +45,8 @@ template.innerHTML = html`
             border-radius: 50%;
         }
 
-        .group-enquiry {
-            margin: 2.5rem 0;
+        .group-controls {
+            margin-top: 1.5rem;
         }
 
         @media (min-width: 400px) {
@@ -74,7 +74,6 @@ template.innerHTML = html`
                 <span class="group-detail group-members"></span>
                 <span class="group-detail group-type"></span>
             </div>
-            <p class="group-enquiry">Do you want to join this community?</p>
             <div class="group-controls">
                 <primary-button
                     class="join-button"
