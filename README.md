@@ -47,6 +47,75 @@
 
 [Client Documentation](https://fictional-chainsaw-8092472b.pages.github.io/client/docs/TypeDoc/)
 
+## Features
+
+-   Some of the API routes and app views are protected and require authentication
+    to use them.
+
+-   All the routing happens within the browser, preserving the history (go back /
+    go forward buttons work as intended and they don't reload the page).
+
+-   Styles are adjusted to mobile, tablet and desktop screen sizes.
+
+-   All the inputs are validated, and errors handled to protect the server from
+    breaking down.
+
+-   The app comes with two colour themes — dark and light. The default theme
+    adjusts itself to the preferred user's system theme on the initial app load.
+    The theme can later be changed by the user.
+
+-   User inputs are escaped where appropriate to prevent XSS attacks (mainly when
+    a feature required the use of innerHTML instead of textContent).
+
+-   Users can authenticated themselves using their Google accounts.
+
+-   The app adjusts its UI to the user's authentication status and other factors
+    (certain elements hide and show as users log in and log out, join and leave
+    groups).
+
+-   Users can add posts and post answers.
+
+-   Users can attach files to their posts.
+
+-   Allowed file extensions are restricted to txt, rtf, pdf, doc, docx, csv, jpg,
+    jpeg, png, gif.
+
+-   Users can download post attachments.
+
+-   Attached images render automatically within a post body.
+
+-   Users can add hashtags to their posts to improve the search experience for
+    others.
+
+-   Links within a post / answer body get detected and activated
+    (made clickable).
+
+-   New posts and answers appear in real-time (implemented with socket.io).
+
+-   Posts on the home and group pages load lazily (pagination implemented with the
+    Intersection Observer API).
+
+-   Users can create public or private groups.
+
+-   Group members can easily generate an invitation link for others.
+
+-   Public groups can be viewed and joined by anyone. They are also included in
+    the search results.
+
+-   Private groups can only be viewed by their members. If someone wants to join a
+    private group, they need an invitation link. Private groups are not included
+    in the search results.
+
+-   Users can use the search engine to browse public posts and public groups.
+
+-   The most popular hashtags used by the users appear under the search bar.
+    Popularity is based on the overall number of public posts that use a given
+    hashtag.
+
+## Reflection
+
+...
+
 ## Coursework Specification
 
 https://docs.google.com/document/d/1KNq3Px8Tb8jbYcLfJLNOJRX8RtqPapvV4_B6vzDoJCc
