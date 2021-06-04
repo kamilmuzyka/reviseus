@@ -285,7 +285,7 @@ class GroupView extends HTMLElement {
         postContent.innerHTML = activateLinks(post.content);
         /** User Name */
         const userName = document.createElement('span');
-        userName.setAttribute('slot', 'heading');
+        userName.setAttribute('slot', 'name');
         userName.textContent = `${post.user.firstName} ${post.user.lastName}`;
         /** User Image */
         const userImage = document.createElement('img');

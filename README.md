@@ -95,9 +95,9 @@
 -   Posts on the home and group pages load lazily (pagination implemented with the
     Intersection Observer API).
 
--   Users can create public or private groups.
+-   Users can create public and private groups.
 
--   Group members can easily generate an invitation link for others.
+-   Group members can generate invitation links for others.
 
 -   Public groups can be viewed and joined by anyone. They are also included in
     the search results.
