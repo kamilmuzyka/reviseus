@@ -108,9 +108,12 @@
 
 -   Users can use the search engine to browse public posts and public groups.
 
--   The most popular hashtags used by the users appear under the search bar.
-    Popularity is based on the overall number of public posts that use a given
-    hashtag.
+-   The most popular hashtags appear under the search bar. Popularity is based
+    on the overall number of public posts that use a given hashtag.
+
+## Known Issues
+
+-   Avatars requested from Google servers sometimes break on localhost due to CORS policy (it doesn't happen in production as far as I know).
 
 ## Reflection
 
