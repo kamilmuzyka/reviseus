@@ -14,6 +14,7 @@ import './components/groups-view/index';
 import './components/new-group-view/index';
 import './components/new-group-message/index';
 import './components/group-join/index';
+import './components/group-invite-view/index';
 import './components/preferences-view/index';
 import './components/search-view/index';
 import './components/new-post-view/index';
@@ -68,6 +69,13 @@ template.innerHTML = html`
                         data-protect="true"
                     >
                         <group-join></group-join>
+                    </single-route>
+                    <!-- Invite -->
+                    <single-route
+                        data-path="/invite/group/:id"
+                        data-protect="true"
+                    >
+                        <group-invite-view></group-invite-view>
                     </single-route>
                     <!-- Preferences -->
                     <single-route

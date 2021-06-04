@@ -85,7 +85,7 @@ template.innerHTML = html`
     </style>
     <div class="group-controls">
         <div class="protected">
-            <a href="/posts/new" is="router-link" class="group-new">
+            <a is="router-link" class="group-new">
                 <primary-button
                     data-background="transparent"
                     data-border="var(--subtle)"
@@ -126,7 +126,7 @@ template.innerHTML = html`
                 </svg>
                 <span>Join Group</span>
             </primary-button>
-            <a href="/posts/new" is="router-link" class="group-invite">
+            <a is="router-link" class="group-invite">
                 <primary-button
                     data-background="transparent"
                     data-border="var(--subtle)"
@@ -329,8 +329,12 @@ class GroupView extends HTMLElement {
     }
 
     displayActionControls(): void {
-        if (this.el.new instanceof HTMLAnchorElement) {
+        if (
+            this.el.new instanceof HTMLAnchorElement &&
+            this.el.invite instanceof HTMLAnchorElement
+        ) {
             this.el.new.href = `/posts/new?group=${this.groupId}`;
+            this.el.invite.href = `/invite/group/${this.groupId}`;
         }
         this.el.new.style.display = 'none';
         this.el.invite.style.display = 'none';
