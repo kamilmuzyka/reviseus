@@ -28,11 +28,43 @@ template.innerHTML = html`
         .group-controls {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+        }
+
+        @media (min-width: 500px) {
+            .group-controls {
+                align-items: center;
+            }
         }
 
         .group-toggle {
             margin-left: auto;
+        }
+
+        .protected {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .protected > *:not(:last-child) {
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 500px) {
+            .protected {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .protected > *:not(:last-child) {
+                margin-bottom: 0;
+                margin-right: 1.5rem;
+            }
+        }
+
+        .group-new,
+        .group-join,
+        .group-invite {
+            display: none;
         }
 
         .group-lazy {
@@ -53,7 +85,7 @@ template.innerHTML = html`
     </style>
     <div class="group-controls">
         <div class="protected">
-            <a href="/posts/new" is="router-link">
+            <a href="/posts/new" is="router-link" class="group-new">
                 <primary-button
                     data-background="transparent"
                     data-border="var(--subtle)"
@@ -72,6 +104,47 @@ template.innerHTML = html`
                         />
                     </svg>
                     <span>New Post</span>
+                </primary-button>
+            </a>
+            <primary-button
+                class="group-join"
+                data-background="var(--accent)"
+                data-color="#f0f0f0"
+            >
+                <svg
+                    slot="icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10.264"
+                    height="10.264"
+                    viewBox="0 0 10.264 10.264"
+                >
+                    <path
+                        d="M6.75,12.566H11.2v4.448h1.368V12.566h4.448V11.2H12.566V6.75H11.2V11.2H6.75Z"
+                        transform="translate(-6.75 -6.75)"
+                        fill="#f0f0f0"
+                    />
+                </svg>
+                <span>Join Group</span>
+            </primary-button>
+            <a href="/posts/new" is="router-link" class="group-invite">
+                <primary-button
+                    data-background="transparent"
+                    data-border="var(--subtle)"
+                >
+                    <svg
+                        slot="icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="10.264"
+                        height="10.264"
+                        viewBox="0 0 10.264 10.264"
+                    >
+                        <path
+                            d="M6.75,12.566H11.2v4.448h1.368V12.566h4.448V11.2H12.566V6.75H11.2V11.2H6.75Z"
+                            transform="translate(-6.75 -6.75)"
+                            fill="var(--primary-text)"
+                        />
+                    </svg>
+                    <span>Invite</span>
                 </primary-button>
             </a>
         </div>
@@ -119,9 +192,12 @@ class GroupView extends HTMLElement {
     /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
-            controls: this.shadowRoot?.querySelector(
+            protected: this.shadowRoot?.querySelector(
                 '.group-controls .protected'
             ),
+            join: this.shadowRoot?.querySelector('.group-join'),
+            invite: this.shadowRoot?.querySelector('.group-invite'),
+            new: this.shadowRoot?.querySelector('.group-new'),
             details: this.shadowRoot?.querySelector('.group-details'),
             heading: this.shadowRoot?.querySelector('.group-heading'),
             posts: this.shadowRoot?.querySelector('.group-posts'),
@@ -138,6 +214,22 @@ class GroupView extends HTMLElement {
     /** Saves group ID extracted from the URL. */
     saveGroupId(): void {
         this.groupId = this.dataset.id ?? 'public';
+    }
+
+    async joinGroup(): Promise<void> {
+        const groupId = this.groupId;
+        const response = await fetch('/api/group/join', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                groupId,
+            }),
+        });
+        if (response.ok) {
+            auth.check();
+        }
     }
 
     /** Loads group details from the server. */
@@ -226,14 +318,40 @@ class GroupView extends HTMLElement {
         return postPreview;
     }
 
-    /** Shows or hides controls based on the user's auth status. */
+    /** Shows or hides protected based on the user's auth status. */
     protectControls(): void {
         const isLoggedIn = auth.ok;
         if (isLoggedIn) {
-            this.el.controls.style.display = 'block';
+            this.el.protected.style.display = 'flex';
             return;
         }
-        this.el.controls.style.display = 'none';
+        this.el.protected.style.display = 'none';
+    }
+
+    displayActionControls(): void {
+        if (this.el.new instanceof HTMLAnchorElement) {
+            this.el.new.href = `/posts/new?group=${this.groupId}`;
+        }
+        this.el.new.style.display = 'none';
+        this.el.invite.style.display = 'none';
+        this.el.join.style.display = 'none';
+        const isMember =
+            Boolean(
+                auth.user?.groups.find((group) => {
+                    return group.id === this.groupId;
+                })
+            ) || this.groupId === 'public';
+        const isPublic = this.groupId === 'public';
+        if (isMember) {
+            this.el.new.style.display = 'block';
+        }
+        if (isMember && !isPublic) {
+            this.el.invite.style.display = 'block';
+            return;
+        }
+        if (!isPublic) {
+            this.el.join.style.display = 'block';
+        }
     }
 
     /** Displays group details such as group name. */
@@ -312,6 +430,7 @@ class GroupView extends HTMLElement {
 
     addEventListeners(): void {
         window.addEventListener('authchange', () => this.protectControls());
+        this.el.join.addEventListener('click', () => this.joinGroup());
     }
 
     connectedCallback(): void {
@@ -323,6 +442,7 @@ class GroupView extends HTMLElement {
                 this.clearPosts();
                 this.displayDetails();
                 this.displayPosts();
+                this.displayActionControls();
                 this.createObserver();
                 this.observer.observe(this.el.lazy);
                 socket.io.emit('subscribeGroup', this.groupId);
