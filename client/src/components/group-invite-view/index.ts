@@ -42,8 +42,16 @@ class GroupInviteView extends HTMLElement {
         this.el.container.appendChild(groupInvite);
     }
 
+    clearContainer(): void {
+        [...this.el.container.children].forEach((child) => child.remove());
+    }
+
     connectedCallback(): void {
         this.addGroupInvite();
+    }
+
+    disconnectedCallback(): void {
+        this.clearContainer();
     }
 }
 

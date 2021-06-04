@@ -156,6 +156,7 @@ template.innerHTML = html`
 
 class NewPostForm extends HTMLElement {
     private el: Elements = {};
+    private groupId;
 
     constructor() {
         super();
@@ -179,6 +180,11 @@ class NewPostForm extends HTMLElement {
                 this.el[element] = requestedElements[element];
             }
         }
+    }
+
+    saveGroupId(): void {
+        const searchParams = new URLSearchParams(location.search);
+        this.groupId = searchParams.get('group');
     }
 
     openFileInput(): void {
@@ -209,7 +215,7 @@ class NewPostForm extends HTMLElement {
     async submitNewPost(): Promise<void> {
         if (this.el.form instanceof HTMLFormElement) {
             const payload = new FormData(this.el.form);
-            const response = await fetch('/api/post', {
+            const response = await fetch(`/api/post/${this.groupId}`, {
                 method: 'POST',
                 body: payload,
             });
@@ -235,6 +241,10 @@ class NewPostForm extends HTMLElement {
         this.el.fileInput.addEventListener('change', () =>
             this.updateFileInput()
         );
+    }
+
+    connectedCallback(): void {
+        this.saveGroupId();
     }
 
     disconnectedCallback(): void {

@@ -101,7 +101,7 @@ template.innerHTML = html`
     </style>
     <div class="group-preview">
         <div>
-            <a class="group-link">
+            <a class="group-link" is="router-link">
                 <secondary-heading class="group-name">
                     <slot name="name"></slot>
                 </secondary-heading>

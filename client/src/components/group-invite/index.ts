@@ -43,7 +43,7 @@ template.innerHTML = html`
         }
 
         .invite-container {
-            margin-top: 2.5rem;
+            margin-top: 1rem;
             display: flex;
             flex-direction: column;
         }
@@ -87,7 +87,6 @@ template.innerHTML = html`
             <span class="group-detail group-type"></span>
         </div>
         <div class="invite-container">
-            <label for="link">Invite others</label>
             <div class="invite-group">
                 <input class="invite-input" name="link" readonly />
                 <button class="invite-button">

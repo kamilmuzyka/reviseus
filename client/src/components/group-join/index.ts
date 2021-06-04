@@ -198,7 +198,7 @@ class GroupJoin extends HTMLElement {
         });
         if (response.ok) {
             auth.check();
-            BrowserRouter.redirect('/groups');
+            BrowserRouter.redirect(`/groups/${groupId}`);
             return;
         }
     }

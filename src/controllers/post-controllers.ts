@@ -9,6 +9,7 @@ import User from '../models/user-model.js';
 import Tag from '../models/tag-model.js';
 import File from '../models/file-model.js';
 import Answer from '../models/answer-model.js';
+import Group from '../models/group-model.js';
 
 /** Creates a new post based on data attached to a request body. Use on
  * protected routes only. */
@@ -22,8 +23,13 @@ export const createNewPost = async (
                 throw Error(filesError);
             }
             const files = req.files;
+            const groupId = req.params.id;
             const { userId } = req.user;
             const { title, content, tags } = validateNewPost(req.body);
+
+            if (!(groupId && testUUID(groupId)) && groupId !== 'public') {
+                throw Error('Incorrect post ID.');
+            }
 
             /** Find the current user. */
             const user = await User.findOne({
@@ -72,7 +78,18 @@ export const createNewPost = async (
                 await newPost.$set('files', postFiles);
             }
 
-            //** To do: <Check for group> */
+            if (testUUID(groupId)) {
+                const group = await Group.findOne({
+                    where: {
+                        id: groupId,
+                    },
+                    include: [Post],
+                });
+                if (!group?.$has('users', user)) {
+                    throw Error('You need to be a group member to add posts.');
+                }
+                await group?.$set('posts', [...group.posts, newPost]);
+            }
 
             /** Find the new (mutated) post and send it to the client. */
             const createdPost = await Post.findOne({

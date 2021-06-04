@@ -387,9 +387,9 @@ class GroupView extends HTMLElement {
 
     /** Removes rendered posts and resets the component's state. */
     clearPosts(): void {
-        [...this.el.posts.children].forEach((child) => child.remove());
         this.posts = null;
         this.offset = 0;
+        [...this.el.posts.children].forEach((child) => child.remove());
     }
 
     /** Fetches group's posts from the server and displays them. */
@@ -397,6 +397,7 @@ class GroupView extends HTMLElement {
         if (entries[0].isIntersecting) {
             (async () => {
                 await this.loadPosts();
+                this.el.error.textContent = '';
                 if (!this.posts.length && this.offset === 10) {
                     this.el.error.textContent = 'No posts yet.';
                     return;
@@ -443,8 +444,8 @@ class GroupView extends HTMLElement {
             await this.loadDetails();
             await this.loadPosts();
             if (!this.redirect) {
-                this.clearPosts();
                 this.displayDetails();
+                this.clearPosts();
                 this.displayPosts();
                 this.displayActionControls();
                 this.createObserver();

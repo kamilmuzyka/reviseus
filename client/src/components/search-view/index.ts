@@ -77,12 +77,14 @@ template.innerHTML = html`
             Search results for <span class="query"></span>
         </primary-heading>
         <div class="results-container post-results-container">
-            <secondary-heading class="results-heading">Posts</secondary-heading>
+            <secondary-heading class="results-heading"
+                >Public Posts</secondary-heading
+            >
             <div class="post-results"></div>
         </div>
         <div class="results-container group-results-container">
             <secondary-heading class="results-heading"
-                >Groups</secondary-heading
+                >Public Groups</secondary-heading
             >
             <div class="group-results"></div>
         </div>

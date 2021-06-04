@@ -11,8 +11,8 @@ import {
 
 const router = Router();
 
-router.post('/', protect, createNewPost);
 router.post('/answer', protect, createPostAnswer);
+router.post('/:id', protect, createNewPost);
 router.get('/public', sendPublicPosts);
 router.get('/:id', sendSinglePost);
 router.get('/:id/answers', sendPostAnswers);
