@@ -198,7 +198,7 @@ class NewPostForm extends HTMLElement {
         }
     }
 
-    /** Updates the custom file input. */
+    /** Updates the custom file input text. */
     updateFileInput(): void {
         if (this.el.fileInput instanceof HTMLInputElement) {
             this.el.fileCount.textContent =
@@ -206,6 +206,11 @@ class NewPostForm extends HTMLElement {
                     ? `${this.el.fileInput.files?.length} File Selected`
                     : `${this.el.fileInput.files?.length} Files Selected`;
         }
+    }
+
+    /** Clears the custom file input text. */
+    clearFileInput(): void {
+        this.el.fileCount.textContent = '';
     }
 
     /** Displays errors returned from the server. */
@@ -265,6 +270,7 @@ class NewPostForm extends HTMLElement {
 
     disconnectedCallback(): void {
         this.clearForm();
+        this.clearFileInput();
         this.removeErrors();
     }
 }
