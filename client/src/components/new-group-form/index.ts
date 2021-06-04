@@ -224,12 +224,20 @@ class NewGroupForm extends HTMLElement {
         }
     }
 
+    /** Clears form data. */
+    clearForm(): void {
+        if (this.el.form instanceof HTMLFormElement) {
+            this.el.form.reset();
+        }
+    }
+
     addEventListeners(): void {
         this.el.submitButton.addEventListener('click', () =>
             this.submitNewGroup()
         );
     }
     disconnectedCallback(): void {
+        this.clearForm();
         this.removeErrors();
     }
 }
