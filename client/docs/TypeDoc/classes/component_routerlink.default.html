@@ -76,6 +76,11 @@
 						<i>&quot;a&quot;</i> tag with <i>&quot;is&quot;</i> attribute:</p>
 						<pre><code class="language-html"><span style="color: #800000">&lt;a</span><span style="color: #000000"> </span><span style="color: #FF0000">href</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;#&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">is</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;router-link&quot;</span><span style="color: #800000">&gt;</span><span style="color: #000000">Link</span><span style="color: #800000">&lt;/a&gt;</span>
 </code></pre>
+						<p>If you would like the link to receive &quot;active&quot; class whenever it&#39;s matching
+						the current location, use <i>data-check=&quot;true&quot;</i> attribute:</p>
+						<pre><code class="language-html"><span style="color: #800000">&lt;a</span><span style="color: #000000"> </span><span style="color: #FF0000">href</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;#&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">is</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;router-link&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">data-check</span><span style="color: #000000">=</span><span style="color: #0000FF">&quot;true&quot;</span><span style="color: #800000">&gt;</span><span style="color: #000000">Link</span><span style="color: #800000">&lt;/a&gt;</span>
+</code></pre>
+						<p>You can use this technique to style the link based on the current location.</p>
 					</div>
 				</div>
 			</section>
@@ -309,7 +314,9 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_routerlink.default.html#addactive" class="tsd-kind-icon">add<wbr>Active</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_routerlink.default.html#addeventlisteners" class="tsd-kind-icon">add<wbr>Event<wbr>Listeners</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#after" class="tsd-kind-icon">after</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#animate" class="tsd-kind-icon">animate</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#append" class="tsd-kind-icon">append</a></li>
@@ -317,12 +324,14 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#attachshadow" class="tsd-kind-icon">attach<wbr>Shadow</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#before" class="tsd-kind-icon">before</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#blur" class="tsd-kind-icon">blur</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_routerlink.default.html#checkifactive" class="tsd-kind-icon">check<wbr>IfActive</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#click" class="tsd-kind-icon">click</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#clonenode" class="tsd-kind-icon">clone<wbr>Node</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#closest" class="tsd-kind-icon">closest</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#comparedocumentposition" class="tsd-kind-icon">compare<wbr>Document<wbr>Position</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_routerlink.default.html#connectedcallback" class="tsd-kind-icon">connected<wbr>Callback</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#contains" class="tsd-kind-icon">contains</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_routerlink.default.html#disconnectedcallback" class="tsd-kind-icon">disconnected<wbr>Callback</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#dispatchevent" class="tsd-kind-icon">dispatch<wbr>Event</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#focus" class="tsd-kind-icon">focus</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#getanimations" class="tsd-kind-icon">get<wbr>Animations</a></li>
@@ -359,11 +368,13 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#queryselectorall" class="tsd-kind-icon">query<wbr>Selector<wbr>All</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#releasepointercapture" class="tsd-kind-icon">release<wbr>Pointer<wbr>Capture</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#remove" class="tsd-kind-icon">remove</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_routerlink.default.html#removeactive" class="tsd-kind-icon">remove<wbr>Active</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#removeattribute" class="tsd-kind-icon">remove<wbr>Attribute</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#removeattributens" class="tsd-kind-icon">remove<wbr>AttributeNS</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#removeattributenode" class="tsd-kind-icon">remove<wbr>Attribute<wbr>Node</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#removechild" class="tsd-kind-icon">remove<wbr>Child</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#removeeventlistener" class="tsd-kind-icon">remove<wbr>Event<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="component_routerlink.default.html#removeeventlisteners" class="tsd-kind-icon">remove<wbr>Event<wbr>Listeners</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#replacechild" class="tsd-kind-icon">replace<wbr>Child</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#replacewith" class="tsd-kind-icon">replace<wbr>With</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="component_routerlink.default.html#requestfullscreen" class="tsd-kind-icon">request<wbr>Fullscreen</a></li>
@@ -398,7 +409,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides HTMLAnchorElement.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/e44ce5b/client/src/components/router-link/index.ts#L10">src/components/router-link/index.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/5767054/client/src/components/router-link/index.ts#L17">src/components/router-link/index.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="component_routerlink.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4>
@@ -3290,6 +3301,23 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addactive" class="tsd-anchor"></a>
+					<h3>add<wbr>Active</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Active<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/5767054/client/src/components/router-link/index.ts#L37">src/components/router-link/index.ts:37</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external">
 					<a name="addeventlistener" class="tsd-anchor"></a>
 					<h3>add<wbr>Event<wbr>Listener</h3>
@@ -3362,6 +3390,23 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">AddEventListenerOptions</span></h5>
 								</li>
 							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addeventlisteners" class="tsd-anchor"></a>
+					<h3>add<wbr>Event<wbr>Listeners</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Event<wbr>Listeners<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/5767054/client/src/components/router-link/index.ts#L23">src/components/router-link/index.ts:23</a></li>
+								</ul>
+							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -3560,6 +3605,23 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="checkifactive" class="tsd-anchor"></a>
+					<h3>check<wbr>IfActive</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">check<wbr>IfActive<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/5767054/client/src/components/router-link/index.ts#L45">src/components/router-link/index.ts:45</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="click" class="tsd-anchor"></a>
 					<h3>click</h3>
@@ -3725,7 +3787,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/e44ce5b/client/src/components/router-link/index.ts#L15">src/components/router-link/index.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/5767054/client/src/components/router-link/index.ts#L52">src/components/router-link/index.ts:52</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -3758,6 +3820,23 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="disconnectedcallback" class="tsd-anchor"></a>
+					<h3>disconnected<wbr>Callback</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">disconnected<wbr>Callback<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/5767054/client/src/components/router-link/index.ts#L58">src/components/router-link/index.ts:58</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -4869,6 +4948,23 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removeactive" class="tsd-anchor"></a>
+					<h3>remove<wbr>Active</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Active<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/5767054/client/src/components/router-link/index.ts#L41">src/components/router-link/index.ts:41</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="removeattribute" class="tsd-anchor"></a>
 					<h3>remove<wbr>Attribute</h3>
@@ -5056,6 +5152,23 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">EventListenerOptions</span></h5>
 								</li>
 							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removeeventlisteners" class="tsd-anchor"></a>
+					<h3>remove<wbr>Event<wbr>Listeners</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Event<wbr>Listeners<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/appeng-m30222/appeng2020-up927804/blob/5767054/client/src/components/router-link/index.ts#L33">src/components/router-link/index.ts:33</a></li>
+								</ul>
+							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -6158,8 +6271,14 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#username" class="tsd-kind-icon">username</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_routerlink.default.html#addactive" class="tsd-kind-icon">add<wbr>Active</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_routerlink.default.html#addeventlisteners" class="tsd-kind-icon">add<wbr>Event<wbr>Listeners</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#after" class="tsd-kind-icon">after</a>
@@ -6182,6 +6301,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#blur" class="tsd-kind-icon">blur</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_routerlink.default.html#checkifactive" class="tsd-kind-icon">check<wbr>IfActive</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#click" class="tsd-kind-icon">click</a>
 							</li>
@@ -6199,6 +6321,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#contains" class="tsd-kind-icon">contains</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_routerlink.default.html#disconnectedcallback" class="tsd-kind-icon">disconnected<wbr>Callback</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#dispatchevent" class="tsd-kind-icon">dispatch<wbr>Event</a>
@@ -6308,6 +6433,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#remove" class="tsd-kind-icon">remove</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_routerlink.default.html#removeactive" class="tsd-kind-icon">remove<wbr>Active</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#removeattribute" class="tsd-kind-icon">remove<wbr>Attribute</a>
 							</li>
@@ -6322,6 +6450,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#removeeventlistener" class="tsd-kind-icon">remove<wbr>Event<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="component_routerlink.default.html#removeeventlisteners" class="tsd-kind-icon">remove<wbr>Event<wbr>Listeners</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external">
 								<a href="component_routerlink.default.html#replacechild" class="tsd-kind-icon">replace<wbr>Child</a>
