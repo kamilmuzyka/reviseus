@@ -162,7 +162,7 @@ class GroupsView extends HTMLElement {
         }
         const message = document.createElement('p');
         message.classList.add('groups-message');
-        message.textContent = 'You don not belong to any groups yet 😔';
+        message.textContent = 'You do not belong to any groups yet 😔';
         this.el.groups.appendChild(message);
     }
 
