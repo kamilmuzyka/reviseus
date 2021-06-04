@@ -136,7 +136,10 @@ template.innerHTML = html`
 `;
 
 class GroupJoin extends HTMLElement {
+    /** Buffers required HTML elements. */
     private el: Elements = {};
+
+    /** Group details fetched from the server. */
     private details;
 
     constructor() {
@@ -147,6 +150,7 @@ class GroupJoin extends HTMLElement {
         this.addEventListeners();
     }
 
+    /** Buffers required HTML elements. */
     loadElements(): void {
         const requestedElements = {
             name: this.shadowRoot?.querySelector('.group-name'),
@@ -161,6 +165,7 @@ class GroupJoin extends HTMLElement {
         }
     }
 
+    /** Loads group details from the server. */
     async loadDetails(): Promise<void> {
         const groupId = this.dataset.id;
         const response = await fetch(`/api/group/${groupId}`);
@@ -172,6 +177,7 @@ class GroupJoin extends HTMLElement {
         this.details = details;
     }
 
+    /** Displays basic details about the group that the user can join. */
     displayDetails(): void {
         this.el.name.textContent = this.details.name;
         this.el.members.textContent =
@@ -184,6 +190,7 @@ class GroupJoin extends HTMLElement {
         } Group`;
     }
 
+    /** Requests the server to associate the current user with a given group. */
     async joinGroup(): Promise<void> {
         const groupId = this.dataset.id;
         const response = await fetch('/api/group/join', {

@@ -20,9 +20,14 @@ template.innerHTML = html`
 `;
 
 class NewPostView extends HTMLElement {
-    private el: Elements = {};
+    /** Group ID extracted from the URL. */
     private groupId;
+
+    /** Group's details such as name, fetched from the server. */
     private groupDetails;
+
+    /** Buffered HTML elements. */
+    private el: Elements = {};
 
     constructor() {
         super();
@@ -43,11 +48,13 @@ class NewPostView extends HTMLElement {
         }
     }
 
+    /** Saves group ID extracted from the URL. */
     saveGroupId(): void {
         const searchParams = new URLSearchParams(location.search);
         this.groupId = searchParams.get('group');
     }
 
+    /** Loads group details from the server. */
     async loadGroupDetails(): Promise<void> {
         const response = await fetch(`/api/group/${this.groupId}`);
         if (response.ok) {
@@ -57,6 +64,7 @@ class NewPostView extends HTMLElement {
         this.groupDetails = null;
     }
 
+    /** Adds group name to the form heading. */
     displayGroupDetails(): void {
         if (this.groupDetails) {
             const text = document.createElement('span');
@@ -73,6 +81,7 @@ class NewPostView extends HTMLElement {
         this.el.heading.appendChild(text);
     }
 
+    /** Resets the form heading. */
     clearGroupDetails(): void {
         this.el.heading.textContent = '';
     }

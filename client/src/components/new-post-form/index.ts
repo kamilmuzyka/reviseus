@@ -155,8 +155,11 @@ template.innerHTML = html`
 `;
 
 class NewPostForm extends HTMLElement {
-    private el: Elements = {};
+    /** Group ID extracted from the URL. */
     private groupId;
+
+    /** Buffered HTML elements. */
+    private el: Elements = {};
 
     constructor() {
         super();
@@ -182,17 +185,20 @@ class NewPostForm extends HTMLElement {
         }
     }
 
+    /** Saves group ID extracted from the URL. */
     saveGroupId(): void {
         const searchParams = new URLSearchParams(location.search);
         this.groupId = searchParams.get('group');
     }
 
+    /** Triggers hidden file input. */
     openFileInput(): void {
         if (this.el.fileInput instanceof HTMLInputElement) {
             this.el.fileInput.click();
         }
     }
 
+    /** Updates the custom file input. */
     updateFileInput(): void {
         if (this.el.fileInput instanceof HTMLInputElement) {
             this.el.fileCount.textContent =
@@ -202,16 +208,19 @@ class NewPostForm extends HTMLElement {
         }
     }
 
+    /** Displays errors returned from the server. */
     displayErrors(message: string): void {
         this.el.error.textContent = message;
         this.el.error.classList.add('active');
     }
 
+    /** Removes displayed errors. */
     removeErrors(): void {
         this.el.error.textContent = '';
         this.el.error.classList.remove('active');
     }
 
+    /** Requests the server to create a new post based on the form data. */
     async submitNewPost(): Promise<void> {
         if (this.el.form instanceof HTMLFormElement) {
             const payload = new FormData(this.el.form);

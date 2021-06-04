@@ -5,6 +5,7 @@ class Theme {
     /** Current theme available for the app components. */
     private currentTheme;
 
+    /** Dispatches a custom event needed to refresh affected components. */
     private dispatch(): void {
         window.dispatchEvent(
             new CustomEvent('themechange', {
@@ -20,6 +21,7 @@ class Theme {
         return media.matches ? 'dark' : 'light';
     }
 
+    /** Lets components look up the current theme. */
     get current() {
         return this.currentTheme;
     }
@@ -29,7 +31,7 @@ class Theme {
         localStorage.setItem('theme', name);
     }
 
-    /** Activates the current theme by overwriting styles. */
+    /** Activates the current theme by overwriting existing styles. */
     private activate(): void {
         document.documentElement.className = this.currentTheme;
     }

@@ -216,6 +216,7 @@ class GroupView extends HTMLElement {
         this.groupId = this.dataset.id ?? 'public';
     }
 
+    /** Requests the server to associate the current user with a given group. */
     async joinGroup(): Promise<void> {
         const groupId = this.groupId;
         const response = await fetch('/api/group/join', {
@@ -328,6 +329,8 @@ class GroupView extends HTMLElement {
         this.el.protected.style.display = 'none';
     }
 
+    /** Displays action controls (join, invite, new post) based on the user's
+     * association with a group. */
     displayActionControls(): void {
         if (
             this.el.new instanceof HTMLAnchorElement &&
