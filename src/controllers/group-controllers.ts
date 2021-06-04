@@ -145,10 +145,7 @@ export const leaveGroup = async (
     }
 };
 
-/** Sends posts belonging to a group specified by ID passed as a URL parameter.
- * The current user must be a member of the group to access its posts. Use on
- * protected routes only. */
-export const sendGroupPosts = async (
+export const sendPrivateGroupPosts = async (
     req: Request,
     res: Response
 ): Promise<void> => {
@@ -190,10 +187,54 @@ export const sendGroupPosts = async (
         /** Check if the current user is a member of the group and if the group
          * is private. */
         const isMember = await group.$has('users', user);
-        const isPrivate = group.type === 'private';
-        if (!isMember && isPrivate) {
+        if (!isMember) {
             throw Error(
                 'You must be a member of this group to access its posts.'
+            );
+        }
+
+        /** Find and send group posts. */
+        const groupPosts = await Post.findAll({
+            where: {
+                groupId,
+            },
+            order: [['createdAt', 'DESC']],
+            limit: 10,
+            offset: Number(offset),
+            include: [User, Answer],
+        });
+        res.json(groupPosts);
+        return;
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+};
+
+/** Sends posts belonging to a group specified by ID passed as a URL parameter.
+ * The current user must be a member of the group to access its posts. Use on
+ * protected routes only. */
+export const sendPublicGroupPosts = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const groupId = req.params.id;
+        const offset = req.query.offset ?? 0;
+
+        /** Check if the group ID has been provided. */
+        if (!groupId || !testUUID(groupId)) {
+            throw Error('Incorrect group ID.');
+        }
+
+        /** Find the specified group. */
+        const group = await Group.findOne({
+            where: {
+                id: groupId,
+            },
+        });
+        if (!group) {
+            throw Error(
+                'Could not find a group with the corresponding group ID.'
             );
         }
 

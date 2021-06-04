@@ -86,8 +86,8 @@ template.innerHTML = html`
 `;
 
 class GroupView extends HTMLElement {
-    /** Specifies if the current user is a member of the group. */
-    private isMember;
+    /** Specifies if the user should be redirected due to authorization issues. */
+    private redirect;
 
     /** Group ID extracted from the URL. */
     private groupId;
@@ -152,20 +152,27 @@ class GroupView extends HTMLElement {
 
     /** Requests group's posts from the server, controlling the offset. */
     async loadPosts(): Promise<void> {
-        let groupPosts;
+        let response;
         if (this.groupId === 'public') {
-            groupPosts = await fetch(`/api/post/public?offset=${this.offset}`);
+            response = await fetch(`/api/post/public?offset=${this.offset}`);
         } else {
-            groupPosts = await fetch(
-                `/api/group/${this.groupId}/posts?offset=${this.offset}`
-            );
+            const isPublic = this.details.type === 'public';
+            if (isPublic) {
+                response = await fetch(
+                    `/api/group/public/${this.groupId}/posts?offset=${this.offset}`
+                );
+            } else {
+                response = await fetch(
+                    `/api/group/private/${this.groupId}/posts?offset=${this.offset}`
+                );
+            }
         }
-        const posts = await groupPosts.json();
-        if (!groupPosts.ok) {
-            this.isMember = false;
+        if (!response.ok) {
+            this.redirect = true;
             return;
         }
-        this.isMember = true;
+        const posts = await response.json();
+        this.redirect = false;
         this.posts = posts;
         this.offset += 10;
     }
@@ -312,8 +319,7 @@ class GroupView extends HTMLElement {
             this.saveGroupId();
             await this.loadDetails();
             await this.loadPosts();
-            if (this.isMember) {
-                // this.clearDetails();
+            if (!this.redirect) {
                 this.clearPosts();
                 this.displayDetails();
                 this.displayPosts();
