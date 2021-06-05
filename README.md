@@ -79,10 +79,10 @@
 -   User inputs are escaped where appropriate to prevent XSS attacks (mainly when
     a feature required the use of innerHTML instead of textContent).
 
--   Users can authenticated themselves using their Google accounts.
+-   Users can log in using their Google accounts in order to access all the app features.
 
 -   The app adjusts its UI to the user's authentication status and other factors
-    (certain elements hide and show as users log in and log out, join and leave
+    (certain elements hide and show as users log in and log out or join and leave
     groups).
 
 -   Users can add posts and post answers.
@@ -94,13 +94,12 @@
 
 -   Users can download post attachments.
 
--   Attached images render automatically within a post body.
+-   Attached images render automatically within the post body.
 
 -   Users can add hashtags to their posts to improve the search experience for
     others.
 
--   Links within a post / answer body get detected and activated
-    (made clickable).
+-   Valid links within the post / answer body get detected and activated automatically.
 
 -   New posts and answers appear in real-time (implemented with socket.io).
 
@@ -134,7 +133,7 @@ ERD and API routes. I followed my sketches throughout the development process,
 adjusting them as new requirements emerged. My initial plan was to build a
 robust application consisting of highly reusable components. Inspired by
 frameworks like React and Vue, I wanted the project to be as declarative as
-possible, meaning that new features could rely on older code and ready modules.
+possible, meaning that new features could rely on older code and done modules.
 I quickly realised this approach is not only time-consuming but also quite hard
 to implement. Since the task was to build a web application, not a framework or
 library, I had to take a different strategy. I still did my best to make the
