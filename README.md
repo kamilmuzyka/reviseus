@@ -1,5 +1,9 @@
 # Revise.us
 
+## Description
+
+`Revise.us` is a single page application created as a place for peer reviews and revisions. It was developed in pure JavaScript using Web Components API. The server runs as a Node/Express application that uses PostgreSQL as its database.
+
 ## Prerequisites
 
 -   Node.js ([Download](https://nodejs.org/en/))
@@ -41,11 +45,19 @@
 
 5. All done! You can now access the application at http://localhost:8080.
 
-## Documentation
+## Testing
 
-[Server Documentation](https://fictional-chainsaw-8092472b.pages.github.io/docs/TypeDoc/)
+-   The setup script populates the database with mock data to make manual testing easier.
 
-[Client Documentation](https://fictional-chainsaw-8092472b.pages.github.io/client/docs/TypeDoc/)
+-   Here is an invitation to a private group called "Appeng" (it's the only way to join
+    private groups) -
+    http://localhost:8080/join/group/13aa3713-45c4-401a-abd7-2213ba91e1a6.
+
+-   There is also a public group called "Portsoc" that you can find using the search
+    engine.
+
+-   You can access the rest of the data and test all the features as a logged-in
+    user.
 
 ## Features
 
@@ -117,27 +129,32 @@
 
 ## Reflection
 
-As I always do, I started the project by designing the UI and core business
-logic such as database ERD and API routes. I followed my blueprints throughout
-the development process, adjusting them as I learned more about existing
-requirements. My initial approach to the code part was to build a robust
-application consisting of highly reusable components. Inspired by frameworks
-like React and Vue, I wanted the project to be as declarative as possible,
-meaning that new features could entirely rely on pre-prepared code and finished
-parts of the application. I quickly realised this approach is not only
-time-consuming but also quite hard to implement. Since the task was to build a
-web application, not a framework or library, I had to take another strategy. I
-still did my best to make the code reusable, but if a module required hours of
-additional work to make it declarative and feasible to use somewhere else, I
-went for a copy-paste approach. I believe this was the right thing to do, given
-the circumstances. The technologies I have learned to build this app are
-TypeScript, Web Components and Web Sockets. I also learned a bit more about
-security when using OAuth, Passport and JWT. If I were to do this project again
-(and had a free hand regarding the technologies), I would use some client-side
-library such as React to avoid reinventing the wheel and make the UI development
-quicker and easier. I could then focus more on existing features and implement
-edit / delete operations that are the most missing functionalities. Also,
-writing some unit tests along the way would make the code more maintainable.
+I began the project by designing the UI and core business logic such as database
+ERD and API routes. I followed my sketches throughout the development process,
+adjusting them as new requirements emerged. My initial plan was to build a
+robust application consisting of highly reusable components. Inspired by
+frameworks like React and Vue, I wanted the project to be as declarative as
+possible, meaning that new features could rely on older code and ready modules.
+I quickly realised this approach is not only time-consuming but also quite hard
+to implement. Since the task was to build a web application, not a framework or
+library, I had to take a different strategy. I still did my best to make the
+code reusable, but if a module required hours of additional work to make it
+declarative and feasible to use somewhere else, I went for a copy-paste
+approach. I believe this was the right thing to do, given the circumstances. The
+technologies I have learned along the way are TypeScript, Web Components and Web
+Sockets. I also learned a bit about security when using OAuth, Passport and JWT.
+If I were to do this project again, I would use some client-side library such as
+React to avoid reinventing the wheel and make the front-end development quicker
+and easier. I could then focus more on existing features, e.g. implement edit /
+delete operations that are the most missing functionalities in the app. Also, I
+would try to write some unit tests to make the code more reliable and
+maintainable.
+
+## Documentation
+
+[Server Documentation](https://fictional-chainsaw-8092472b.pages.github.io/docs/TypeDoc/)
+
+[Client Documentation](https://fictional-chainsaw-8092472b.pages.github.io/client/docs/TypeDoc/)
 
 ## Coursework Specification
 
