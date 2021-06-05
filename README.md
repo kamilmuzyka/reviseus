@@ -19,7 +19,7 @@
     `npm install`
 
     Make sure the postinstall script runs after the install script (it should happen
-    automatically). If not, run:
+    automatically). If not, do:
 
     `npm run postinstall`
 
@@ -30,7 +30,7 @@
     DB_URI=postgres://<DATABASE_USERNAME>:<DATABASE_PASSWORD>@localhost:5432/reviseus
     GOOGLE_CLIENT=965556441564-cce55mafc1159cbsadka911r301sj6kj.apps.googleusercontent.com
     GOOGLE_SECRET=OVYXy9cWLGmTnX455z6HFxuo
-    JWT_SECRET=CXweCZDfwDPp94Tp7E62
+    JWT_SECRET=CXweCZDfwDPp94Tp7E62y9cW
     ```
 
     - Replace the <...> fragments with your local settings.
