@@ -30,7 +30,7 @@
     DB_URI=postgres://<DATABASE_USERNAME>:<DATABASE_PASSWORD>@localhost:5432/reviseus
     GOOGLE_CLIENT=965556441564-cce55mafc1159cbsadka911r301sj6kj.apps.googleusercontent.com
     GOOGLE_SECRET=OVYXy9cWLGmTnX455z6HFxuo
-    JWT_SECRET=CXweCZDfwDPp94Tp7E62y9cW
+    JWT_SECRET=CXweCZDfwDPp94Tp7E62
     ```
 
     - Replace the <...> fragments with your local settings.
