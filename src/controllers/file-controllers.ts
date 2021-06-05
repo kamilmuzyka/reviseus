@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import path from 'path';
 
+/** Sends a single binary file that has been uploaded to the server by a user. */
 export const sendSingleFile = async (
     req: Request,
     res: Response

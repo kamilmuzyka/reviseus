@@ -63,7 +63,7 @@ export const createNewPost = async (
                 await newPost.$set('tags', postHashtags);
             }
 
-            /** Reflect any uploaded files in the database. */
+            /** Keep a record of uploaded files in the database. */
             if (files && files.length) {
                 const postFiles = await Promise.all(
                     files.map(async (file) => {
@@ -78,6 +78,7 @@ export const createNewPost = async (
                 await newPost.$set('files', postFiles);
             }
 
+            /** Prevent non-members from adding posts to a group. */
             if (testUUID(groupId)) {
                 const group = await Group.findOne({
                     where: {
@@ -144,8 +145,6 @@ export const createPostAnswer = async (
         await user.$set('answers', [...user.answers, postAnswer]);
         await post.$set('answers', [...post.answers, postAnswer]);
 
-        //** To do: <Check for group> */
-
         /** Find the new (mutated) answer and send it to the client. */
         const createdAnswer = await Answer.findOne({
             where: {
@@ -189,7 +188,7 @@ export const sendSinglePost = async (
 };
 
 /** Sends public posts that don't belong to any group. Anyone should be able to
- * access public posts. */
+ * access them. */
 export const sendPublicPosts = async (
     req: Request,
     res: Response
