@@ -23,7 +23,8 @@
 
     `npm run postinstall`
 
-    or
+    If you use Windows, the scripts above may cause errors produced by the
+    _--prefix_ flag. Use the following script to continue the installation:
 
     `cd client && npm install`
 
