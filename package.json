@@ -41,11 +41,11 @@
         "typescript": "4.2.3"
     },
     "scripts": {
-        "postinstall": "npm install --prefix client --cwd client",
+        "postinstall": "npm install --prefix client",
         "createDatabase": "createdb reviseus && psql reviseus < migrations/04-06-2021.sql",
-        "build": "tsc & npm run build --prefix client --cwd client",
+        "build": "tsc & npm run build --prefix client",
         "setup": "npm run createDatabase & npm run build",
-        "devClient": "npm run dev --prefix client --cwd client",
+        "devClient": "npm run dev --prefix client",
         "devServer": "tsc -w & nodemon ./dist/app.js",
         "dev": "concurrently \"npm run devClient\" \"npm run devServer\"",
         "docs": "npx typedoc"
