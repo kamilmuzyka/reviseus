@@ -1,8 +1,8 @@
 {
     "devDependencies": {
-        "parcel": "*",
-        "typedoc": "^0.20.35",
-        "typescript": "^4.2.3"
+        "parcel": "2.0.0-beta.2",
+        "typedoc": "0.20.35",
+        "typescript": "4.2.3"
     },
     "scripts": {
         "dev": "parcel watch ./public/index.html",
