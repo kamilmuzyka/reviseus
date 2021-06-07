@@ -6,11 +6,11 @@
 
 ## Prerequisites
 
--   Node.js ([Download](https://nodejs.org/en/))
+-   Node.js 16.3.0 ([Download](https://nodejs.org/en/))
 
--   npm ([Documentation](https://www.npmjs.com/get-npm))
+-   npm 7.15.1 ([Documentation](https://www.npmjs.com/get-npm))
 
--   PostgreSQL ([Download/Windows](https://www.postgresql.org/download/) | [Download/MacOS](https://postgresapp.com/))
+-   PostgreSQL 13.3 ([Download/Windows](https://www.postgresql.org/download/) | [Download/MacOS](https://postgresapp.com/))
 
 ## Installation
 
@@ -18,10 +18,14 @@
 
     `npm install`
 
-    Make sure the postinstall script runs after the install script (it should happen
-    automatically). If not, do:
+    Make sure the postinstall script runs after the install script (it should
+    happen automatically). If not, do:
 
     `npm run postinstall`
+
+    or
+
+    `cd client && npm install`
 
 2. Create _.env_ file in the project root directory and put the following
    code inside of it:
@@ -33,11 +37,14 @@
     JWT_SECRET=CXweCZDfwDPp94Tp7E62y9cW
     ```
 
-    - Replace the <...> fragments with your local settings.
+    Replace the <...> fragments with your local settings.
 
 3. Run the setup script:
 
     `npm run setup`
+
+    Please note, if you use Windows, the database setup script may ask you for
+    additional authorisation.
 
 4. Start the development server:
 
