@@ -42,7 +42,7 @@
     },
     "scripts": {
         "postinstall": "npm install --prefix client",
-        "createDatabase": "createdb reviseus && psql reviseus < migrations/04-06-2021.sql",
+        "createDatabase": "createdb reviseus && psql reviseus < migrations/07-06-2021.sql",
         "build": "tsc & npm run build --prefix client",
         "setup": "npm run createDatabase & npm run build",
         "devClient": "npm run dev --prefix client",
