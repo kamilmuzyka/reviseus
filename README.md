@@ -44,8 +44,8 @@
 
     `npm run setup`
 
-    Please note, if you use Windows, the database setup script may ask you for
-    additional authorisation.
+    If you use Windows, the database setup script may ask you for additional
+    authorisation.
 
 4. Start the development server:
 
