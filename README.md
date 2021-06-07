@@ -27,8 +27,8 @@
 
     `cd client && npm install`
 
-2. Create _.env_ file in the project root directory and put the following
-   code inside of it:
+2. Create _.env_ file in the project root directory and put the following code
+   inside of it:
 
     ```
     DB_URI=postgres://<DATABASE_USERNAME>:<DATABASE_PASSWORD>@localhost:5432/reviseus
@@ -54,25 +54,26 @@
 
 ## Testing
 
--   The setup script populates the database with mock data to make manual testing easier.
+-   The setup script populates the database with mock data to make manual
+    testing easier.
 
--   Here is an invitation to a private group called "Appeng" (it's the only way to join
-    private groups) -
+-   Here is an invitation to a private group called "Appeng" (it's the only way
+    to join private groups) -
     http://localhost:8080/join/group/13aa3713-45c4-401a-abd7-2213ba91e1a6.
 
--   There is also a public group called "Portsoc" that you can find using the search
-    engine.
+-   There is also a public group called "Portsoc" that you can find using the
+    search engine.
 
 -   You can access the rest of the data and test all the features as a logged-in
     user.
 
 ## Features
 
--   Some of the API routes and app views are protected and require authentication
-    to use them.
+-   Some of the API routes and app views are protected and require
+    authentication to use them.
 
--   All the routing happens within the browser, preserving the history (go back /
-    go forward buttons work as intended and they don't reload the page).
+-   All the routing happens within the browser, preserving the history (go
+    back/go forward buttons work as intended and they don't reload the page).
 
 -   Styles are adjusted to mobile, tablet and desktop screen sizes.
 
@@ -83,21 +84,22 @@
     adjusts itself to the theme preferred by the operating system on the initial
     load. Users can later change that theme.
 
--   User inputs are escaped where appropriate to prevent XSS attacks (mainly when
-    a feature required the use of innerHTML instead of textContent).
+-   User inputs are escaped where appropriate to prevent XSS attacks (mainly
+    when a feature required the use of innerHTML instead of textContent).
 
--   Users can log in using their Google accounts in order to access all the app features.
+-   Users can log in using their Google accounts in order to access all the app
+    features.
 
 -   The app adjusts its UI to the user's authentication status and other factors
-    (certain elements hide and show as users log in and log out or join and leave
-    groups).
+    (certain elements hide and show as users log in and log out or join and
+    leave groups).
 
 -   Users can add posts and post answers.
 
 -   Users can attach files to their posts.
 
--   Allowed file extensions are restricted to txt, rtf, pdf, doc, docx, csv, jpg,
-    jpeg, png, gif.
+-   Allowed file extensions are restricted to txt, rtf, pdf, doc, docx, csv,
+    jpg, jpeg, png, gif.
 
 -   Users can download post attachments.
 
@@ -106,12 +108,13 @@
 -   Users can add hashtags to their posts to improve the search experience for
     others.
 
--   Valid links within the post / answer body get detected and activated automatically.
+-   Valid links within the post/answer body get detected and activated
+    automatically.
 
 -   New posts and answers appear in real-time (implemented with socket.io).
 
--   Posts on the home and group pages load lazily (pagination implemented with the
-    Intersection Observer API).
+-   Posts on the home and group pages load lazily (pagination implemented with
+    the Intersection Observer API).
 
 -   Users can create public and private groups.
 
@@ -120,9 +123,9 @@
 -   Public groups can be viewed and joined by anyone. They are also included in
     the search results.
 
--   Private groups can only be viewed by their members. If someone wants to join a
-    private group, they need an invitation link. Private groups are not included
-    in the search results.
+-   Private groups can only be viewed by their members. If someone wants to join
+    a private group, they need an invitation link. Private groups are not
+    included in the search results.
 
 -   Users can use the search engine to browse public posts and public groups.
 
@@ -131,7 +134,8 @@
 
 ## Known Issues
 
--   Avatars requested from Google servers sometimes break on localhost due to CORS policy (it doesn't happen in production as far as I know).
+-   Avatars requested from Google servers sometimes break on localhost due to
+    CORS policy (it doesn't happen in production as far as I know).
 
 ## Reflection
 
@@ -140,9 +144,9 @@ ERD and API routes. I followed my sketches throughout the development process,
 adjusting them as new requirements emerged. My initial plan was to build a
 robust application consisting of highly reusable components. Inspired by
 frameworks like React and Vue, I wanted the project to be as declarative as
-possible, meaning that new features could rely on older code and done modules.
-I quickly realised this approach is not only time-consuming but also quite hard
-to implement. Since the task was to build a web application, not a framework or
+possible, meaning that new features could rely on older code and done modules. I
+quickly realised this approach is not only time-consuming but also quite hard to
+implement. Since the task was to build a web application, not a framework or
 library, I had to take a different strategy. I still did my best to make the
 code reusable, but if a module required hours of additional work to make it
 declarative and feasible to use somewhere else, I went for a copy-paste
@@ -151,9 +155,9 @@ technologies I have learned along the way are TypeScript, Web Components and Web
 Sockets. I also learned a bit about security when using OAuth, Passport and JWT.
 If I were to do this project again, I would use some client-side library such as
 React to avoid reinventing the wheel and make the front-end development quicker
-and easier. I could then focus more on existing features, e.g. implement edit /
-delete operations that are the most missing functionalities in the app. Also, I
-would try to write some unit tests to make the code more reliable and
+and easier. I could then focus more on existing features, e.g. implement
+edit/delete operations that are the most missing functionalities in the app.
+Also, I would try to write some unit tests to make the code more reliable and
 maintainable.
 
 ## Documentation
