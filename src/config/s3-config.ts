@@ -13,20 +13,28 @@ const s3 = new S3({
 
 /** Uploads a file to the S3 bucket. */
 export const uploadFile = async (file) => {
-    const fileStream = fs.createReadStream(file.path);
-    const uploadParams = {
-        Bucket: process.env.AWS_BUCKET_NAME ?? '',
-        Body: fileStream,
-        Key: file.filename,
-    };
-    return s3.upload(uploadParams).promise();
+    try {
+        const fileStream = fs.createReadStream(file.path);
+        const uploadParams = {
+            Bucket: process.env.AWS_BUCKET_NAME ?? '',
+            Body: fileStream,
+            Key: file.filename,
+        };
+        return s3.upload(uploadParams).promise();
+    } catch (error) {
+        throw Error('Failed to upload the file.');
+    }
 };
 
 /** Downloads a file from the S3 bucket. */
 export const getFileReadStream = async (fileKey: string) => {
-    const downloadParams = {
-        Key: fileKey,
-        Bucket: process.env.AWS_BUCKET_NAME ?? '',
-    };
-    return s3.getObject(downloadParams).createReadStream();
+    try {
+        const downloadParams = {
+            Key: fileKey,
+            Bucket: process.env.AWS_BUCKET_NAME ?? '',
+        };
+        return s3.getObject(downloadParams).createReadStream();
+    } catch (error) {
+        throw Error('Failed to fetch the file.');
+    }
 };

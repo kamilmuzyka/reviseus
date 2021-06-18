@@ -11,7 +11,7 @@ export const sendSingleFile = async (
         const fileKey = req.params.key;
         const readStream = await getFileReadStream(fileKey);
         readStream.pipe(res);
-    } catch (err) {
+    } catch (error) {
         res.status(400).json({
             error: 'Could not find requested resource.',
         });
