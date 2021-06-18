@@ -12,4 +12,4 @@
 
 ## Links
 
-[Client Documentation](https://fictional-chainsaw-8092472b.pages.github.io/client/docs/TypeDoc/)
+[Client Documentation](https://kamilmuzyka.github.io/reviseus/client/docs/TypeDoc/)

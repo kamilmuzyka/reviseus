@@ -10,4 +10,4 @@
 
 ## Links
 
-[Server Documentation](https://fictional-chainsaw-8092472b.pages.github.io/docs/TypeDoc/)
+[Server Documentation](https://kamilmuzyka.github.io/reviseus/docs/TypeDoc/)
