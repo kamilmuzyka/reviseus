@@ -4,6 +4,6 @@ import { sendSingleFile } from '../controllers/file-controllers.js';
 
 const router = Router();
 
-router.get('/:user/:filename', sendSingleFile);
+router.get('/:key', sendSingleFile);
 
 export default router;

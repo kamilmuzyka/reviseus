@@ -3,6 +3,7 @@
     "type": "module",
     "dependencies": {
         "@types/socket.io": "2.1.13",
+        "aws-sdk": "^2.931.0",
         "cookie-parser": "1.4.5",
         "dotenv": "8.2.0",
         "express": "4.17.1",

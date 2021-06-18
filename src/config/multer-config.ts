@@ -7,15 +7,11 @@ import { v4 } from 'uuid';
 /** Specify the output directory. */
 const fileDestination = 'uploads';
 
-/** Define the output directory and set file names pattern. Every file goes into
- * the user's directory (named same as the user ID). File names are randomly
- * generated UUIDs. Original file names should be saved in the database along
- * with the path to a file. */
+/** Define the output directory and set file names pattern. */
 const fileStorage = multer.diskStorage({
     destination: (req, file, callback) => {
-        const userFileDestination = path.join(fileDestination, req.user.userId);
-        fs.mkdirSync(userFileDestination, { recursive: true });
-        callback(null, userFileDestination);
+        fs.mkdirSync(fileDestination, { recursive: true });
+        callback(null, fileDestination);
     },
     filename: (req, file, callback) => {
         callback(null, `${v4() + path.extname(file.originalname)}`);

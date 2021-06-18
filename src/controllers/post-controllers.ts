@@ -2,6 +2,8 @@
 import { Request, Response } from 'express';
 import { validateNewPost, validatePostAnswer } from '../lib/validate.js';
 import { parseFiles } from '../config/multer-config.js';
+import { uploadFile } from '../config/s3-config.js';
+import unlinkFile from '../utils/unlink-file.js';
 import extractHashtags from '../utils/extract-hashtags.js';
 import testUUID from '../utils/test-uuid.js';
 import Post from '../models/post-model.js';
@@ -63,13 +65,16 @@ export const createNewPost = async (
                 await newPost.$set('tags', postHashtags);
             }
 
-            /** Keep a record of uploaded files in the database. */
+            /** Upload files to the S3 bucket and create new records in
+             * the database. */
             if (files && files.length) {
                 const postFiles = await Promise.all(
                     files.map(async (file) => {
+                        const uploadedFile = await uploadFile(file);
+                        await unlinkFile(file.path);
                         const postFile = await File.create({
                             name: file.originalname,
-                            uri: file.path,
+                            uri: `uploads/${uploadedFile.Key}`,
                             mimetype: file.mimetype,
                         });
                         return postFile;
