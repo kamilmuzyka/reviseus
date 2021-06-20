@@ -14,7 +14,7 @@ dotenv.config();
 
 /** Database Schema: ![Database Schema as Entity Relationship
  * Diagram](media://schema.jpeg) */
-const sequelize = new Sequelize(process.env.DB_URI ?? '', {
+const sequelize = new Sequelize(process.env.DATABASE_URL ?? '', {
     models: [User, Group, UserGroups, Post, Tag, PostTags, File, Answer],
     logging: false,
 });

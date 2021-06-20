@@ -1,6 +1,10 @@
 {
     "name": "revise.us",
     "type": "module",
+    "engines": {
+        "node": "16.3.0",
+        "npm": "7.15.1"
+    },
     "dependencies": {
         "@types/socket.io": "2.1.13",
         "aws-sdk": "^2.931.0",
@@ -49,6 +53,7 @@
         "devClient": "npm run dev --prefix client",
         "devServer": "tsc -w & nodemon ./dist/app.js",
         "dev": "concurrently \"npm run devClient\" \"npm run devServer\"",
+        "start": "node ./dist/app.js",
         "docs": "npx typedoc"
     }
 }

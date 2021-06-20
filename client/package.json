@@ -6,7 +6,7 @@
     },
     "scripts": {
         "dev": "parcel watch ./public/index.html",
-        "build": "parcel build ./public/index.html",
+        "build": "npx parcel@2.0.0-beta.2 build ./public/index.html",
         "docs": "npx typedoc"
     },
     "dependencies": {
