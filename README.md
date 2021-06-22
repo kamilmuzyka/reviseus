@@ -2,7 +2,12 @@
 
 ## Description
 
-`Revise.us` is a single page application created as a place for peer reviews and revisions. It was developed in pure JavaScript using Web Components API. The server runs as a Node/Express application that uses PostgreSQL as a database.
+`Revise.us` is a single page application created as a place for peer reviews and
+revisions. It was developed in pure JavaScript using Web Components API. The
+server runs as a Node/Express application that uses PostgreSQL as a database.
+
+Preview (it might take a few seconds before the server wakes up):
+https://reviseus.kamilmuzyka.com
 
 ## Prerequisites
 
