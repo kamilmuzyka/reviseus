@@ -6,9 +6,6 @@
 revisions. It was developed in pure JavaScript using Web Components API. The
 server runs as a Node/Express application that uses PostgreSQL as a database.
 
-Preview (it might take a few seconds before the server wakes up):
-https://reviseus.kamilmuzyka.com
-
 ## Prerequisites
 
 -   Node.js 16.3.0 ([Download](https://nodejs.org/en/))
